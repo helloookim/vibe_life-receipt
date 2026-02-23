@@ -189,6 +189,11 @@ function switchLang(lang) {
     if (cnBtn) cnBtn.classList.toggle('lang-switch-active', lang === 'cn');
     if (esBtn) esBtn.classList.toggle('lang-switch-active', lang === 'es');
 
+    // Toggle Asian-only share buttons
+    const isAsianLang = ['ko', 'ja'].includes(lang);
+    document.querySelectorAll('.share-ko-only').forEach(el => el.classList.toggle('hidden', lang !== 'ko'));
+    document.querySelectorAll('.share-asian').forEach(el => el.classList.toggle('hidden', !isAsianLang));
+
     // Update birthdate select order and labels
     updateBirthdateOrder(lang);
 }
@@ -387,6 +392,100 @@ function getInitialLang() {
     // 3. Default to English
     return 'en';
 }
+
+// ==================== SHARE UTILITIES ====================
+
+const SITE_URL = 'https://lifereceipt.uk';
+
+function getShareUrl(path) {
+    const url = SITE_URL + (path || '');
+    return currentLang && currentLang !== 'en' ? url + '?lang=' + currentLang : url;
+}
+
+function openSharePopup(url) {
+    const w = 600, h = 500;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open(url, '_blank', `width=${w},height=${h},left=${left},top=${top},toolbar=no,menubar=no`);
+}
+
+function shareToX(text, url) {
+    openSharePopup(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+}
+
+function shareToFacebook(url) {
+    openSharePopup(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+}
+
+function shareToThreads(text, url) {
+    openSharePopup(`https://www.threads.net/intent/post?text=${encodeURIComponent(text + '\n' + url)}`);
+}
+
+function shareToLine(text, url) {
+    openSharePopup(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
+}
+
+function shareToKakao(title, description, url) {
+    if (typeof Kakao !== 'undefined' && Kakao.isInitialized()) {
+        Kakao.Share.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: title,
+                description: description,
+                imageUrl: SITE_URL + '/og-image.png',
+                link: { mobileWebUrl: url, webUrl: url }
+            },
+            buttons: [{ title: '확인하기', link: { mobileWebUrl: url, webUrl: url } }]
+        });
+    } else {
+        // Fallback: copy link
+        copyLinkShared();
+    }
+}
+
+function copyLinkShared() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        const msgs = {
+            en: 'Link copied to clipboard!',
+            ko: '링크가 클립보드에 복사되었습니다!',
+            ja: 'リンクをクリップボードにコピーしました！',
+            cn: '链接已复制到剪贴板！',
+            es: '¡Enlace copiado al portapapeles!'
+        };
+        alert(msgs[currentLang] || msgs.en);
+    });
+}
+
+function saveAsImage(elementId, filename, bgColor) {
+    if (typeof html2canvas === 'undefined') {
+        const msgs = {
+            en: 'Take a screenshot to save your result!\n\niPhone: Power + Volume Up\nAndroid: Power + Volume Down\nPC: Print Screen or Win+Shift+S',
+            ko: '스크린샷을 찍어 결과를 저장하세요!\n\niPhone: 전원 + 볼륨업\nAndroid: 전원 + 볼륨다운\nPC: Print Screen 또는 Win+Shift+S'
+        };
+        alert(msgs[currentLang] || msgs.en);
+        return;
+    }
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    html2canvas(el, {
+        backgroundColor: bgColor || '#ffffff',
+        scale: 2,
+        useCORS: true
+    }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = filename || 'result.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
+// SVG icons for share buttons
+const SHARE_ICONS = {
+    x: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+    facebook: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+    threads: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.086.718 5.496 2.057 7.164 1.432 1.781 3.632 2.695 6.54 2.717 1.955-.013 3.822-.477 5.081-1.46.987-.77 1.714-1.86 1.714-3.421 0-1.477-.664-2.625-1.912-3.324-.78-.437-1.7-.655-2.453-.793a28.5 28.5 0 0 0-.454-.073c.263 1.712.069 3.03-.588 3.958-.606.855-1.533 1.309-2.682 1.34l-.064.001c-.944 0-1.79-.332-2.448-.96-.668-.637-1.037-1.519-1.037-2.469 0-1.786 1.167-3.33 3.181-4.196 1.154-.496 2.489-.739 3.965-.72.45.006.893.032 1.326.08a8.143 8.143 0 0 0-.265-1.387c-.18-.574-.442-1.062-.811-1.454-.714-.759-1.8-1.153-3.227-1.173-1.477.024-2.596.392-3.326 1.093-.765.736-1.167 1.838-1.191 3.272l-2.118-.028c.032-1.957.622-3.498 1.749-4.58 1.068-1.027 2.58-1.558 4.494-1.583h.082c1.922.025 3.41.605 4.422 1.727.537.595.913 1.318 1.146 2.14.224.793.33 1.66.316 2.587l.001.08c.99.281 1.863.696 2.57 1.238 1.253.959 1.914 2.415 1.914 4.215 0 2.178-1.024 3.792-2.497 4.943-1.575 1.231-3.779 1.776-6.023 1.792z"/></svg>',
+    copy: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'
+};
 
 // Initialize on DOM load
 if (typeof document !== 'undefined') {

@@ -482,14 +482,19 @@ function toggleFamilyHistory() {
 
 function selectGender(gender) {
     selectedGender = gender;
-    document.getElementById('gender-M').classList.remove('ring-4', 'ring-gray-400');
-    document.getElementById('gender-F').classList.remove('ring-4', 'ring-gray-400');
+    const mBtn = document.getElementById('gender-M');
+    const fBtn = document.getElementById('gender-F');
 
-    if (gender === 'M') {
-        document.getElementById('gender-M').classList.add('ring-4', 'ring-gray-400');
-    } else {
-        document.getElementById('gender-F').classList.add('ring-4', 'ring-gray-400');
-    }
+    // Reset both buttons to original state
+    [mBtn, fBtn].forEach(btn => {
+        btn.classList.remove('bg-gray-500', 'text-white', 'border-gray-400');
+        btn.classList.add('bg-gray-700', 'border-gray-600');
+    });
+
+    // Highlight selected
+    const selectedBtn = gender === 'M' ? mBtn : fBtn;
+    selectedBtn.classList.remove('bg-gray-700', 'border-gray-600');
+    selectedBtn.classList.add('bg-gray-500', 'text-white', 'border-gray-400');
 }
 
 function selectOption(category, value, silent = false) {
@@ -1017,14 +1022,43 @@ function renderResults() {
 
         <!-- Action Buttons -->
         <div class="max-w-2xl mx-auto space-y-4 mb-12">
-            <button onclick="shareLifespan()" class="w-full btn-gradient-purple font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
-                <span class="text-xl">📤</span>
-                <span class="lang-en">Share My Time</span>
-                <span class="lang-ko hidden">내 시간 공유하기</span>
-                <span class="lang-ja hidden">時間を共有</span>
-                <span class="lang-cn hidden">分享我的时间</span>
-                <span class="lang-es hidden">Compartir Mi Tiempo</span>
+            <button onclick="saveLifespanImage()" class="w-full btn-gradient-purple font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                <span class="text-xl">📸</span>
+                <span class="lang-en">Save as Image</span>
+                <span class="lang-ko hidden">이미지로 저장</span>
+                <span class="lang-ja hidden">画像として保存</span>
+                <span class="lang-cn hidden">保存为图片</span>
+                <span class="lang-es hidden">Guardar como Imagen</span>
             </button>
+
+            <!-- Share Buttons Grid -->
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="shareLifespanToX()" class="flex items-center justify-center gap-1.5 py-3 bg-black text-white rounded-xl hover:opacity-80 transition-all text-sm font-medium">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    X
+                </button>
+                <button onclick="shareLifespanToFacebook()" class="flex items-center justify-center gap-1.5 py-3 text-white rounded-xl hover:opacity-80 transition-all text-sm font-medium" style="background:#1877F2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    Facebook
+                </button>
+                <button onclick="shareLifespanToThreads()" class="flex items-center justify-center gap-1.5 py-3 bg-black text-white rounded-xl hover:opacity-80 transition-all text-sm font-medium">
+                    Threads
+                </button>
+                <button onclick="shareLifespanToKakao()" class="share-ko-only hidden flex items-center justify-center gap-1.5 py-3 rounded-xl hover:opacity-80 transition-all text-sm font-bold text-gray-900" style="background:#FEE500">
+                    KakaoTalk
+                </button>
+                <button onclick="shareLifespanToLine()" class="share-asian hidden flex items-center justify-center gap-1.5 py-3 rounded-xl hover:opacity-80 transition-all text-sm font-bold text-white" style="background:#06C755">
+                    LINE
+                </button>
+                <button onclick="copyLink()" class="flex items-center justify-center gap-1.5 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-500 transition-all text-sm font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    <span class="lang-en">Copy</span>
+                    <span class="lang-ko hidden">복사</span>
+                    <span class="lang-ja hidden">コピー</span>
+                    <span class="lang-cn hidden">复制</span>
+                    <span class="lang-es hidden">Copiar</span>
+                </button>
+            </div>
 
             <button onclick="window.location.href='index.html'" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
                 <span class="text-xl">🧾</span>
@@ -1260,44 +1294,31 @@ function startCountdownTimer() {
 
 // ==================== SHARING ====================
 
-function shareLifespan() {
+function getLifespanShareText() {
     const result = lifespanResult;
-    const shareText = {
-        en: `I have ${result.yearsRemaining} years remaining! Check your time: `,
-        ko: `나에게 ${result.yearsRemaining}년이 남았대! 당신의 시간도 확인해보세요: `,
-        ja: `私には${result.yearsRemaining}年残っています！あなたの時間も確認してください: `,
-        cn: `我还剩${result.yearsRemaining}年！检查你的时间: `,
-        es: `¡Me quedan ${result.yearsRemaining} años! Verifica tu tiempo: `
+    const texts = {
+        en: `I have ${result.yearsRemaining} years remaining! Check your time`,
+        ko: `나에게 ${result.yearsRemaining}년이 남았대! 당신의 시간도 확인해보세요`,
+        ja: `私には${result.yearsRemaining}年残っています！あなたの時間も確認してください`,
+        cn: `我还剩${result.yearsRemaining}年！检查你的时间`,
+        es: `¡Me quedan ${result.yearsRemaining} años! Verifica tu tiempo`
     };
-
-    const text = shareText[currentLang] || shareText.en;
-    const url = window.location.href;
-
-    if (navigator.share) {
-        navigator.share({
-            title: 'My Life Clock',
-            text: text,
-            url: url
-        }).catch(() => {
-            copyLink();
-        });
-    } else {
-        copyLink();
-    }
+    return texts[currentLang] || texts.en;
 }
 
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        const msg = {
-            en: 'Link copied to clipboard!',
-            ko: '링크가 클립보드에 복사되었습니다!',
-            ja: 'リンクをクリップボードにコピーしました！',
-            cn: '链接已复制到剪贴板！',
-            es: '¡Enlace copiado al portapapeles!'
-        };
-        alert(msg[currentLang] || msg.en);
-    });
+function saveLifespanImage() {
+    saveAsImage('result-container', 'my-life-clock.png', '#111113');
 }
+
+function shareLifespanToX() { shareToX(getLifespanShareText(), getShareUrl('/lifespan.html')); }
+function shareLifespanToFacebook() { shareToFacebook(getShareUrl('/lifespan.html')); }
+function shareLifespanToThreads() { shareToThreads(getLifespanShareText(), getShareUrl('/lifespan.html')); }
+function shareLifespanToLine() { shareToLine(getLifespanShareText(), getShareUrl('/lifespan.html')); }
+function shareLifespanToKakao() {
+    const title = currentLang === 'ko' ? '나의 생명시계' : 'My Life Clock';
+    shareToKakao(title, getLifespanShareText(), getShareUrl('/lifespan.html'));
+}
+function copyLink() { copyLinkShared(); }
 
 // ==================== CROSS-SERVICE INTEGRATION ====================
 

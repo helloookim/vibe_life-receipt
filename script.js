@@ -24,16 +24,16 @@ function selectGender(gender) {
     const mBtn = document.getElementById('gender-M');
     const fBtn = document.getElementById('gender-F');
 
-    // Reset both buttons
+    // Reset both buttons to original state
     [mBtn, fBtn].forEach(btn => {
-        btn.classList.remove('btn-gradient', 'border-purple-500');
-        btn.classList.add('border-gray-700');
+        btn.classList.remove('bg-gray-900', 'text-white', 'border-gray-900');
+        btn.classList.add('bg-gray-50', 'text-gray-800', 'border-gray-200');
     });
 
     // Highlight selected
     const selectedBtn = gender === 'M' ? mBtn : fBtn;
-    selectedBtn.classList.add('btn-gradient', 'border-purple-500');
-    selectedBtn.classList.remove('border-gray-700');
+    selectedBtn.classList.remove('bg-gray-50', 'text-gray-800', 'border-gray-200');
+    selectedBtn.classList.add('bg-gray-900', 'text-white', 'border-gray-900');
 }
 
 function selectMeal(meal) {
@@ -654,42 +654,29 @@ function generateBarcode() {
 
 // Share and save functions
 function saveImage() {
-    // Using html2canvas would be ideal, but for now we'll use the Web Share API
-    if (navigator.share) {
-        shareReceipt();
-    } else {
-        alert(currentLang === 'en'
-            ? 'To save the image, take a screenshot of the receipt above'
-            : '영수증을 저장하려면 위 화면을 캡처해주세요');
-    }
+    saveAsImage('receipt-container', 'my-life-receipt.png', '#f5f5f4');
 }
 
-function shareReceipt() {
-    const shareData = {
-        title: currentLang === 'en' ? 'My Life Receipt' : '나의 인생 영수증',
-        text: currentLang === 'en'
-            ? `I just created my Life Receipt! Check yours at ${window.location.href}`
-            : `나의 인생 영수증을 만들어봤어요! 여기서 만들어보세요: ${window.location.href}`,
-        url: window.location.href
+function getReceiptShareText() {
+    const texts = {
+        en: 'I just created my Life Receipt! Check yours',
+        ko: '나의 인생 영수증을 만들어봤어요! 여기서 만들어보세요',
+        ja: '人生レシートを作ってみました！あなたも確認してみてください',
+        cn: '我刚创建了我的人生收据！来看看你的吧',
+        es: '¡Acabo de crear mi Recibo de Vida! Mira el tuyo'
     };
-
-    if (navigator.share) {
-        navigator.share(shareData).catch(err => {
-            console.log('Error sharing:', err);
-            copyLink();
-        });
-    } else {
-        copyLink();
-    }
+    return texts[currentLang] || texts.en;
 }
 
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        alert(currentLang === 'en'
-            ? 'Link copied to clipboard!'
-            : '링크가 클립보드에 복사되었습니다!');
-    });
+function shareReceiptToX() { shareToX(getReceiptShareText(), getShareUrl()); }
+function shareReceiptToFacebook() { shareToFacebook(getShareUrl()); }
+function shareReceiptToThreads() { shareToThreads(getReceiptShareText(), getShareUrl()); }
+function shareReceiptToLine() { shareToLine(getReceiptShareText(), getShareUrl()); }
+function shareReceiptToKakao() {
+    const title = currentLang === 'ko' ? '나의 인생 영수증' : 'My Life Receipt';
+    shareToKakao(title, getReceiptShareText(), getShareUrl());
 }
+function copyLink() { copyLinkShared(); }
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {

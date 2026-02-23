@@ -393,7 +393,12 @@ function getTexts() {
             yourIncome: 'Your Income',
             timesGlobalMedian: 'times the global median income',
             equivUSD: 'equivalent in USD',
-            dotMapTitle: 'Your position among 100 people',
+            positionBarTitle: 'Your position in the world',
+            positionYou: 'YOU',
+            positionPoorest: 'Lower income',
+            positionRichest: 'Higher income',
+            positionBelowYou: 'earn less than you',
+            positionAboveYou: 'earn more than you',
             comparisonTitle: 'How You Compare',
             insightTitle: 'Perspective',
             shareTitle: 'Share My Rank',
@@ -418,7 +423,12 @@ function getTexts() {
             yourIncome: '당신의 소득',
             timesGlobalMedian: '전 세계 중위소득의 배',
             equivUSD: 'USD 환산',
-            dotMapTitle: '100명 중 당신의 위치',
+            positionBarTitle: '전 세계에서 당신의 위치',
+            positionYou: '당신',
+            positionPoorest: '저소득',
+            positionRichest: '고소득',
+            positionBelowYou: '이 당신보다 적게 벌어요',
+            positionAboveYou: '이 당신보다 많이 벌어요',
             comparisonTitle: '순위 비교',
             insightTitle: '한 가지 관점',
             shareTitle: '내 순위 공유하기',
@@ -461,11 +471,10 @@ function renderResults() {
             ${wealthUserData.householdSize > 1 ? `<p class="text-xs text-gray-500 mt-2">${t.householdNote}</p>` : ''}
         </div>
 
-        <!-- Dot Map -->
+        <!-- Position Bar -->
         <div class="mb-12 fade-in" style="animation-delay: 0.3s">
-            <h3 class="text-center text-lg font-bold mb-4 text-gray-300">${t.dotMapTitle}</h3>
-            ${renderDotMap(r.globalPercentile)}
-            <p class="text-center text-sm text-gray-500 mt-2">⭐ = ${lang === 'ko' ? '당신' : 'You'}</p>
+            <h3 class="text-center text-lg font-bold mb-4 text-gray-300">${t.positionBarTitle}</h3>
+            ${renderPositionBar(r.globalPercentile, richerThanFormatted, richerThanYouFormatted, t)}
         </div>
 
         <!-- Comparison Bars -->
@@ -496,12 +505,36 @@ function renderResults() {
 
         <!-- Action Buttons -->
         <div class="space-y-3 fade-in" style="animation-delay: 1.1s">
-            <button onclick="shareWealth()" class="w-full btn-gradient-gold text-gray-900 font-bold py-5 rounded-xl text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105">
-                <span class="text-xl">📤</span> ${t.shareTitle}
-            </button>
-            <button onclick="saveWealthImage()" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-xl text-lg flex items-center justify-center gap-3 transition-all border border-gray-600">
+            <button onclick="saveWealthImage()" class="w-full btn-gradient-gold text-gray-900 font-bold py-5 rounded-xl text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105">
                 <span class="text-xl">📸</span> ${t.saveImage}
             </button>
+
+            <!-- Share Buttons Grid -->
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="shareWealthToX()" class="flex items-center justify-center gap-1.5 py-3 bg-black text-white rounded-xl hover:opacity-80 transition-all text-sm font-medium">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    X
+                </button>
+                <button onclick="shareWealthToFacebook()" class="flex items-center justify-center gap-1.5 py-3 text-white rounded-xl hover:opacity-80 transition-all text-sm font-medium" style="background:#1877F2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    Facebook
+                </button>
+                <button onclick="shareWealthToThreads()" class="flex items-center justify-center gap-1.5 py-3 bg-black text-white rounded-xl hover:opacity-80 transition-all text-sm font-medium">
+                    Threads
+                </button>
+                <button onclick="shareWealthToKakao()" class="share-ko-only hidden flex items-center justify-center gap-1.5 py-3 rounded-xl hover:opacity-80 transition-all text-sm font-bold text-gray-900" style="background:#FEE500">
+                    KakaoTalk
+                </button>
+                <button onclick="shareWealthToLine()" class="share-asian hidden flex items-center justify-center gap-1.5 py-3 rounded-xl hover:opacity-80 transition-all text-sm font-bold text-white" style="background:#06C755">
+                    LINE
+                </button>
+                <button onclick="copyLink()" class="flex items-center justify-center gap-1.5 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-500 transition-all text-sm font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    <span class="lang-en">Copy</span>
+                    <span class="lang-ko hidden">복사</span>
+                </button>
+            </div>
+
             <div class="grid grid-cols-2 gap-3 pt-2">
                 <a href="lifespan.html" class="block bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-white font-bold py-4 rounded-xl text-center transition-all">
                     <span class="text-lg">⏳</span><br><span class="text-sm">${t.lifeClockLink}</span>
@@ -528,26 +561,58 @@ function renderResults() {
 
 // ==================== VISUALIZATIONS ====================
 
-function renderDotMap(percentile) {
-    const position = Math.min(100, Math.max(1, Math.round(percentile * 100)));
-    let html = '<div class="grid grid-cols-10 gap-1.5 max-w-sm mx-auto">';
+function renderPositionBar(percentile, belowFormatted, aboveFormatted, t) {
+    const pct = Math.min(99, Math.max(1, Math.round(percentile * 100)));
 
-    for (let i = 1; i <= 100; i++) {
-        const isUser = (i === position);
-        const isBelowUser = (i < position);
-        const delay = i * 15;
+    // Crowd of people on each side (proportional count)
+    const leftCount = Math.round(pct / 10);
+    const rightCount = Math.round((100 - pct) / 10);
+    const leftPeople = '👤'.repeat(Math.max(1, leftCount));
+    const rightPeople = '👤'.repeat(Math.max(1, rightCount));
 
-        if (isUser) {
-            html += `<div class="text-center text-xl dot-appear" style="animation-delay:${delay}ms">⭐</div>`;
-        } else if (isBelowUser) {
-            html += `<div class="text-center text-lg text-gray-600 dot-appear" style="animation-delay:${delay}ms">👤</div>`;
-        } else {
-            html += `<div class="text-center text-lg text-blue-400 dot-appear" style="animation-delay:${delay}ms">👤</div>`;
-        }
-    }
+    return `
+    <div class="max-w-xl mx-auto">
+        <!-- People row with marker -->
+        <div class="relative mb-2" style="height: 60px">
+            <!-- Left crowd -->
+            <div class="absolute left-0 bottom-0 text-gray-600 text-sm tracking-tight overflow-hidden whitespace-nowrap" style="width: ${Math.max(pct - 3, 0)}%">
+                ${leftPeople}
+            </div>
+            <!-- User marker -->
+            <div class="absolute bottom-0 flex flex-col items-center" style="left: ${pct}%; transform: translateX(-50%)">
+                <span class="text-xs font-bold text-yellow-400 mb-0.5">${t.positionYou}</span>
+                <span class="text-2xl">⭐</span>
+            </div>
+            <!-- Right crowd -->
+            <div class="absolute right-0 bottom-0 text-blue-400 text-sm tracking-tight overflow-hidden whitespace-nowrap text-right" style="width: ${Math.max(97 - pct, 0)}%">
+                ${rightPeople}
+            </div>
+        </div>
 
-    html += '</div>';
-    return html;
+        <!-- Bar -->
+        <div class="relative w-full h-4 rounded-full overflow-hidden bg-gray-700">
+            <div class="absolute inset-0 rounded-full" style="background: linear-gradient(to right, #374151, #1e3a5f, #2563eb, #fbbf24, #ffd700)"></div>
+            <!-- Position marker line -->
+            <div class="absolute top-0 bottom-0 w-0.5 bg-white" style="left: ${pct}%; box-shadow: 0 0 6px rgba(255,255,255,0.8)"></div>
+        </div>
+
+        <!-- Labels -->
+        <div class="flex justify-between mt-2 text-xs text-gray-500">
+            <span>${t.positionPoorest}</span>
+            <span>${t.positionRichest}</span>
+        </div>
+
+        <!-- Population counts -->
+        <div class="flex justify-between mt-3 text-sm">
+            <div class="text-gray-400">
+                <span class="text-gray-300 font-semibold">${belowFormatted}</span> ${t.positionBelowYou}
+            </div>
+            <div class="text-blue-300 text-right">
+                <span class="text-blue-200 font-semibold">${aboveFormatted}</span> ${t.positionAboveYou}
+            </div>
+        </div>
+    </div>
+    `;
 }
 
 function renderComparisonBars(result, countryName, t, lang) {
@@ -611,63 +676,27 @@ function animatePercentile(target) {
 
 // ==================== SHARING ====================
 
-function shareWealth() {
+function getWealthShareText() {
     const topP = wealthResult.topPercent < 1 ? wealthResult.topPercent.toFixed(2) : wealthResult.topPercent.toFixed(1);
-    const lang = currentLang || 'en';
-
-    const shareTexts = {
+    const texts = {
         en: `I'm in the top ${topP}% globally! Where do you rank among 8 billion people?`,
         ko: `나는 전 세계 상위 ${topP}%래! 80억 명 중 너는 몇 등이야?`
     };
-
-    const text = shareTexts[lang] || shareTexts.en;
-    const url = window.location.href;
-
-    if (navigator.share) {
-        navigator.share({
-            title: lang === 'ko' ? '글로벌 부 순위' : 'Global Wealth Rank',
-            text: text,
-            url: url
-        }).catch(() => copyLink());
-    } else {
-        copyLink();
-    }
+    return texts[currentLang] || texts.en;
 }
 
-function copyLink() {
-    const lang = currentLang || 'en';
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        const msg = lang === 'ko' ? '링크가 복사되었습니다!' : 'Link copied to clipboard!';
-        alert(msg);
-    }).catch(() => {
-        const msg = lang === 'ko' ? '링크를 복사할 수 없습니다.' : 'Could not copy link.';
-        alert(msg);
-    });
+function shareWealthToX() { shareToX(getWealthShareText(), getShareUrl('/wealth.html')); }
+function shareWealthToFacebook() { shareToFacebook(getShareUrl('/wealth.html')); }
+function shareWealthToThreads() { shareToThreads(getWealthShareText(), getShareUrl('/wealth.html')); }
+function shareWealthToLine() { shareToLine(getWealthShareText(), getShareUrl('/wealth.html')); }
+function shareWealthToKakao() {
+    const title = currentLang === 'ko' ? '글로벌 부 순위' : 'Global Wealth Rank';
+    shareToKakao(title, getWealthShareText(), getShareUrl('/wealth.html'));
 }
+function copyLink() { copyLinkShared(); }
 
 function saveWealthImage() {
-    const lang = currentLang || 'en';
-    // Try html2canvas if available
-    if (typeof html2canvas !== 'undefined') {
-        const el = document.getElementById('result-container');
-        html2canvas(el, {
-            backgroundColor: '#0a192f',
-            scale: 2,
-            useCORS: true
-        }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'my-wealth-rank.png';
-            link.href = canvas.toDataURL();
-            link.click();
-        });
-    } else {
-        // Fallback: prompt screenshot
-        const msgs = {
-            en: 'Take a screenshot to save your result!\n\niPhone: Power + Volume Up\nAndroid: Power + Volume Down\nPC: Print Screen or Win+Shift+S',
-            ko: '스크린샷을 찍어 결과를 저장하세요!\n\niPhone: 전원 + 볼륨업\nAndroid: 전원 + 볼륨다운\nPC: Print Screen 또는 Win+Shift+S'
-        };
-        alert(msgs[lang] || msgs.en);
-    }
+    saveAsImage('result-container', 'my-wealth-rank.png', '#0a192f');
 }
 
 // ==================== CROSS-SERVICE INTEGRATION ====================
