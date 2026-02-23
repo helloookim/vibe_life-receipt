@@ -220,10 +220,32 @@ function detectUserCountry() {
     return mapping[locale] || mapping[locale.split('-')[0]] || null;
 }
 
+/**
+ * Detect language from URL parameter (?lang=ko) or data attribute
+ * @returns {string} - Language code (defaults to 'en')
+ */
+function getInitialLang() {
+    // 1. Check URL parameter: ?lang=ko
+    const params = new URLSearchParams(window.location.search);
+    const urlLang = params.get('lang');
+    if (urlLang && ['en', 'ko', 'ja', 'cn', 'es'].includes(urlLang)) {
+        return urlLang;
+    }
+
+    // 2. Check data-lang attribute on <html> (set by stub pages)
+    const htmlLang = document.documentElement.getAttribute('data-default-lang');
+    if (htmlLang) {
+        return htmlLang;
+    }
+
+    // 3. Default to English
+    return 'en';
+}
+
 // Initialize on DOM load
 if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
         setMaxDateToToday();
-        switchLang('en'); // Default language
+        switchLang(getInitialLang());
     });
 }

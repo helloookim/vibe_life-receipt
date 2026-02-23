@@ -194,7 +194,7 @@ function renderStep2() {
                         <span class="lang-cn hidden">运动 (每周次数)</span>
                         <span class="lang-es hidden">Ejercicio (veces/sem)</span>
                     </span>
-                    <span id="exercise-value" class="text-purple-400 font-bold">3</span>
+                    <span id="exercise-value" class="text-gray-400 font-bold">3</span>
                 </label>
                 <input type="range" id="exercise" min="0" max="7" step="1" value="3" class="w-full" oninput="updateSliderValue('exercise', this.value)">
                 <div class="flex justify-between text-xs text-gray-400 mt-1">
@@ -214,7 +214,7 @@ function renderStep2() {
                         <span class="lang-cn hidden">睡眠 (小时/天)</span>
                         <span class="lang-es hidden">Sueño (horas/día)</span>
                     </span>
-                    <span id="sleep-value" class="text-purple-400 font-bold">7h</span>
+                    <span id="sleep-value" class="text-gray-400 font-bold">7h</span>
                 </label>
                 <input type="range" id="sleep" min="4" max="12" step="0.5" value="7" class="w-full" oninput="updateSliderValue('sleep', this.value + 'h')">
                 <div class="flex justify-between text-xs text-gray-400 mt-1">
@@ -272,7 +272,7 @@ function renderStep2() {
                         <span class="lang-cn hidden">坐着时间 (小时/天)</span>
                         <span class="lang-es hidden">Tiempo Sentado (horas/día)</span>
                     </span>
-                    <span id="sitting-value" class="text-purple-400 font-bold">8h</span>
+                    <span id="sitting-value" class="text-gray-400 font-bold">8h</span>
                 </label>
                 <input type="range" id="sitting" min="2" max="14" step="1" value="8" class="w-full" oninput="updateSliderValue('sitting', this.value + 'h')">
                 <div class="flex justify-between text-xs text-gray-400 mt-1">
@@ -342,7 +342,7 @@ function renderStep3() {
                         <span class="lang-cn hidden">压力水平 (1-10)</span>
                         <span class="lang-es hidden">Nivel de Estrés (1-10)</span>
                     </span>
-                    <span id="stress-value" class="text-purple-400 font-bold">5</span>
+                    <span id="stress-value" class="text-gray-400 font-bold">5</span>
                 </label>
                 <input type="range" id="stress" min="1" max="10" step="1" value="5" class="w-full" oninput="updateSliderValue('stress', this.value)">
                 <div class="flex justify-between text-xs text-gray-400 mt-1">
@@ -416,7 +416,7 @@ function renderStep3() {
 
             <!-- Family History (Accordion) -->
             <div class="border-t-2 border-gray-600 pt-6 mt-6">
-                <button onclick="toggleFamilyHistory()" class="w-full text-left font-semibold mb-4 hover:text-purple-400 transition flex justify-between items-center p-4 bg-gradient-to-r from-purple-900 from-opacity-20 to-indigo-900 to-opacity-20 rounded-xl border-2 border-purple-500 border-opacity-20">
+                <button onclick="toggleFamilyHistory()" class="w-full text-left font-semibold mb-4 hover:text-gray-400 transition flex justify-between items-center p-4 bg-gray-700 bg-opacity-40 rounded-xl border-2 border-gray-600 border-opacity-20">
                     <span class="flex items-center gap-2">
                         <span class="text-xl">🧬</span>
                         <span class="lang-en">Family History (optional)</span>
@@ -425,7 +425,7 @@ function renderStep3() {
                         <span class="lang-cn hidden">家族史 (可选)</span>
                         <span class="lang-es hidden">Historial Familiar (opcional)</span>
                     </span>
-                    <span id="family-arrow" class="transform transition-transform text-purple-400 text-xl">▼</span>
+                    <span id="family-arrow" class="transform transition-transform text-gray-400 text-xl">▼</span>
                 </button>
 
                 <div id="family-history" class="hidden space-y-4 pt-4">
@@ -482,13 +482,13 @@ function toggleFamilyHistory() {
 
 function selectGender(gender) {
     selectedGender = gender;
-    document.getElementById('gender-M').classList.remove('ring-4', 'ring-blue-400');
-    document.getElementById('gender-F').classList.remove('ring-4', 'ring-pink-400');
+    document.getElementById('gender-M').classList.remove('ring-4', 'ring-gray-400');
+    document.getElementById('gender-F').classList.remove('ring-4', 'ring-gray-400');
 
     if (gender === 'M') {
-        document.getElementById('gender-M').classList.add('ring-4', 'ring-blue-400');
+        document.getElementById('gender-M').classList.add('ring-4', 'ring-gray-400');
     } else {
-        document.getElementById('gender-F').classList.add('ring-4', 'ring-pink-400');
+        document.getElementById('gender-F').classList.add('ring-4', 'ring-gray-400');
     }
 }
 
@@ -500,14 +500,14 @@ function selectOption(category, value, silent = false) {
     // Visual feedback - highlight selected button
     const buttons = document.querySelectorAll(`[id^="${category}-"]`);
     buttons.forEach(btn => {
-        btn.classList.remove('ring-4', 'ring-purple-500', 'bg-purple-700');
+        btn.classList.remove('ring-4', 'ring-gray-500', 'bg-gray-600');
         btn.classList.add('bg-gray-800');
     });
 
     const selectedBtn = document.getElementById(`${category}-${value}`);
     if (selectedBtn) {
         selectedBtn.classList.remove('bg-gray-800');
-        selectedBtn.classList.add('ring-4', 'ring-purple-500', 'bg-purple-700');
+        selectedBtn.classList.add('ring-4', 'ring-gray-500', 'bg-gray-600');
     }
 }
 
@@ -860,7 +860,7 @@ function renderResults() {
                     <span class="lang-cn hidden">预期寿命</span>
                     <span class="lang-es hidden">Esperanza de Vida</span>
                 </p>
-                <p class="text-6xl md:text-8xl font-bold text-purple-300">
+                <p class="text-6xl md:text-8xl font-bold text-gray-300">
                     ${result.adjustedLifeExpectancy}
                     <span class="text-4xl text-gray-400">
                         <span class="lang-en">years</span>
@@ -880,14 +880,14 @@ function renderResults() {
                     <span class="lang-cn hidden">剩余时间</span>
                     <span class="lang-es hidden">Tiempo Restante</span>
                 </p>
-                <div id="countdown-display" class="mono-font text-4xl md:text-6xl text-purple-200 font-bold">
+                <div id="countdown-display" class="mono-font text-4xl md:text-6xl text-gray-300 font-bold">
                     <!-- Countdown will be updated here -->
                 </div>
             </div>
 
             <!-- Progress Bar -->
             <div class="max-w-2xl mx-auto mb-4">
-                <div class="w-full bg-gray-700 rounded-full h-6 overflow-hidden border-2 border-purple-500 border-opacity-30">
+                <div class="w-full bg-gray-700 rounded-full h-6 overflow-hidden border-2 border-gray-600 border-opacity-30">
                     <div class="progress-bar-bg h-6 transition-all duration-1000" style="width: ${result.lifeProgressPercent}%"></div>
                 </div>
                 <p class="text-lg text-gray-400 mt-2">
@@ -904,7 +904,7 @@ function renderResults() {
         <!-- Emotional Metrics Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             <!-- Remaining Seasons -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-purple-500 border-opacity-20 text-center">
+            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
                 <div class="text-4xl mb-2">🌸🌞🍂❄️</div>
                 <p class="text-sm text-gray-400 mb-2">
                     <span class="lang-en">Remaining Seasons</span>
@@ -913,7 +913,7 @@ function renderResults() {
                     <span class="lang-cn hidden">剩余季节</span>
                     <span class="lang-es hidden">Temporadas Restantes</span>
                 </p>
-                <p class="text-3xl font-bold text-purple-300">${result.remainingSeasons.spring}
+                <p class="text-3xl font-bold text-gray-300">${result.remainingSeasons.spring}
                     <span class="text-lg text-gray-400">
                         <span class="lang-en">each</span>
                         <span class="lang-ko hidden">번</span>
@@ -925,7 +925,7 @@ function renderResults() {
             </div>
 
             <!-- Remaining Weekends -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-purple-500 border-opacity-20 text-center">
+            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
                 <div class="text-4xl mb-2">🎉</div>
                 <p class="text-sm text-gray-400 mb-2">
                     <span class="lang-en">Remaining Weekends</span>
@@ -934,7 +934,7 @@ function renderResults() {
                     <span class="lang-cn hidden">剩余周末</span>
                     <span class="lang-es hidden">Fines de Semana Restantes</span>
                 </p>
-                <p class="text-3xl font-bold text-purple-300">${formatNumber(result.remainingWeekends)}
+                <p class="text-3xl font-bold text-gray-300">${formatNumber(result.remainingWeekends)}
                     <span class="text-lg text-gray-400">
                         <span class="lang-en">weekends</span>
                         <span class="lang-ko hidden">번</span>
@@ -946,7 +946,7 @@ function renderResults() {
             </div>
 
             <!-- Remaining Holidays -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-purple-500 border-opacity-20 text-center">
+            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
                 <div class="text-4xl mb-2">🎄</div>
                 <p class="text-sm text-gray-400 mb-2">
                     <span class="lang-en">Remaining ${result.primaryHoliday.name.en}</span>
@@ -955,7 +955,7 @@ function renderResults() {
                     <span class="lang-cn hidden">剩余${result.primaryHoliday.name.cn}</span>
                     <span class="lang-es hidden">${result.primaryHoliday.name.es} Restantes</span>
                 </p>
-                <p class="text-3xl font-bold text-purple-300">${result.remainingHolidays}
+                <p class="text-3xl font-bold text-gray-300">${result.remainingHolidays}
                     <span class="text-lg text-gray-400">
                         <span class="lang-en">times</span>
                         <span class="lang-ko hidden">번</span>
@@ -967,7 +967,7 @@ function renderResults() {
             </div>
 
             <!-- Remaining Birthdays -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-purple-500 border-opacity-20 text-center">
+            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
                 <div class="text-4xl mb-2">🎂</div>
                 <p class="text-sm text-gray-400 mb-2">
                     <span class="lang-en">Remaining Birthdays</span>
@@ -976,7 +976,7 @@ function renderResults() {
                     <span class="lang-cn hidden">剩余生日</span>
                     <span class="lang-es hidden">Cumpleaños Restantes</span>
                 </p>
-                <p class="text-3xl font-bold text-purple-300">${result.remainingBirthdays}
+                <p class="text-3xl font-bold text-gray-300">${result.remainingBirthdays}
                     <span class="text-lg text-gray-400">
                         <span class="lang-en">cakes</span>
                         <span class="lang-ko hidden">번</span>
@@ -988,7 +988,7 @@ function renderResults() {
             </div>
 
             <!-- Remaining Meals -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-purple-500 border-opacity-20 text-center">
+            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
                 <div class="text-4xl mb-2">🍽️</div>
                 <p class="text-sm text-gray-400 mb-2">
                     <span class="lang-en">Remaining Meals</span>
@@ -997,15 +997,15 @@ function renderResults() {
                     <span class="lang-cn hidden">剩余餐数</span>
                     <span class="lang-es hidden">Comidas Restantes</span>
                 </p>
-                <p class="text-3xl font-bold text-purple-300">${formatNumber(result.remainingMeals)}</p>
+                <p class="text-3xl font-bold text-gray-300">${formatNumber(result.remainingMeals)}</p>
             </div>
 
             ${result.timeWithParents ? renderParentTimeCard(result.timeWithParents) : '<div></div>'}
         </div>
 
         <!-- Impact Analysis Chart -->
-        <div class="bg-gray-800 bg-opacity-60 p-8 rounded-xl border-2 border-purple-500 border-opacity-20 mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-center text-purple-300">
+        <div class="bg-gray-800 bg-opacity-60 p-8 rounded-xl border-2 border-gray-600 border-opacity-20 mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-center text-gray-300">
                 <span class="lang-en">What Affects Your Lifespan</span>
                 <span class="lang-ko hidden">수명에 영향을 주는 요인</span>
                 <span class="lang-ja hidden">寿命に影響する要因</span>
@@ -1017,7 +1017,7 @@ function renderResults() {
 
         <!-- Action Buttons -->
         <div class="max-w-2xl mx-auto space-y-4 mb-12">
-            <button onclick="shareLifespan()" class="w-full btn-gradient-purple text-white font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+            <button onclick="shareLifespan()" class="w-full btn-gradient-purple font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
                 <span class="text-xl">📤</span>
                 <span class="lang-en">Share My Time</span>
                 <span class="lang-ko hidden">내 시간 공유하기</span>
@@ -1026,7 +1026,7 @@ function renderResults() {
                 <span class="lang-es hidden">Compartir Mi Tiempo</span>
             </button>
 
-            <button onclick="window.location.href='index.html'" class="w-full bg-gradient-to-r from-yellow-600 to-pink-600 hover:from-yellow-500 hover:to-pink-500 text-white font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+            <button onclick="window.location.href='index.html'" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
                 <span class="text-xl">🧾</span>
                 <span class="lang-en">See My Life Receipt</span>
                 <span class="lang-ko hidden">인생 영수증 보기</span>
@@ -1065,7 +1065,7 @@ function renderParentTimeCard(timeWithParents) {
     if (timeWithParents.mother) {
         const m = timeWithParents.mother;
         html += `
-            <div class="bg-gradient-to-br from-pink-900 from-opacity-40 to-purple-900 to-opacity-40 p-6 rounded-xl border-2 border-pink-500 border-opacity-40 text-center">
+            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-40 text-center">
                 <div class="text-4xl mb-2">👩</div>
                 <p class="text-sm text-gray-300 mb-2">
                     <span class="lang-en">Time with Mother</span>
@@ -1074,7 +1074,7 @@ function renderParentTimeCard(timeWithParents) {
                     <span class="lang-cn hidden">与母亲的时间</span>
                     <span class="lang-es hidden">Tiempo con Madre</span>
                 </p>
-                <p class="text-3xl font-bold text-pink-300">${formatNumber(m.daysRemaining)}
+                <p class="text-3xl font-bold text-gray-300">${formatNumber(m.daysRemaining)}
                     <span class="text-lg text-gray-300">
                         <span class="lang-en">days</span>
                         <span class="lang-ko hidden">일</span>
@@ -1097,7 +1097,7 @@ function renderParentTimeCard(timeWithParents) {
     if (timeWithParents.father) {
         const f = timeWithParents.father;
         html += `
-            <div class="bg-gradient-to-br from-blue-900 from-opacity-40 to-indigo-900 to-opacity-40 p-6 rounded-xl border-2 border-blue-500 border-opacity-40 text-center">
+            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-40 text-center">
                 <div class="text-4xl mb-2">👨</div>
                 <p class="text-sm text-gray-300 mb-2">
                     <span class="lang-en">Time with Father</span>
@@ -1106,7 +1106,7 @@ function renderParentTimeCard(timeWithParents) {
                     <span class="lang-cn hidden">与父亲的时间</span>
                     <span class="lang-es hidden">Tiempo con Padre</span>
                 </p>
-                <p class="text-3xl font-bold text-blue-300">${formatNumber(f.daysRemaining)}
+                <p class="text-3xl font-bold text-gray-300">${formatNumber(f.daysRemaining)}
                     <span class="text-lg text-gray-300">
                         <span class="lang-en">days</span>
                         <span class="lang-ko hidden">일</span>
