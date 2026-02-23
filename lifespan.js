@@ -1307,7 +1307,7 @@ function loadDataFromLifeReceipt() {
         if (lifeReceiptData) {
             const data = JSON.parse(lifeReceiptData);
             // Pre-fill birthdate, country, gender if available
-            if (data.birthdate) document.getElementById('birthdate').value = data.birthdate;
+            if (data.birthdate) setBirthdate(data.birthdate);
             if (data.country) document.getElementById('country').value = data.country;
             if (data.gender) selectGender(data.gender);
             const sleepEl = document.getElementById('sleep');

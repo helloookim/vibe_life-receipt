@@ -1,159 +1,7 @@
-// Global state
-let currentLang = 'en';
+// Global state (currentLang, COUNTRY_DATA, switchLang, formatNumber, calculateAge from shared.js)
 let selectedGender = null;
 let selectedMeal = 'mixed';
 let userData = {};
-
-// Constants for calculations
-const COUNTRY_DATA = {
-    KR: {
-        name: { en: 'South Korea', ko: '대한민국' },
-        currency: '₩',
-        avgCoffeePrice: 4500,
-        avgMealPrice: 12000,
-        avgWalkingSteps: 7000,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'soju bottles', ko: '소주병' }
-        }
-    },
-    US: {
-        name: { en: 'United States', ko: '미국' },
-        currency: '$',
-        avgCoffeePrice: 4.5,
-        avgMealPrice: 15,
-        avgWalkingSteps: 5000,
-        comparisons: {
-            water: { en: 'Olympic pools', ko: '올림픽 수영장' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'Starbucks cups', ko: '스타벅스 컵' }
-        }
-    },
-    JP: {
-        name: { en: 'Japan', ko: '일본' },
-        currency: '¥',
-        avgCoffeePrice: 450,
-        avgMealPrice: 1000,
-        avgWalkingSteps: 7500,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'coffee cans', ko: '커피캔' }
-        }
-    },
-    CN: {
-        name: { en: 'China', ko: '중국' },
-        currency: '¥',
-        avgCoffeePrice: 25,
-        avgMealPrice: 30,
-        avgWalkingSteps: 6000,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'cups', ko: '컵' }
-        }
-    },
-    UK: {
-        name: { en: 'United Kingdom', ko: '영국' },
-        currency: '£',
-        avgCoffeePrice: 3.5,
-        avgMealPrice: 12,
-        avgWalkingSteps: 5500,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'tea cups', ko: '차 컵' }
-        }
-    },
-    DE: {
-        name: { en: 'Germany', ko: '독일' },
-        currency: '€',
-        avgCoffeePrice: 3.2,
-        avgMealPrice: 11,
-        avgWalkingSteps: 5800,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'cups', ko: '컵' }
-        }
-    },
-    FR: {
-        name: { en: 'France', ko: '프랑스' },
-        currency: '€',
-        avgCoffeePrice: 3.8,
-        avgMealPrice: 13,
-        avgWalkingSteps: 5200,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'espresso cups', ko: '에스프레소 잔' }
-        }
-    },
-    ES: {
-        name: { en: 'Spain', ko: '스페인' },
-        currency: '€',
-        avgCoffeePrice: 2.5,
-        avgMealPrice: 10,
-        avgWalkingSteps: 5500,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'café con leche', ko: '카페 라떼' }
-        }
-    },
-    BR: {
-        name: { en: 'Brazil', ko: '브라질' },
-        currency: 'R$',
-        avgCoffeePrice: 5,
-        avgMealPrice: 20,
-        avgWalkingSteps: 4800,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'cafezinho', ko: '카페지뉴' }
-        }
-    },
-    IN: {
-        name: { en: 'India', ko: '인도' },
-        currency: '₹',
-        avgCoffeePrice: 150,
-        avgMealPrice: 200,
-        avgWalkingSteps: 6500,
-        comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'chai cups', ko: '차이 컵' }
-        }
-    }
-};
-
-// Language switching
-function switchLang(lang) {
-    currentLang = lang;
-
-    // Update HTML lang attribute for date picker and browser localization
-    document.documentElement.lang = lang;
-
-    document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
-    document.querySelectorAll('.lang-ko').forEach(el => el.classList.toggle('hidden', lang !== 'ko'));
-    document.querySelectorAll('.lang-ja').forEach(el => el.classList.toggle('hidden', lang !== 'ja'));
-    document.querySelectorAll('.lang-cn').forEach(el => el.classList.toggle('hidden', lang !== 'cn'));
-    document.querySelectorAll('.lang-es').forEach(el => el.classList.toggle('hidden', lang !== 'es'));
-
-    // Highlight active language button
-    const enBtn = document.getElementById('lang-en');
-    const koBtn = document.getElementById('lang-ko');
-    const jaBtn = document.getElementById('lang-ja');
-    const cnBtn = document.getElementById('lang-cn');
-    const esBtn = document.getElementById('lang-es');
-
-    enBtn.classList.toggle('lang-switch-active', lang === 'en');
-    koBtn.classList.toggle('lang-switch-active', lang === 'ko');
-    if (jaBtn) jaBtn.classList.toggle('lang-switch-active', lang === 'ja');
-    if (cnBtn) cnBtn.classList.toggle('lang-switch-active', lang === 'cn');
-    if (esBtn) esBtn.classList.toggle('lang-switch-active', lang === 'es');
-}
 
 // Navigation
 function startForm() {
@@ -226,16 +74,6 @@ function updateSliderValue(id, value) {
         if (dailyElemCn) dailyElemCn.textContent = daily;
         if (dailyElemEs) dailyElemEs.textContent = daily;
     }
-}
-
-// Calculations
-function calculateAge(birthdate) {
-    const today = new Date();
-    const birth = new Date(birthdate);
-    const ageMs = today - birth;
-    const ageDays = Math.floor(ageMs / (1000 * 60 * 60 * 24));
-    const ageYears = ageDays / 365.25;
-    return { days: ageDays, years: ageYears };
 }
 
 function generateReceipt() {
@@ -802,9 +640,7 @@ function renderReceipt(data) {
     document.getElementById('receipt-container').innerHTML = receiptHTML;
 }
 
-function formatNumber(num) {
-    return Math.floor(num).toLocaleString();
-}
+
 
 function generateBarcode() {
     let bars = '';
@@ -857,13 +693,6 @@ function copyLink() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    // Set max date to today for birthdate input
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('birthdate').setAttribute('max', today);
-
-    // Initialize language
-    switchLang('en');
-
     // Set default coffee value (7 per week = 1 per day)
     updateSliderValue('coffee', '7');
 });

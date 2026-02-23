@@ -358,7 +358,18 @@
                                 <span class="lang-es hidden">Fecha de Nacimiento</span>
                                 <span class="text-red-400 text-xs">*</span>
                             </label>
-                            <input type="date" id="birthdate" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-gray-500 outline-none border-2 border-gray-600 transition-all" required>
+                            <div class="birthdate-container flex gap-2">
+                                <input type="hidden" id="birthdate" class="birthdate-hidden">
+                                <div class="birth-year-group flex-1" style="order: 1">
+                                    <select class="birth-year w-full px-3 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-gray-500 outline-none border-2 border-gray-600 transition-all cursor-pointer"></select>
+                                </div>
+                                <div class="birth-month-group flex-1" style="order: 2">
+                                    <select class="birth-month w-full px-3 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-gray-500 outline-none border-2 border-gray-600 transition-all cursor-pointer"></select>
+                                </div>
+                                <div class="birth-day-group" style="order: 3; flex: 0.6">
+                                    <select class="birth-day w-full px-3 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-gray-500 outline-none border-2 border-gray-600 transition-all cursor-pointer"></select>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Country -->

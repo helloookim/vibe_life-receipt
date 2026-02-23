@@ -126,6 +126,23 @@ const COUNTRY_DATA = {
     }
 };
 
+// Birthdate select configuration
+const ASIAN_LANGS = ['ko', 'ja', 'cn'];
+const MONTH_NAMES = {
+    en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    ko: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    ja: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    cn: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+};
+const BIRTHDATE_LABELS = {
+    en: { year: 'Year', month: 'Month', day: 'Day' },
+    ko: { year: '년', month: '월', day: '일' },
+    ja: { year: '年', month: '月', day: '日' },
+    cn: { year: '年', month: '月', day: '日' },
+    es: { year: 'Año', month: 'Mes', day: 'Día' }
+};
+
 // Utility Functions
 
 /**
@@ -171,6 +188,9 @@ function switchLang(lang) {
     if (jaBtn) jaBtn.classList.toggle('lang-switch-active', lang === 'ja');
     if (cnBtn) cnBtn.classList.toggle('lang-switch-active', lang === 'cn');
     if (esBtn) esBtn.classList.toggle('lang-switch-active', lang === 'es');
+
+    // Update birthdate select order and labels
+    updateBirthdateOrder(lang);
 }
 
 /**
@@ -183,14 +203,140 @@ function formatNumber(num) {
 }
 
 /**
- * Set max date for date input to today
- * Prevents selecting future dates
+ * Initialize birthdate select dropdowns (Year, Month, Day)
+ * Replaces native date input with custom selects for locale-aware ordering
  */
-function setMaxDateToToday() {
-    const today = new Date().toISOString().split('T')[0];
-    const birthdateInputs = document.querySelectorAll('input[type="date"]');
-    birthdateInputs.forEach(input => {
-        input.setAttribute('max', today);
+function initBirthdateSelects() {
+    const containers = document.querySelectorAll('.birthdate-container');
+    if (!containers.length) return;
+
+    const currentYear = new Date().getFullYear();
+
+    containers.forEach(container => {
+        const yearSelect = container.querySelector('.birth-year');
+        const monthSelect = container.querySelector('.birth-month');
+        const daySelect = container.querySelector('.birth-day');
+        if (!yearSelect || !monthSelect || !daySelect) return;
+
+        // Populate years
+        yearSelect.innerHTML = '<option value="">Year</option>';
+        for (let y = currentYear; y >= 1920; y--) {
+            yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+        }
+
+        // Populate months (1-12)
+        const names = MONTH_NAMES.en;
+        monthSelect.innerHTML = '<option value="">Month</option>';
+        for (let m = 1; m <= 12; m++) {
+            monthSelect.innerHTML += `<option value="${String(m).padStart(2, '0')}">${names[m - 1]}</option>`;
+        }
+
+        // Populate days (1-31)
+        daySelect.innerHTML = '<option value="">Day</option>';
+        for (let d = 1; d <= 31; d++) {
+            daySelect.innerHTML += `<option value="${String(d).padStart(2, '0')}">${d}</option>`;
+        }
+
+        // Update hidden input on change
+        const onChange = () => {
+            updateBirthdateDays(container);
+            updateBirthdateValue(container);
+        };
+        yearSelect.addEventListener('change', onChange);
+        monthSelect.addEventListener('change', onChange);
+        daySelect.addEventListener('change', () => updateBirthdateValue(container));
+    });
+}
+
+function updateBirthdateDays(container) {
+    const yearSelect = container.querySelector('.birth-year');
+    const monthSelect = container.querySelector('.birth-month');
+    const daySelect = container.querySelector('.birth-day');
+
+    const year = parseInt(yearSelect.value) || 2000;
+    const month = parseInt(monthSelect.value) || 1;
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    const currentDay = daySelect.value;
+    const lang = currentLang || 'en';
+    const labels = BIRTHDATE_LABELS[lang] || BIRTHDATE_LABELS.en;
+    daySelect.innerHTML = `<option value="">${labels.day}</option>`;
+    for (let d = 1; d <= daysInMonth; d++) {
+        const val = String(d).padStart(2, '0');
+        daySelect.innerHTML += `<option value="${val}"${val === currentDay ? ' selected' : ''}>${d}</option>`;
+    }
+}
+
+function updateBirthdateValue(container) {
+    const year = container.querySelector('.birth-year').value;
+    const month = container.querySelector('.birth-month').value;
+    const day = container.querySelector('.birth-day').value;
+    const hiddenInput = container.querySelector('.birthdate-hidden');
+
+    if (year && month && day) {
+        hiddenInput.value = `${year}-${month}-${day}`;
+    } else {
+        hiddenInput.value = '';
+    }
+}
+
+function updateBirthdateOrder(lang) {
+    const containers = document.querySelectorAll('.birthdate-container');
+    if (!containers.length) return;
+
+    const isAsian = ASIAN_LANGS.includes(lang);
+    const labels = BIRTHDATE_LABELS[lang] || BIRTHDATE_LABELS.en;
+    const names = MONTH_NAMES[lang] || MONTH_NAMES.en;
+
+    containers.forEach(container => {
+        const yearGroup = container.querySelector('.birth-year-group');
+        const monthGroup = container.querySelector('.birth-month-group');
+        const dayGroup = container.querySelector('.birth-day-group');
+        if (!yearGroup || !monthGroup || !dayGroup) return;
+
+        // Reorder: Asian = Y-M-D, others = D-M-Y
+        if (isAsian) {
+            yearGroup.style.order = '1';
+            monthGroup.style.order = '2';
+            dayGroup.style.order = '3';
+        } else {
+            dayGroup.style.order = '1';
+            monthGroup.style.order = '2';
+            yearGroup.style.order = '3';
+        }
+
+        // Update placeholders
+        const yearSelect = container.querySelector('.birth-year');
+        const monthSelect = container.querySelector('.birth-month');
+        const daySelect = container.querySelector('.birth-day');
+
+        yearSelect.options[0].textContent = labels.year;
+        daySelect.options[0].textContent = labels.day;
+        monthSelect.options[0].textContent = labels.month;
+
+        // Update month option text
+        for (let i = 1; i <= 12 && i < monthSelect.options.length; i++) {
+            monthSelect.options[i].textContent = names[i - 1];
+        }
+    });
+}
+
+/**
+ * Set birthdate from YYYY-MM-DD string (for pre-fill from localStorage)
+ */
+function setBirthdate(dateStr) {
+    if (!dateStr) return;
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return;
+
+    const containers = document.querySelectorAll('.birthdate-container');
+    containers.forEach(container => {
+        const hiddenInput = container.querySelector('.birthdate-hidden');
+        hiddenInput.value = dateStr;
+
+        container.querySelector('.birth-year').value = parts[0];
+        container.querySelector('.birth-month').value = parts[1];
+        container.querySelector('.birth-day').value = parts[2];
     });
 }
 
@@ -245,7 +391,7 @@ function getInitialLang() {
 // Initialize on DOM load
 if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
-        setMaxDateToToday();
+        initBirthdateSelects();
         switchLang(getInitialLang());
     });
 }
