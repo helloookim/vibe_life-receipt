@@ -264,7 +264,7 @@
             </div>
 
             <!-- CTA Button -->
-            <button onclick="startForm()" class="btn-gradient text-white font-bold py-5 px-10 rounded-full text-xl shadow-2xl transition-all transform hover:scale-105 inline-flex items-center gap-3">
+            <button onclick="startForm()" class="bg-gray-900 hover:bg-black text-white font-bold py-5 px-10 rounded-full text-xl shadow-md transition-all inline-flex items-center gap-3">
                 <span class="lang-en">✨ Get My Receipt</span>
                 <span class="lang-ko hidden">✨ 내 영수증 받기</span>
                 <span class="lang-ja hidden">✨ レシートを作成</span>
@@ -280,6 +280,24 @@
                 <span class="lang-ja hidden">✨ 何千人もの人が自分の人生統計を確認しています ✨</span>
                 <span class="lang-cn hidden">✨ 加入数千人发现他们的人生统计数据 ✨</span>
                 <span class="lang-es hidden">✨ Únete a miles descubriendo sus estadísticas de vida ✨</span>
+            </div>
+
+            <!-- Links to Other Services -->
+            <div class="mt-8 flex flex-col gap-2">
+                <a href="lifespan.html" class="text-gray-500 hover:text-gray-700 transition text-sm underline">
+                    <span class="lang-en">⏳ How much time do you have left?</span>
+                    <span class="lang-ko hidden">⏳ 남은 시간은 얼마나 될까?</span>
+                    <span class="lang-ja hidden">⏳ あなたに残された時間は?</span>
+                    <span class="lang-cn hidden">⏳ 你还剩多少时间?</span>
+                    <span class="lang-es hidden">⏳ ¿Cuánto tiempo te queda?</span>
+                </a>
+                <a href="wealth.html" class="text-gray-500 hover:text-gray-700 transition text-sm underline">
+                    <span class="lang-en">💰 Where do you rank among 8 billion?</span>
+                    <span class="lang-ko hidden">💰 80억 명 중 당신은 몇 등?</span>
+                    <span class="lang-ja hidden">💰 80億人の中であなたは何位?</span>
+                    <span class="lang-cn hidden">💰 80亿人中你排第几?</span>
+                    <span class="lang-es hidden">💰 ¿Dónde te ubicas entre 8 mil millones?</span>
+                </a>
             </div>
         </div>
     </div>
@@ -306,8 +324,8 @@
             </div>
 
             <!-- Privacy Notice -->
-            <div class="mb-6 bg-green-50 border-2 border-green-200 rounded-xl p-4 text-center">
-                <p class="text-sm text-green-800">
+            <div class="mb-6 bg-gray-50 border border-gray-200 rounded-xl p-4 text-center">
+                <p class="text-sm text-gray-600">
                     <span class="font-semibold">🔒 </span>
                     <span class="lang-en">We don't collect or store any data - all calculations happen in your browser only.</span>
                     <span class="lang-ko hidden">개인 데이터는 수집되거나 저장되지 않습니다 - 모든 계산은 귀하의 브라우저에서만 이루어집니다.</span>
@@ -318,7 +336,7 @@
             </div>
 
             <!-- Form Card -->
-            <div class="bg-white bg-opacity-80 backdrop-blur-lg rounded-2xl p-6 md:p-8 border-2 border-pink-200 shadow-2xl">
+            <div class="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-lg">
                 <!-- Required Inputs -->
                 <div class="space-y-6 mb-6">
                     <div>
@@ -376,7 +394,7 @@
                                 <span class="lang-cn hidden">♂️ 男性</span>
                                 <span class="lang-es hidden">♂️ Masculino</span>
                             </button>
-                            <button type="button" onclick="selectGender('F')" id="gender-F" class="py-4 bg-gradient-to-r from-pink-50 to-pink-100 hover:from-pink-100 hover:to-pink-200 rounded-xl transition-all border-2 border-pink-200 font-medium text-lg text-gray-800">
+                            <button type="button" onclick="selectGender('F')" id="gender-F" class="py-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all border-2 border-gray-200 font-medium text-lg text-gray-800">
                                 <span class="lang-en">♀️ Female</span>
                                 <span class="lang-ko hidden">♀️ 여性</span>
                                 <span class="lang-ja hidden">♀️ 女性</span>
@@ -388,8 +406,8 @@
                 </div>
 
                 <!-- Optional Inputs (Accordion) -->
-                <div class="border-t-2 border-pink-200 pt-6 mt-6">
-                    <button onclick="toggleOptional()" class="w-full text-left font-semibold mb-4 hover:text-pink-600 transition flex justify-between items-center p-4 bg-gradient-to-r from-yellow-50 to-pink-50 rounded-xl border-2 border-pink-200 text-gray-800">
+                <div class="border-t border-gray-200 pt-6 mt-6">
+                    <button onclick="toggleOptional()" class="w-full text-left font-semibold mb-4 hover:text-gray-600 transition flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-200 text-gray-800">
                         <span class="flex items-center gap-2">
                             <span class="text-xl">🎯</span>
                             <span class="lang-en">Get a more accurate receipt (optional)</span>
@@ -398,11 +416,11 @@
                             <span class="lang-cn hidden">获取更准确的收据（可选）</span>
                             <span class="lang-es hidden">Obtener un recibo más preciso (opcional)</span>
                         </span>
-                        <span id="optional-arrow" class="transform transition-transform text-pink-500 text-xl">▼</span>
+                        <span id="optional-arrow" class="transform transition-transform text-gray-400 text-xl">▼</span>
                     </button>
 
                     <div id="optional-inputs" class="hidden space-y-6 pt-4">
-                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border-2 border-purple-200">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                             <label class="block text-sm font-medium mb-3 flex justify-between">
                                 <span class="flex items-center gap-2">
                                     <span>😴</span>
@@ -412,7 +430,7 @@
                                     <span class="lang-cn hidden">每天睡眠时间</span>
                                     <span class="lang-es hidden">Horas de sueño por día</span>
                                 </span>
-                                <span id="sleep-value" class="text-pink-600 font-bold">7h</span>
+                                <span id="sleep-value" class="text-gray-900 font-bold">7h</span>
                             </label>
                             <input type="range" id="sleep" min="4" max="12" step="0.5" value="7" class="w-full" oninput="updateSliderValue('sleep', this.value + 'h')">
                             <div class="flex justify-between text-xs text-gray-600 mt-1">
@@ -421,7 +439,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-xl border-2 border-yellow-200">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                             <label class="block text-sm font-medium mb-3 flex justify-between">
                                 <span class="flex items-center gap-2">
                                     <span>☕</span>
@@ -431,7 +449,7 @@
                                     <span class="lang-cn hidden">每周咖啡杯数</span>
                                     <span class="lang-es hidden">Tazas de café por semana</span>
                                 </span>
-                                <span id="coffee-value" class="text-orange-600 font-bold">7</span>
+                                <span id="coffee-value" class="text-gray-900 font-bold">7</span>
                             </label>
                             <input type="range" id="coffee" min="0" max="35" step="1" value="7" class="w-full" oninput="updateSliderValue('coffee', this.value)">
                             <div class="flex justify-between text-xs text-gray-600 mt-1">
@@ -447,7 +465,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-xl border-2 border-blue-200">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                             <label class="block text-sm font-medium mb-3 flex justify-between">
                                 <span class="flex items-center gap-2">
                                     <span>📱</span>
@@ -457,7 +475,7 @@
                                     <span class="lang-cn hidden">每天智能手机使用时间</span>
                                     <span class="lang-es hidden">Uso de smartphone por día</span>
                                 </span>
-                                <span id="phone-value" class="text-blue-600 font-bold">4h</span>
+                                <span id="phone-value" class="text-gray-900 font-bold">4h</span>
                             </label>
                             <input type="range" id="phone" min="1" max="14" step="0.5" value="4" class="w-full" oninput="updateSliderValue('phone', this.value + 'h')">
                             <div class="flex justify-between text-xs text-gray-600 mt-1">
@@ -466,7 +484,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                             <label class="block text-sm font-medium mb-3 flex items-center gap-2">
                                 <span>🍽️</span>
                                 <span class="lang-en">Meal type</span>
@@ -476,7 +494,7 @@
                                 <span class="lang-es hidden">Tipo de comida</span>
                             </label>
                             <div class="grid grid-cols-3 gap-3">
-                                <button type="button" onclick="selectMeal('home')" id="meal-home" class="py-3 text-sm bg-white hover:bg-green-50 rounded-lg transition-all border-2 border-green-200 text-gray-800">
+                                <button type="button" onclick="selectMeal('home')" id="meal-home" class="py-3 text-sm bg-white hover:bg-gray-50 rounded-lg transition-all border border-gray-200 text-gray-800">
                                     <div class="text-xl mb-1">🏠</div>
                                     <span class="lang-en">Home</span>
                                     <span class="lang-ko hidden">집밥</span>
@@ -484,7 +502,7 @@
                                     <span class="lang-cn hidden">在家</span>
                                     <span class="lang-es hidden">Casa</span>
                                 </button>
-                                <button type="button" onclick="selectMeal('mixed')" id="meal-mixed" class="py-3 text-sm bg-white hover:bg-yellow-50 rounded-lg transition-all border-2 border-yellow-200 text-gray-800">
+                                <button type="button" onclick="selectMeal('mixed')" id="meal-mixed" class="py-3 text-sm bg-white hover:bg-gray-50 rounded-lg transition-all border border-gray-200 text-gray-800">
                                     <div class="text-xl mb-1">🍱</div>
                                     <span class="lang-en">Mixed</span>
                                     <span class="lang-ko hidden">반반</span>
@@ -492,7 +510,7 @@
                                     <span class="lang-cn hidden">混合</span>
                                     <span class="lang-es hidden">Mixto</span>
                                 </button>
-                                <button type="button" onclick="selectMeal('out')" id="meal-out" class="py-3 text-sm bg-white hover:bg-orange-50 rounded-lg transition-all border-2 border-orange-200 text-gray-800">
+                                <button type="button" onclick="selectMeal('out')" id="meal-out" class="py-3 text-sm bg-white hover:bg-gray-50 rounded-lg transition-all border border-gray-200 text-gray-800">
                                     <div class="text-xl mb-1">🍔</div>
                                     <span class="lang-en">Eating out</span>
                                     <span class="lang-ko hidden">외식</span>
@@ -506,7 +524,7 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button onclick="generateReceipt()" class="w-full mt-8 btn-gradient text-white font-bold py-5 rounded-xl text-xl transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3">
+                <button onclick="generateReceipt()" class="w-full mt-8 bg-gray-900 hover:bg-black text-white font-bold py-5 rounded-xl text-xl transition-all shadow-md flex items-center justify-center gap-3">
                     <span class="lang-en">✨ Generate My Receipt</span>
                     <span class="lang-ko hidden">✨ 영수증 생성하기</span>
                     <span class="lang-ja hidden">✨ レシートを生成</span>
@@ -546,8 +564,8 @@
             </div>
 
             <!-- Loading Bar -->
-            <div class="max-w-md mx-auto w-full bg-gray-200 rounded-full h-3 overflow-hidden border-2 border-pink-200">
-                <div class="h-full gradient-bg animate-pulse" style="width: 70%;"></div>
+            <div class="max-w-md mx-auto w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div class="h-full bg-gray-800 animate-pulse" style="width: 70%;"></div>
             </div>
         </div>
     </div>
@@ -561,7 +579,7 @@
 
         <!-- Action Buttons -->
         <div class="max-w-md w-full space-y-3">
-            <button onclick="saveImage()" class="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+            <button onclick="saveImage()" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2">
                 <span class="text-xl">💾</span>
                 <span class="lang-en">Save as Image</span>
                 <span class="lang-ko hidden">이미지로 저장</span>
@@ -570,7 +588,7 @@
                 <span class="lang-es hidden">Guardar como Imagen</span>
             </button>
 
-            <button onclick="shareReceipt()" class="w-full btn-gradient text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+            <button onclick="shareReceipt()" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2">
                 <span class="text-xl">📤</span>
                 <span class="lang-en">Share Receipt</span>
                 <span class="lang-ko hidden">영수증 공유하기</span>
@@ -579,7 +597,7 @@
                 <span class="lang-es hidden">Compartir Recibo</span>
             </button>
 
-            <button onclick="startOver()" class="w-full bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 text-gray-800 font-bold py-4 rounded-xl transition-all border-2 border-purple-300 flex items-center justify-center gap-2">
+            <button onclick="startOver()" class="w-full bg-white hover:bg-gray-50 text-gray-800 font-bold py-4 rounded-xl transition-all border border-gray-300 flex items-center justify-center gap-2">
                 <span class="text-xl">🔄</span>
                 <span class="lang-en">Create Another</span>
                 <span class="lang-ko hidden">다시 만들기</span>
@@ -590,7 +608,7 @@
         </div>
 
         <!-- Footer Message -->
-        <div class="mt-8 text-center text-gray-700 text-sm max-w-md bg-white bg-opacity-60 rounded-xl p-4 border-2 border-yellow-200">
+        <div class="mt-8 text-center text-gray-500 text-sm max-w-md bg-white rounded-xl p-4 border border-gray-200">
             <p class="lang-en">Share your receipt with friends and compare your life statistics! 🚀</p>
             <p class="lang-ko hidden">친구들과 영수증을 공유하고 인생 통계를 비교해보세요! 🚀</p>
             <p class="lang-ja hidden">友達とレシートを共有して人生統計を比較しよう! 🚀</p>

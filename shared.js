@@ -194,6 +194,32 @@ function setMaxDateToToday() {
     });
 }
 
+/**
+ * Detect user's likely country from browser locale
+ * @returns {string|null} - ISO country code or null
+ */
+function detectUserCountry() {
+    const locale = navigator.language || navigator.userLanguage || '';
+    const mapping = {
+        'ko': 'KR', 'ko-KR': 'KR',
+        'ja': 'JP', 'ja-JP': 'JP',
+        'zh': 'CN', 'zh-CN': 'CN', 'zh-TW': 'TW', 'zh-HK': 'HK',
+        'en-US': 'US', 'en-GB': 'UK', 'en-AU': 'AU', 'en-CA': 'CA', 'en-NZ': 'NZ', 'en-SG': 'SG',
+        'de': 'DE', 'de-DE': 'DE', 'de-AT': 'AT', 'de-CH': 'CH',
+        'fr': 'FR', 'fr-FR': 'FR', 'fr-CA': 'CA', 'fr-BE': 'BE', 'fr-CH': 'CH',
+        'es': 'ES', 'es-ES': 'ES', 'es-MX': 'MX', 'es-AR': 'AR', 'es-CO': 'CO', 'es-CL': 'CL',
+        'pt': 'PT', 'pt-BR': 'BR', 'pt-PT': 'PT',
+        'it': 'IT', 'nl': 'NL', 'nl-BE': 'BE',
+        'ru': 'RU', 'hi': 'IN', 'th': 'TH', 'vi': 'VN', 'id': 'ID',
+        'tr': 'TR', 'ar': 'SA', 'sv': 'SE', 'nb': 'NO', 'da': 'DK', 'fi': 'FI',
+        'pl': 'PL', 'cs': 'CZ', 'hu': 'HU', 'ro': 'RO', 'uk': 'UA',
+        'ms': 'MY', 'tl': 'PH'
+    };
+
+    // Try exact match first, then language prefix
+    return mapping[locale] || mapping[locale.split('-')[0]] || null;
+}
+
 // Initialize on DOM load
 if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {

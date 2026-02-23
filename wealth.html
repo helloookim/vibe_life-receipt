@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Wealth Rank - Where Do You Stand Among 8 Billion?</title>
+    <meta name="description" content="전 세계 80억 명 중 당신의 부 순위를 확인하세요 - Find your global wealth percentile">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Global Wealth Rank - Where Do You Stand?">
+    <meta property="og:description" content="80억 명 중 당신은 몇 등? 지금 확인해보세요.">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .lang-ko:not(.mono-font):not(.mono-font *),
+        .lang-ja:not(.mono-font):not(.mono-font *),
+        .lang-cn:not(.mono-font):not(.mono-font *) {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .mono-font {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        /* Dark navy gradient background */
+        .wealth-gradient-bg {
+            background: linear-gradient(135deg, #0a192f 0%, #112240 50%, #0d1b2a 100%);
+        }
+
+        /* Gold text glow */
+        .wealth-gold-glow {
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5),
+                         0 0 40px rgba(255, 215, 0, 0.3),
+                         0 0 60px rgba(255, 215, 0, 0.2);
+        }
+
+        @keyframes pulseGold {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.5),
+                             0 0 40px rgba(255, 215, 0, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255, 215, 0, 0.7),
+                             0 0 60px rgba(255, 215, 0, 0.5),
+                             0 0 90px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        .wealth-gold-pulse {
+            color: #ffd700;
+            animation: pulseGold 2s ease-in-out infinite;
+        }
+
+        /* Gold gradient button */
+        .btn-gradient-gold {
+            background: linear-gradient(135deg, #ffd700 0%, #f0c040 50%, #ffdf6c 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient-gold:hover {
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Gold gradient bar */
+        .bar-gradient-gold {
+            background: linear-gradient(to right, #ffd700, #f0c040, #ffdf6c);
+        }
+
+        /* Language switch */
+        .lang-switch {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: #e5e7eb;
+        }
+
+        .lang-switch-active {
+            background: linear-gradient(135deg, #ffd700 0%, #f0c040 100%);
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            color: #0a192f;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes globeSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .globe-spin {
+            animation: globeSpin 2s linear infinite;
+            display: inline-block;
+        }
+
+        /* Slider styles - gold theme */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-track {
+            background: linear-gradient(to right, #1e3a5f, #ffd700);
+            height: 10px;
+            border-radius: 5px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700 0%, #f0c040 100%);
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.6);
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        input[type="range"]::-moz-range-track {
+            background: linear-gradient(to right, #1e3a5f, #ffd700);
+            height: 10px;
+            border-radius: 5px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700 0%, #f0c040 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.6);
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        /* Dot map */
+        .dot-appear {
+            opacity: 0;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="wealth-gradient-bg text-gray-100 min-h-screen">
+    <!-- Language Switcher -->
+    <div class="lang-switcher fixed top-6 right-6 z-50 flex gap-2 flex-wrap justify-end">
+        <button onclick="switchLang('en')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-en">EN</button>
+        <button onclick="switchLang('ko')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ko">KO</button>
+    </div>
+
+    <!-- ==================== LANDING PAGE ==================== -->
+    <div id="landing" class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-20 left-20 w-96 h-96 bg-blue-800 rounded-full mix-blend-normal filter blur-3xl opacity-20 animate-pulse"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-indigo-900 rounded-full mix-blend-normal filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-900 rounded-full mix-blend-normal filter blur-3xl opacity-15 animate-pulse" style="animation-delay: 2s"></div>
+        </div>
+
+        <div class="max-w-3xl w-full text-center relative z-10 fade-in">
+            <div class="mb-8 inline-block">
+                <div class="text-9xl">🌍</div>
+            </div>
+
+            <div class="mb-12">
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-6 wealth-gold-glow">
+                    <span class="lang-en">GLOBAL WEALTH RANK</span>
+                    <span class="lang-ko hidden">글로벌 부 순위</span>
+                </h1>
+                <p class="text-3xl md:text-4xl mb-4 text-blue-300 font-bold">
+                    <span class="lang-en">Where do you stand among 8 billion?</span>
+                    <span class="lang-ko hidden">80억 명 중 당신은 몇 등?</span>
+                </p>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto font-medium">
+                    <span class="lang-en">Enter your income to discover your global wealth percentile</span>
+                    <span class="lang-ko hidden">소득을 입력하고 전 세계에서의 부 순위를 확인하세요</span>
+                </p>
+            </div>
+
+            <button onclick="startWealthForm()" class="btn-gradient-gold text-gray-900 font-bold py-6 px-12 rounded-full text-2xl shadow-2xl transition-all transform hover:scale-105 inline-flex items-center gap-3">
+                <span class="lang-en">Check My Rank</span>
+                <span class="lang-ko hidden">내 순위 확인하기</span>
+                <span class="text-3xl">→</span>
+            </button>
+
+            <div class="mt-12 text-gray-400 text-sm font-medium">
+                <span class="lang-en">Discover where you rank in the world</span>
+                <span class="lang-ko hidden">전 세계에서 당신의 위치를 확인하세요</span>
+            </div>
+
+            <div class="mt-8 flex flex-col gap-2">
+                <a href="index.html" class="text-blue-400 hover:text-blue-300 transition text-sm underline">
+                    <span class="lang-en">🧾 What does your life look like on a receipt?</span>
+                    <span class="lang-ko hidden">🧾 당신의 인생을 영수증으로 본다면?</span>
+                </a>
+                <a href="lifespan.html" class="text-blue-400 hover:text-blue-300 transition text-sm underline">
+                    <span class="lang-en">⏳ How much time do you have left?</span>
+                    <span class="lang-ko hidden">⏳ 남은 시간은 얼마나 될까?</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== INPUT FORM ==================== -->
+    <div id="form" class="hidden min-h-screen flex flex-col items-center justify-center p-4 py-12">
+        <div class="max-w-2xl w-full">
+            <div class="text-center mb-8 fade-in">
+                <h2 class="text-4xl font-bold mb-3 wealth-gold-glow">
+                    <span class="lang-en">Enter Your Income</span>
+                    <span class="lang-ko hidden">소득을 입력하세요</span>
+                </h2>
+                <p class="text-gray-400">
+                    <span class="lang-en">Just 2 fields — takes 10 seconds</span>
+                    <span class="lang-ko hidden">2개 항목만 입력 — 10초면 충분합니다</span>
+                </p>
+            </div>
+
+            <!-- Privacy Notice -->
+            <div class="mb-6 bg-blue-900 bg-opacity-30 border-2 border-blue-500 border-opacity-30 rounded-xl p-4 text-center">
+                <p class="text-sm text-blue-200">
+                    <span class="font-semibold">🔒 </span>
+                    <span class="lang-en">All calculations happen in your browser — no data is collected or stored</span>
+                    <span class="lang-ko hidden">모든 계산은 브라우저에서 이루어집니다 — 데이터는 수집되거나 저장되지 않습니다</span>
+                </p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="bg-gray-800 bg-opacity-60 backdrop-blur-lg rounded-2xl p-6 md:p-10 border-2 border-blue-500 border-opacity-30 shadow-2xl">
+                <!-- Country -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                        <span class="text-xl">🌍</span>
+                        <span class="lang-en">Country</span>
+                        <span class="lang-ko hidden">국가</span>
+                        <span class="text-red-400 text-xs">*</span>
+                    </label>
+                    <select id="country" onchange="onCountryChange()" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none border-2 border-gray-600 transition-all">
+                        <option value="" disabled selected>
+                            Select your country...
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Income -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                        <span class="text-xl">💰</span>
+                        <span class="lang-en">Annual Income (before tax)</span>
+                        <span class="lang-ko hidden">연소득 (세전)</span>
+                        <span class="text-red-400 text-xs">*</span>
+                    </label>
+                    <div class="relative">
+                        <span id="currency-symbol" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg font-bold">$</span>
+                        <input type="number" id="income" min="0" class="w-full pl-12 pr-20 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none border-2 border-gray-600 transition-all text-lg" placeholder="50000">
+                        <span id="income-unit-suffix" class="absolute right-4 top-1/2 -translate-y-1/2 text-yellow-400 text-sm font-bold pointer-events-none"></span>
+                    </div>
+                    <p id="income-unit-label" class="text-xs text-gray-400 mt-1"></p>
+                </div>
+
+                <!-- Preset Buttons -->
+                <div class="mb-6 flex flex-wrap gap-2">
+                    <button onclick="setPreset('minimum')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border border-gray-600 transition-all hover:border-yellow-500">
+                        <span class="lang-en">Minimum Wage</span>
+                        <span class="lang-ko hidden">최저임금</span>
+                    </button>
+                    <button onclick="setPreset('median')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border border-gray-600 transition-all hover:border-yellow-500">
+                        <span class="lang-en">Median Income</span>
+                        <span class="lang-ko hidden">중위소득</span>
+                    </button>
+                    <button onclick="setPreset('top10')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border border-gray-600 transition-all hover:border-yellow-500">
+                        <span class="lang-en">Top 10%</span>
+                        <span class="lang-ko hidden">상위 10%</span>
+                    </button>
+                </div>
+
+                <!-- Optional Section -->
+                <div class="border-t border-gray-600 pt-4 mt-4">
+                    <button onclick="toggleOptional()" class="w-full flex items-center justify-between text-left py-2">
+                        <span class="text-sm text-gray-300">
+                            <span class="lang-en">More accurate ranking (optional)</span>
+                            <span class="lang-ko hidden">더 정확한 순위 보기 (선택)</span>
+                        </span>
+                        <span id="optional-arrow" class="transition-transform duration-300 text-gray-400">▼</span>
+                    </button>
+                    <div id="optional-inputs" class="hidden mt-4 space-y-5">
+                        <!-- Age -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 flex items-center gap-2">
+                                <span>🎂</span>
+                                <span class="lang-en">Age</span>
+                                <span class="lang-ko hidden">나이</span>
+                            </label>
+                            <input type="number" id="age" min="13" max="120" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none border-2 border-gray-600 transition-all" placeholder="30">
+                        </div>
+
+                        <!-- Household Size -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 flex items-center gap-2">
+                                <span>👨‍👩‍👧‍👦</span>
+                                <span class="lang-en">Household Size</span>
+                                <span class="lang-ko hidden">가구 인원수</span>
+                                <span id="household-value" class="ml-2 text-yellow-400 font-bold">1</span>
+                                <span class="text-gray-400 text-xs lang-en">person(s)</span>
+                                <span class="text-gray-400 text-xs lang-ko hidden">명</span>
+                            </label>
+                            <input type="range" id="household" min="1" max="8" value="1" oninput="document.getElementById('household-value').textContent=this.value" class="w-full">
+                        </div>
+
+                        <!-- Occupation -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                                <span>💼</span>
+                                <span class="lang-en">Occupation</span>
+                                <span class="lang-ko hidden">직업군</span>
+                            </label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="occupation-buttons">
+                                <button onclick="selectOccupation('office')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                    <span class="lang-en">Office</span>
+                                    <span class="lang-ko hidden">사무직</span>
+                                </button>
+                                <button onclick="selectOccupation('professional')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                    <span class="lang-en">Professional</span>
+                                    <span class="lang-ko hidden">전문직</span>
+                                </button>
+                                <button onclick="selectOccupation('self_employed')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                    <span class="lang-en">Self-employed</span>
+                                    <span class="lang-ko hidden">자영업</span>
+                                </button>
+                                <button onclick="selectOccupation('freelancer')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                    <span class="lang-en">Freelancer</span>
+                                    <span class="lang-ko hidden">프리랜서</span>
+                                </button>
+                                <button onclick="selectOccupation('student')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                    <span class="lang-en">Student/Other</span>
+                                    <span class="lang-ko hidden">학생/기타</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <button onclick="calculateWealth()" class="w-full mt-8 btn-gradient-gold text-gray-900 font-bold py-5 rounded-xl text-xl transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3">
+                    <span class="lang-en">💰 See My Rank</span>
+                    <span class="lang-ko hidden">💰 내 순위 보기</span>
+                    <span class="text-2xl">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== LOADING ==================== -->
+    <div id="loading" class="hidden min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="text-center">
+            <div class="mb-8 globe-spin">
+                <div class="text-9xl">🌍</div>
+            </div>
+            <div class="text-4xl font-bold mb-4 wealth-gold-pulse">
+                <span class="lang-en">Searching</span>
+                <span class="lang-ko hidden">검색 중</span>
+                <span class="inline-block animate-pulse">.</span>
+                <span class="inline-block animate-pulse" style="animation-delay:0.2s">.</span>
+                <span class="inline-block animate-pulse" style="animation-delay:0.4s">.</span>
+            </div>
+            <div class="text-gray-400 text-lg mb-6">
+                <span class="lang-en">Finding your position among 8 billion people...</span>
+                <span class="lang-ko hidden">80억 명 중 당신의 위치를 찾고 있습니다...</span>
+            </div>
+            <div id="loading-counter" class="text-3xl font-bold text-blue-300 mono-font mb-6">0</div>
+            <div class="max-w-md mx-auto w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+                <div id="loading-bar" class="h-full bar-gradient-gold rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== RESULTS ==================== -->
+    <div id="result" class="hidden min-h-screen flex flex-col items-center justify-start p-4 py-12">
+        <div id="result-container" class="w-full max-w-4xl">
+            <!-- Dynamically generated by wealth.js -->
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-8 px-4 text-center text-gray-500 text-xs">
+        <div class="max-w-2xl mx-auto space-y-3">
+            <p class="text-gray-600">
+                <span class="lang-en">Based on World Bank, OECD, and UBS data (2023). This is a statistical estimate and may differ from actual income distributions.</span>
+                <span class="lang-ko hidden">World Bank, OECD, UBS 데이터(2023) 기반 통계적 추정치입니다. 실제 소득 분포와 차이가 있을 수 있습니다.</span>
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="about.html" class="hover:text-gray-300 transition">About</a>
+                <a href="privacy.html" class="hover:text-gray-300 transition">Privacy</a>
+                <a href="terms.html" class="hover:text-gray-300 transition">Terms</a>
+                <a href="contact.html" class="hover:text-gray-300 transition">Contact</a>
+            </div>
+            <p>&copy; 2025 Life Receipt. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="shared.js"></script>
+    <script src="data/wealth-data.js"></script>
+    <script src="wealth.js"></script>
+</body>
+</html>
