@@ -206,21 +206,11 @@
 <body class="bg-stone-50 text-gray-800 min-h-screen">
     <!-- Language Switcher - Fixed Position -->
     <div class="lang-switcher fixed top-6 right-6 z-50 flex gap-2 flex-wrap justify-end">
-        <button onclick="switchLang('en')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-en">
-            EN
-        </button>
-        <button onclick="switchLang('ko')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ko">
-            KO
-        </button>
-        <button onclick="switchLang('ja')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ja">
-            JP
-        </button>
-        <button onclick="switchLang('cn')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-cn">
-            CN
-        </button>
-        <button onclick="switchLang('es')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-es">
-            ES
-        </button>
+        <button onclick="switchLang('en')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-en">English</button>
+        <button onclick="switchLang('ko')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ko">한국어</button>
+        <button onclick="switchLang('ja')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ja">日本語</button>
+        <button onclick="switchLang('cn')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-cn">中文</button>
+        <button onclick="switchLang('es')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-es">Español</button>
     </div>
 
     <!-- Landing Page -->
@@ -617,7 +607,7 @@
     <!-- Receipt Result -->
     <div id="result" class="hidden min-h-screen flex flex-col items-center justify-start p-4 py-12">
         <!-- Receipt Container -->
-        <div id="receipt-container" class="receipt-paper receipt-edge receipt-font text-gray-900 p-8 md:p-10 max-w-md w-full printer-animation text-sm mb-8">
+        <div id="receipt-container" class="receipt-paper receipt-edge receipt-font text-gray-900 p-8 md:p-10 max-w-md w-full printer-animation text-sm mb-8" style="color: #000; background: #fff;">
             <!-- Receipt content will be generated here -->
         </div>
 

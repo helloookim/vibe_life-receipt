@@ -654,7 +654,7 @@ function generateBarcode() {
 
 // Share and save functions
 function saveImage() {
-    saveAsImage('receipt-container', 'my-life-receipt.png', '#f5f5f4');
+    saveAsImage('receipt-container', 'my-life-receipt.png', '#ffffff');
 }
 
 function getReceiptShareText() {
