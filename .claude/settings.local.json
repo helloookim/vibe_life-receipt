@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --version:*)",
+      "Bash(git -C \"c:\\\\Users\\\\laser\\\\OneDrive\\\\2026\\\\vibecode\\\\lifeinnumbers\\\\life_receipt\" init)",
+      "Bash(git -C \"c:\\\\Users\\\\laser\\\\OneDrive\\\\2026\\\\vibecode\\\\lifeinnumbers\\\\life_receipt\" add .)",
+      "Bash(git -C \"c:\\\\Users\\\\laser\\\\OneDrive\\\\2026\\\\vibecode\\\\lifeinnumbers\\\\life_receipt\" status)"
+    ]
+  }
+}

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Receipt - Your Life in One Receipt</title>
+    <meta name="description" content="당신의 인생을 영수증 한 장으로 요약합니다 - Summarize your life in one receipt">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Life Receipt - Your Life in One Receipt">
+    <meta property="og:description" content="당신의 인생을 영수증 한 장으로. 지금 확인해보세요.">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Korean, Japanese & Chinese font - Pretendard (except for receipt) */
+        .lang-ko:not(.receipt-font):not(.receipt-font *),
+        .lang-ja:not(.receipt-font):not(.receipt-font *),
+        .lang-cn:not(.receipt-font):not(.receipt-font *) {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .receipt-font {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        .receipt-paper {
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .receipt-edge {
+            position: relative;
+        }
+
+        .receipt-edge::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: linear-gradient(135deg, transparent 25%, #f8f9fa 25%, #f8f9fa 50%, transparent 50%, transparent 75%, #f8f9fa 75%);
+            background-size: 12px 12px;
+        }
+
+        .printer-animation {
+            animation: printSlide 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes printSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .typing-dot {
+            animation: typing 1.4s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .gradient-bg {
+            background: #1d1d1f;
+        }
+
+        .gradient-text {
+            color: #1d1d1f;
+        }
+
+        .gradient-bg-2 {
+            background: #e5484d;
+        }
+
+        .gradient-bg-3 {
+            background: #3b82f6;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-track {
+            background: #e5e5e5;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #1d1d1f;
+            cursor: pointer;
+            margin-top: -7px;
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type="range"]::-moz-range-track {
+            background: #e5e5e5;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #1d1d1f;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type="date"] {
+            color-scheme: light;
+        }
+
+        .btn-gradient {
+            background: #1d1d1f;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-gradient:hover {
+            background: #333;
+            transform: translateY(-1px);
+        }
+
+        .btn-gradient:active {
+            transform: translateY(0);
+        }
+
+        .lang-switch {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+
+        .lang-switch-active {
+            background: #1d1d1f;
+            border: 1px solid #1d1d1f;
+            color: white;
+            font-weight: 600;
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(-2deg); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800 min-h-screen">
+    <!-- Language Switcher - Fixed Position -->
+    <div class="lang-switcher fixed top-6 right-6 z-50 flex gap-2 flex-wrap justify-end">
+        <button onclick="switchLang('en')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-en">
+            EN
+        </button>
+        <button onclick="switchLang('ko')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ko">
+            KO
+        </button>
+        <button onclick="switchLang('ja')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ja">
+            JP
+        </button>
+        <button onclick="switchLang('cn')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-cn">
+            CN
+        </button>
+        <button onclick="switchLang('es')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-es">
+            ES
+        </button>
+    </div>
+
+    <!-- Landing Page -->
+    <div id="landing" class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-20 right-20 w-96 h-96 bg-stone-200 rounded-full filter blur-3xl opacity-40"></div>
+        </div>
+
+        <div class="max-w-2xl w-full text-center relative z-10 fade-in">
+            <!-- Receipt Preview -->
+            <div class="mb-12 receipt-paper p-8 max-w-md mx-auto transform -rotate-2 receipt-edge floating">
+                <div class="text-gray-800">
+                    <div class="text-center mb-4">
+                        <div class="text-3xl font-bold mb-2 lang-en receipt-font">LIFE RECEIPT</div>
+                        <div class="text-3xl font-bold mb-2 lang-ko hidden">인생 영수증</div>
+                        <div class="text-3xl font-bold mb-2 lang-ja hidden">人生レシート</div>
+                        <div class="text-3xl font-bold mb-2 lang-cn hidden">人生收据</div>
+                        <div class="text-3xl font-bold mb-2 lang-es receipt-font hidden">RECIBO DE VIDA</div>
+                    </div>
+                    <div class="border-t-2 border-dashed border-gray-400 my-4"></div>
+                    <div class="text-xs space-y-2 blur-sm select-none">
+                        <div class="flex justify-between"><span>수면 시간</span><span>87,660시간</span></div>
+                        <div class="flex justify-between"><span>커피 ☕</span><span>10,950잔</span></div>
+                        <div class="flex justify-between"><span>스마트폰 📱</span><span>2.5년</span></div>
+                        <div class="flex justify-between"><span>화장실 🚽</span><span>190일</span></div>
+                    </div>
+                    <div class="border-t-2 border-dashed border-gray-400 my-4"></div>
+                    <div class="text-center text-xs opacity-50">PRICELESS</div>
+                </div>
+            </div>
+
+            <!-- Title Section -->
+            <div class="mb-8">
+                <h1 class="text-6xl md:text-7xl font-extrabold mb-4 text-gray-900">
+                    Life Receipt
+                </h1>
+                <p class="text-2xl md:text-3xl mb-3 text-gray-800 font-semibold">
+                    <span class="lang-en">Your life. One receipt.</span>
+                    <span class="lang-ko hidden">당신의 인생, 영수증 한 장으로</span>
+                    <span class="lang-ja hidden">あなたの人生、一枚のレシートで</span>
+                    <span class="lang-cn hidden">你的人生，一张收据</span>
+                    <span class="lang-es hidden">Tu vida. Un recibo.</span>
+                </p>
+                <p class="text-lg text-gray-700 max-w-md mx-auto font-medium">
+                    <span class="lang-en">See how you've spent your time on Earth - calculated down to the last coffee cup ☕</span>
+                    <span class="lang-ko hidden">지금까지 살면서 소비한 시간과 경험을 한눈에 확인하세요 ✨</span>
+                    <span class="lang-ja hidden">これまでの人生で費やした時間と経験を一目で確認 ✨</span>
+                    <span class="lang-cn hidden">看看你在地球上度过的时光 - 计算到最后一杯咖啡 ☕</span>
+                    <span class="lang-es hidden">Mira cómo has pasado tu tiempo en la Tierra - calculado hasta la última taza de café ☕</span>
+                </p>
+            </div>
+
+            <!-- CTA Button -->
+            <button onclick="startForm()" class="btn-gradient text-white font-bold py-5 px-10 rounded-full text-xl shadow-2xl transition-all transform hover:scale-105 inline-flex items-center gap-3">
+                <span class="lang-en">✨ Get My Receipt</span>
+                <span class="lang-ko hidden">✨ 내 영수증 받기</span>
+                <span class="lang-ja hidden">✨ レシートを作成</span>
+                <span class="lang-cn hidden">✨ 获取我的收据</span>
+                <span class="lang-es hidden">✨ Obtener Mi Recibo</span>
+                <span class="text-2xl">→</span>
+            </button>
+
+            <!-- Stats Counter (Optional) -->
+            <div class="mt-12 text-gray-700 text-sm font-medium">
+                <span class="lang-en">✨ Join thousands discovering their life statistics ✨</span>
+                <span class="lang-ko hidden">✨ 수천 명이 자신의 인생 통계를 확인했습니다 ✨</span>
+                <span class="lang-ja hidden">✨ 何千人もの人が自分の人生統計を確認しています ✨</span>
+                <span class="lang-cn hidden">✨ 加入数千人发现他们的人生统计数据 ✨</span>
+                <span class="lang-es hidden">✨ Únete a miles descubriendo sus estadísticas de vida ✨</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Form -->
+    <div id="form" class="hidden min-h-screen flex flex-col items-center justify-center p-4 py-12">
+        <div class="max-w-2xl w-full">
+            <!-- Header -->
+            <div class="text-center mb-8 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-3 text-gray-900">
+                    <span class="lang-en">Tell us about yourself</span>
+                    <span class="lang-ko hidden">정보를 입력해주세요</span>
+                    <span class="lang-ja hidden">情報を入力してください</span>
+                    <span class="lang-cn hidden">告诉我们关于你的信息</span>
+                    <span class="lang-es hidden">Cuéntanos sobre ti</span>
+                </h2>
+                <p class="text-gray-600">
+                    <span class="lang-en">Just a few details to calculate your life receipt 🎯</span>
+                    <span class="lang-ko hidden">영수증 생성을 위한 몇 가지 정보만 입력하세요 🎯</span>
+                    <span class="lang-ja hidden">レシート作成のためのいくつかの情報を入力 🎯</span>
+                    <span class="lang-cn hidden">只需一些细节来计算你的人生收据 🎯</span>
+                    <span class="lang-es hidden">Solo algunos detalles para calcular tu recibo de vida 🎯</span>
+                </p>
+            </div>
+
+            <!-- Privacy Notice -->
+            <div class="mb-6 bg-green-50 border-2 border-green-200 rounded-xl p-4 text-center">
+                <p class="text-sm text-green-800">
+                    <span class="font-semibold">🔒 </span>
+                    <span class="lang-en">We don't collect or store any data - all calculations happen in your browser only.</span>
+                    <span class="lang-ko hidden">개인 데이터는 수집되거나 저장되지 않습니다 - 모든 계산은 귀하의 브라우저에서만 이루어집니다.</span>
+                    <span class="lang-ja hidden">個人データは収集・保存されません - すべての計算はブラウザ内でのみ行われます。</span>
+                    <span class="lang-cn hidden">我们不收集或存储任何数据 - 所有计算仅在您的浏览器中进行。</span>
+                    <span class="lang-es hidden">No recopilamos ni almacenamos ningún dato - todos los cálculos ocurren solo en tu navegador.</span>
+                </p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="bg-white bg-opacity-80 backdrop-blur-lg rounded-2xl p-6 md:p-8 border-2 border-pink-200 shadow-2xl">
+                <!-- Required Inputs -->
+                <div class="space-y-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                            <span class="text-xl">🎂</span>
+                            <span class="lang-en">Date of Birth</span>
+                            <span class="lang-ko hidden">생년월일</span>
+                            <span class="lang-ja hidden">生年月日</span>
+                            <span class="lang-cn hidden">出生日期</span>
+                            <span class="lang-es hidden">Fecha de Nacimiento</span>
+                            <span class="text-red-400 text-xs">*</span>
+                        </label>
+                        <input type="date" id="birthdate" class="w-full px-4 py-3 bg-white rounded-xl focus:ring-2 focus:ring-pink-400 outline-none border-2 border-gray-200 transition-all text-gray-800" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                            <span class="text-xl">🌍</span>
+                            <span class="lang-en">Country</span>
+                            <span class="lang-ko hidden">국가</span>
+                            <span class="lang-ja hidden">国</span>
+                            <span class="lang-cn hidden">国家</span>
+                            <span class="lang-es hidden">País</span>
+                            <span class="text-red-400 text-xs">*</span>
+                        </label>
+                        <select id="country" class="w-full px-4 py-3 bg-white rounded-xl focus:ring-2 focus:ring-pink-400 outline-none border-2 border-gray-200 transition-all text-gray-800 cursor-pointer">
+                            <option value="KR">🇰🇷 South Korea / 대한민국</option>
+                            <option value="US">🇺🇸 United States</option>
+                            <option value="JP">🇯🇵 Japan / 日本</option>
+                            <option value="CN">🇨🇳 China / 中国</option>
+                            <option value="UK">🇬🇧 United Kingdom</option>
+                            <option value="DE">🇩🇪 Germany</option>
+                            <option value="FR">🇫🇷 France</option>
+                            <option value="ES">🇪🇸 Spain</option>
+                            <option value="BR">🇧🇷 Brazil</option>
+                            <option value="IN">🇮🇳 India</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                            <span class="text-xl">👤</span>
+                            <span class="lang-en">Gender</span>
+                            <span class="lang-ko hidden">성별</span>
+                            <span class="lang-ja hidden">性別</span>
+                            <span class="lang-cn hidden">性别</span>
+                            <span class="lang-es hidden">Género</span>
+                            <span class="text-red-400 text-xs">*</span>
+                        </label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button type="button" onclick="selectGender('M')" id="gender-M" class="py-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all border-2 border-gray-200 font-medium text-lg text-gray-800">
+                                <span class="lang-en">♂️ Male</span>
+                                <span class="lang-ko hidden">♂️ 남성</span>
+                                <span class="lang-ja hidden">♂️ 男性</span>
+                                <span class="lang-cn hidden">♂️ 男性</span>
+                                <span class="lang-es hidden">♂️ Masculino</span>
+                            </button>
+                            <button type="button" onclick="selectGender('F')" id="gender-F" class="py-4 bg-gradient-to-r from-pink-50 to-pink-100 hover:from-pink-100 hover:to-pink-200 rounded-xl transition-all border-2 border-pink-200 font-medium text-lg text-gray-800">
+                                <span class="lang-en">♀️ Female</span>
+                                <span class="lang-ko hidden">♀️ 여性</span>
+                                <span class="lang-ja hidden">♀️ 女性</span>
+                                <span class="lang-cn hidden">♀️ 女性</span>
+                                <span class="lang-es hidden">♀️ Femenino</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optional Inputs (Accordion) -->
+                <div class="border-t-2 border-pink-200 pt-6 mt-6">
+                    <button onclick="toggleOptional()" class="w-full text-left font-semibold mb-4 hover:text-pink-600 transition flex justify-between items-center p-4 bg-gradient-to-r from-yellow-50 to-pink-50 rounded-xl border-2 border-pink-200 text-gray-800">
+                        <span class="flex items-center gap-2">
+                            <span class="text-xl">🎯</span>
+                            <span class="lang-en">Get a more accurate receipt (optional)</span>
+                            <span class="lang-ko hidden">더 정확한 영수증 받기 (선택사항)</span>
+                            <span class="lang-ja hidden">より正確なレシートを取得 (オプション)</span>
+                            <span class="lang-cn hidden">获取更准确的收据（可选）</span>
+                            <span class="lang-es hidden">Obtener un recibo más preciso (opcional)</span>
+                        </span>
+                        <span id="optional-arrow" class="transform transition-transform text-pink-500 text-xl">▼</span>
+                    </button>
+
+                    <div id="optional-inputs" class="hidden space-y-6 pt-4">
+                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border-2 border-purple-200">
+                            <label class="block text-sm font-medium mb-3 flex justify-between">
+                                <span class="flex items-center gap-2">
+                                    <span>😴</span>
+                                    <span class="lang-en">Sleep hours per day</span>
+                                    <span class="lang-ko hidden">하루 수면 시간</span>
+                                    <span class="lang-ja hidden">1日の睡眠時間</span>
+                                    <span class="lang-cn hidden">每天睡眠时间</span>
+                                    <span class="lang-es hidden">Horas de sueño por día</span>
+                                </span>
+                                <span id="sleep-value" class="text-pink-600 font-bold">7h</span>
+                            </label>
+                            <input type="range" id="sleep" min="4" max="12" step="0.5" value="7" class="w-full" oninput="updateSliderValue('sleep', this.value + 'h')">
+                            <div class="flex justify-between text-xs text-gray-600 mt-1">
+                                <span>4h</span>
+                                <span>12h</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-xl border-2 border-yellow-200">
+                            <label class="block text-sm font-medium mb-3 flex justify-between">
+                                <span class="flex items-center gap-2">
+                                    <span>☕</span>
+                                    <span class="lang-en">Cups of coffee per week</span>
+                                    <span class="lang-ko hidden">주당 커피 잔수</span>
+                                    <span class="lang-ja hidden">週あたりのコーヒー杯数</span>
+                                    <span class="lang-cn hidden">每周咖啡杯数</span>
+                                    <span class="lang-es hidden">Tazas de café por semana</span>
+                                </span>
+                                <span id="coffee-value" class="text-orange-600 font-bold">7</span>
+                            </label>
+                            <input type="range" id="coffee" min="0" max="35" step="1" value="7" class="w-full" oninput="updateSliderValue('coffee', this.value)">
+                            <div class="flex justify-between text-xs text-gray-600 mt-1">
+                                <span><span class="lang-en">0/week</span><span class="lang-ko hidden">0잔/주</span></span>
+                                <span><span class="lang-en">35/week</span><span class="lang-ko hidden">35잔/주</span></span>
+                            </div>
+                            <div class="text-center text-xs text-gray-500 mt-2">
+                                <span class="lang-en">≈ <span id="coffee-daily">1</span> cup/day</span>
+                                <span class="lang-ko hidden">≈ 하루 <span id="coffee-daily-ko">1</span>잔</span>
+                                <span class="lang-ja hidden">≈ <span id="coffee-daily-ja">1</span>杯/日</span>
+                                <span class="lang-cn hidden">≈ <span id="coffee-daily-cn">1</span>杯/天</span>
+                                <span class="lang-es hidden">≈ <span id="coffee-daily-es">1</span> taza/día</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-xl border-2 border-blue-200">
+                            <label class="block text-sm font-medium mb-3 flex justify-between">
+                                <span class="flex items-center gap-2">
+                                    <span>📱</span>
+                                    <span class="lang-en">Smartphone usage per day</span>
+                                    <span class="lang-ko hidden">하루 스마트폰 사용시간</span>
+                                    <span class="lang-ja hidden">1日のスマートフォン使用時間</span>
+                                    <span class="lang-cn hidden">每天智能手机使用时间</span>
+                                    <span class="lang-es hidden">Uso de smartphone por día</span>
+                                </span>
+                                <span id="phone-value" class="text-blue-600 font-bold">4h</span>
+                            </label>
+                            <input type="range" id="phone" min="1" max="14" step="0.5" value="4" class="w-full" oninput="updateSliderValue('phone', this.value + 'h')">
+                            <div class="flex justify-between text-xs text-gray-600 mt-1">
+                                <span>1h</span>
+                                <span>14h</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200">
+                            <label class="block text-sm font-medium mb-3 flex items-center gap-2">
+                                <span>🍽️</span>
+                                <span class="lang-en">Meal type</span>
+                                <span class="lang-ko hidden">식사 유형</span>
+                                <span class="lang-ja hidden">食事タイプ</span>
+                                <span class="lang-cn hidden">用餐类型</span>
+                                <span class="lang-es hidden">Tipo de comida</span>
+                            </label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <button type="button" onclick="selectMeal('home')" id="meal-home" class="py-3 text-sm bg-white hover:bg-green-50 rounded-lg transition-all border-2 border-green-200 text-gray-800">
+                                    <div class="text-xl mb-1">🏠</div>
+                                    <span class="lang-en">Home</span>
+                                    <span class="lang-ko hidden">집밥</span>
+                                    <span class="lang-ja hidden">自炊</span>
+                                    <span class="lang-cn hidden">在家</span>
+                                    <span class="lang-es hidden">Casa</span>
+                                </button>
+                                <button type="button" onclick="selectMeal('mixed')" id="meal-mixed" class="py-3 text-sm bg-white hover:bg-yellow-50 rounded-lg transition-all border-2 border-yellow-200 text-gray-800">
+                                    <div class="text-xl mb-1">🍱</div>
+                                    <span class="lang-en">Mixed</span>
+                                    <span class="lang-ko hidden">반반</span>
+                                    <span class="lang-ja hidden">半々</span>
+                                    <span class="lang-cn hidden">混合</span>
+                                    <span class="lang-es hidden">Mixto</span>
+                                </button>
+                                <button type="button" onclick="selectMeal('out')" id="meal-out" class="py-3 text-sm bg-white hover:bg-orange-50 rounded-lg transition-all border-2 border-orange-200 text-gray-800">
+                                    <div class="text-xl mb-1">🍔</div>
+                                    <span class="lang-en">Eating out</span>
+                                    <span class="lang-ko hidden">외식</span>
+                                    <span class="lang-ja hidden">外食</span>
+                                    <span class="lang-cn hidden">外出就餐</span>
+                                    <span class="lang-es hidden">Comer fuera</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button onclick="generateReceipt()" class="w-full mt-8 btn-gradient text-white font-bold py-5 rounded-xl text-xl transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3">
+                    <span class="lang-en">✨ Generate My Receipt</span>
+                    <span class="lang-ko hidden">✨ 영수증 생성하기</span>
+                    <span class="lang-ja hidden">✨ レシートを生成</span>
+                    <span class="lang-cn hidden">✨ 生成我的收据</span>
+                    <span class="lang-es hidden">✨ Generar Mi Recibo</span>
+                    <span class="text-2xl">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Animation -->
+    <div id="loading" class="hidden min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="text-center">
+            <!-- Animated Printer Icon -->
+            <div class="mb-8 inline-block">
+                <div class="text-8xl animate-bounce">🖨️</div>
+            </div>
+
+            <div class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+                <span class="lang-en">Calculating</span>
+                <span class="lang-ko hidden">計算中</span>
+                <span class="lang-ja hidden">計算中</span>
+                <span class="lang-cn hidden">计算中</span>
+                <span class="lang-es hidden">Calculando</span>
+                <span class="typing-dot">.</span>
+                <span class="typing-dot" style="animation-delay: 0.2s">.</span>
+                <span class="typing-dot" style="animation-delay: 0.4s">.</span>
+            </div>
+
+            <div class="text-gray-700 text-lg mb-6">
+                <span class="lang-en">Printing your life receipt...</span>
+                <span class="lang-ko hidden">인생 영수증을 출력하고 있습니다...</span>
+                <span class="lang-ja hidden">人生レシートを印刷中...</span>
+                <span class="lang-cn hidden">正在打印您的人生收据...</span>
+                <span class="lang-es hidden">Imprimiendo tu recibo de vida...</span>
+            </div>
+
+            <!-- Loading Bar -->
+            <div class="max-w-md mx-auto w-full bg-gray-200 rounded-full h-3 overflow-hidden border-2 border-pink-200">
+                <div class="h-full gradient-bg animate-pulse" style="width: 70%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Result -->
+    <div id="result" class="hidden min-h-screen flex flex-col items-center justify-start p-4 py-12">
+        <!-- Receipt Container -->
+        <div id="receipt-container" class="receipt-paper receipt-edge receipt-font text-gray-900 p-8 md:p-10 max-w-md w-full printer-animation text-sm mb-8">
+            <!-- Receipt content will be generated here -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="max-w-md w-full space-y-3">
+            <button onclick="saveImage()" class="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                <span class="text-xl">💾</span>
+                <span class="lang-en">Save as Image</span>
+                <span class="lang-ko hidden">이미지로 저장</span>
+                <span class="lang-ja hidden">画像として保存</span>
+                <span class="lang-cn hidden">保存为图片</span>
+                <span class="lang-es hidden">Guardar como Imagen</span>
+            </button>
+
+            <button onclick="shareReceipt()" class="w-full btn-gradient text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                <span class="text-xl">📤</span>
+                <span class="lang-en">Share Receipt</span>
+                <span class="lang-ko hidden">영수증 공유하기</span>
+                <span class="lang-ja hidden">レシートを共有</span>
+                <span class="lang-cn hidden">分享收据</span>
+                <span class="lang-es hidden">Compartir Recibo</span>
+            </button>
+
+            <button onclick="startOver()" class="w-full bg-gradient-to-r from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200 text-gray-800 font-bold py-4 rounded-xl transition-all border-2 border-purple-300 flex items-center justify-center gap-2">
+                <span class="text-xl">🔄</span>
+                <span class="lang-en">Create Another</span>
+                <span class="lang-ko hidden">다시 만들기</span>
+                <span class="lang-ja hidden">もう一度作成</span>
+                <span class="lang-cn hidden">再创建一个</span>
+                <span class="lang-es hidden">Crear Otro</span>
+            </button>
+        </div>
+
+        <!-- Footer Message -->
+        <div class="mt-8 text-center text-gray-700 text-sm max-w-md bg-white bg-opacity-60 rounded-xl p-4 border-2 border-yellow-200">
+            <p class="lang-en">Share your receipt with friends and compare your life statistics! 🚀</p>
+            <p class="lang-ko hidden">친구들과 영수증을 공유하고 인생 통계를 비교해보세요! 🚀</p>
+            <p class="lang-ja hidden">友達とレシートを共有して人生統計を比較しよう! 🚀</p>
+            <p class="lang-cn hidden">与朋友分享您的收据并比较人生统计数据！🚀</p>
+            <p class="lang-es hidden">¡Comparte tu recibo con amigos y compara tus estadísticas de vida! 🚀</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-6 mb-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">
+                    <span class="lang-en">About</span>
+                    <span class="lang-ko hidden">소개</span>
+                    <span class="lang-ja hidden">について</span>
+                    <span class="lang-cn hidden">关于</span>
+                    <span class="lang-es hidden">Acerca de</span>
+                </a>
+                <a href="privacy.html" class="hover:text-white transition">
+                    <span class="lang-en">Privacy Policy</span>
+                    <span class="lang-ko hidden">개인정보처리방침</span>
+                    <span class="lang-ja hidden">プライバシーポリシー</span>
+                    <span class="lang-cn hidden">隐私政策</span>
+                    <span class="lang-es hidden">Política de Privacidad</span>
+                </a>
+                <a href="terms.html" class="hover:text-white transition">
+                    <span class="lang-en">Terms of Service</span>
+                    <span class="lang-ko hidden">이용약관</span>
+                    <span class="lang-ja hidden">利用規約</span>
+                    <span class="lang-cn hidden">服务条款</span>
+                    <span class="lang-es hidden">Términos de Servicio</span>
+                </a>
+                <a href="contact.html" class="hover:text-white transition">
+                    <span class="lang-en">Contact</span>
+                    <span class="lang-ko hidden">문의</span>
+                    <span class="lang-ja hidden">お問い合わせ</span>
+                    <span class="lang-cn hidden">联系我们</span>
+                    <span class="lang-es hidden">Contacto</span>
+                </a>
+            </div>
+            <p class="text-xs text-gray-500">
+                © 2026 Life Receipt.
+                <span class="lang-en">All rights reserved.</span>
+                <span class="lang-ko hidden">모든 권리 보유.</span>
+                <span class="lang-ja hidden">全著作権所有</span>
+                <span class="lang-cn hidden">保留所有权利。</span>
+                <span class="lang-es hidden">Todos los derechos reservados.</span>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

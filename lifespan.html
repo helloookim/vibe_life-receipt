@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Clock - How Much Time Do You Have Left?</title>
+    <meta name="description" content="남은 수명 계산기 - 당신에게 남은 시간을 알려드립니다 - Calculate your remaining time based on health and lifestyle">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Life Clock - Your Remaining Time">
+    <meta property="og:description" content="당신에게 남은 시간을 확인하세요. 지금 확인해보세요.">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Korean, Japanese & Chinese font */
+        .lang-ko:not(.mono-font):not(.mono-font *),
+        .lang-ja:not(.mono-font):not(.mono-font *),
+        .lang-cn:not(.mono-font):not(.mono-font *) {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .mono-font {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+        }
+
+        /* Dark theme gradient backgrounds */
+        .dark-gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e293b 100%);
+        }
+
+        .dark-gradient-bg-2 {
+            background: linear-gradient(135deg, #1e293b 0%, #312e81 100%);
+        }
+
+        /* Countdown glow effect */
+        .countdown-glow {
+            text-shadow: 0 0 20px rgba(147, 51, 234, 0.5),
+                         0 0 40px rgba(79, 70, 229, 0.3),
+                         0 0 60px rgba(59, 130, 246, 0.2);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(147, 51, 234, 0.5),
+                             0 0 40px rgba(79, 70, 229, 0.3),
+                             0 0 60px rgba(59, 130, 246, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(147, 51, 234, 0.7),
+                             0 0 60px rgba(79, 70, 229, 0.5),
+                             0 0 90px rgba(59, 130, 246, 0.3);
+            }
+        }
+
+        /* Progress bar for multi-step form */
+        .step-progress {
+            transition: width 0.3s ease;
+        }
+
+        /* Slider styles - dark theme */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-track {
+            background: linear-gradient(to right, #dc2626, #f59e0b, #22c55e);
+            height: 10px;
+            border-radius: 5px;
+            border: 2px solid rgba(147, 51, 234, 0.2);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.6);
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        input[type="range"]::-moz-range-track {
+            background: linear-gradient(to right, #dc2626, #f59e0b, #22c55e);
+            height: 10px;
+            border-radius: 5px;
+            border: 2px solid rgba(147, 51, 234, 0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.6);
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        .btn-gradient-purple {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient-purple:hover {
+            box-shadow: 0 10px 40px rgba(147, 51, 234, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .lang-switch {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            color: #e5e7eb;
+        }
+
+        .lang-switch-active {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            border: 2px solid rgba(147, 51, 234, 0.6);
+            color: white;
+            font-weight: 600;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Hourglass animation */
+        @keyframes flip {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(180deg); }
+        }
+
+        .flip-animation {
+            animation: flip 2s ease-in-out infinite;
+        }
+
+        /* Heartbeat animation */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        .heartbeat-animation {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        /* Progress bar styles */
+        .progress-bar-bg {
+            background: linear-gradient(to right, #22c55e 0%, #f59e0b 50%, #dc2626 100%);
+        }
+
+        /* Impact chart bars */
+        .impact-bar-positive {
+            background: linear-gradient(to right, #10b981, #22c55e);
+        }
+
+        .impact-bar-negative {
+            background: linear-gradient(to left, #ef4444, #dc2626);
+        }
+    </style>
+</head>
+<body class="dark-gradient-bg text-gray-100 min-h-screen">
+    <!-- Language Switcher - Fixed Position -->
+    <div class="lang-switcher fixed top-6 right-6 z-50 flex gap-2 flex-wrap justify-end">
+        <button onclick="switchLang('en')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-en">
+            EN
+        </button>
+        <button onclick="switchLang('ko')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ko">
+            KO
+        </button>
+        <button onclick="switchLang('ja')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-ja">
+            JP
+        </button>
+        <button onclick="switchLang('cn')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-cn">
+            CN
+        </button>
+        <button onclick="switchLang('es')" class="lang-switch px-4 py-2 rounded-full font-medium text-sm transition-all duration-300" id="lang-es">
+            ES
+        </button>
+    </div>
+
+    <!-- Landing Page -->
+    <div id="landing" class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-20 left-20 w-96 h-96 bg-purple-700 rounded-full mix-blend-normal filter blur-3xl opacity-20 animate-pulse"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-indigo-700 rounded-full mix-blend-normal filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-700 rounded-full mix-blend-normal filter blur-3xl opacity-15 animate-pulse" style="animation-delay: 2s"></div>
+        </div>
+
+        <div class="max-w-3xl w-full text-center relative z-10 fade-in">
+            <!-- Clock Icon -->
+            <div class="mb-8 inline-block">
+                <div class="text-9xl">⏳</div>
+            </div>
+
+            <!-- Title Section -->
+            <div class="mb-12">
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-6 countdown-glow">
+                    <span class="lang-en">YOUR LIFE CLOCK</span>
+                    <span class="lang-ko hidden">당신의 생명시계</span>
+                    <span class="lang-ja hidden">あなたの命の時計</span>
+                    <span class="lang-cn hidden">你的生命时钟</span>
+                    <span class="lang-es hidden">TU RELOJ DE VIDA</span>
+                </h1>
+                <p class="text-3xl md:text-4xl mb-4 text-purple-300 font-bold">
+                    <span class="lang-en">How much time do you have left?</span>
+                    <span class="lang-ko hidden">당신에게 남은 시간은?</span>
+                    <span class="lang-ja hidden">あなたに残された時間は?</span>
+                    <span class="lang-cn hidden">你还剩多少时间?</span>
+                    <span class="lang-es hidden">¿Cuánto tiempo te queda?</span>
+                </p>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto font-medium">
+                    <span class="lang-en">Based on your health and lifestyle, see exactly how many years, days, and seconds remain</span>
+                    <span class="lang-ko hidden">건강과 생활습관을 바탕으로 남은 년, 일, 초를 정확히 확인하세요</span>
+                    <span class="lang-ja hidden">健康とライフスタイルに基づいて、残りの年、日、秒を正確に確認</span>
+                    <span class="lang-cn hidden">根据你的健康和生活方式，准确查看剩余的年、天和秒</span>
+                    <span class="lang-es hidden">Basado en tu salud y estilo de vida, ve exactamente cuántos años, días y segundos quedan</span>
+                </p>
+            </div>
+
+            <!-- Live Countdown Preview (global average) -->
+            <div class="mb-12 mono-font text-2xl md:text-3xl text-purple-200" id="landing-countdown">
+                <div class="mb-2 text-sm text-gray-400">
+                    <span class="lang-en">Average person's remaining time:</span>
+                    <span class="lang-ko hidden">평균적인 사람의 남은 시간:</span>
+                    <span class="lang-ja hidden">平均的な人の残り時間:</span>
+                    <span class="lang-cn hidden">普通人剩余时间:</span>
+                    <span class="lang-es hidden">Tiempo restante de persona promedio:</span>
+                </div>
+                <div id="average-countdown">47년 3개월 12일 07:23:41</div>
+            </div>
+
+            <!-- CTA Button -->
+            <button onclick="startLifespanForm()" class="btn-gradient-purple text-white font-bold py-6 px-12 rounded-full text-2xl shadow-2xl transition-all transform hover:scale-105 inline-flex items-center gap-3">
+                <span class="lang-en">Check My Time</span>
+                <span class="lang-ko hidden">내 시간 확인하기</span>
+                <span class="lang-ja hidden">自分の時間を確認</span>
+                <span class="lang-cn hidden">查看我的时间</span>
+                <span class="lang-es hidden">Ver Mi Tiempo</span>
+                <span class="text-3xl">→</span>
+            </button>
+
+            <!-- Stats Counter -->
+            <div class="mt-12 text-gray-400 text-sm font-medium">
+                <span class="lang-en">Join thousands discovering their remaining time</span>
+                <span class="lang-ko hidden">수천 명이 자신의 남은 시간을 확인했습니다</span>
+                <span class="lang-ja hidden">何千人もの人が残り時間を確認しています</span>
+                <span class="lang-cn hidden">加入数千人发现他们的剩余时间</span>
+                <span class="lang-es hidden">Únete a miles descubriendo su tiempo restante</span>
+            </div>
+
+            <!-- Link to Life Receipt -->
+            <div class="mt-8">
+                <a href="index.html" class="text-purple-400 hover:text-purple-300 transition text-sm underline">
+                    <span class="lang-en">← Or check your Life Receipt instead</span>
+                    <span class="lang-ko hidden">← 또는 인생 영수증 확인하기</span>
+                    <span class="lang-ja hidden">← または人生レシートを確認</span>
+                    <span class="lang-cn hidden">← 或查看你的人生收据</span>
+                    <span class="lang-es hidden">← O revisa tu Recibo de Vida</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multi-Step Form -->
+    <div id="form" class="hidden min-h-screen flex flex-col items-center justify-start p-4 py-12">
+        <div class="max-w-3xl w-full">
+            <!-- Progress Indicator -->
+            <div class="mb-8 fade-in">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="text-sm text-gray-400">
+                        <span class="lang-en">Step <span id="current-step">1</span> of 3</span>
+                        <span class="lang-ko hidden">3단계 중 <span id="current-step-ko">1</span>단계</span>
+                        <span class="lang-ja hidden">ステップ <span id="current-step-ja">1</span> / 3</span>
+                        <span class="lang-cn hidden">第 <span id="current-step-cn">1</span> 步，共 3 步</span>
+                        <span class="lang-es hidden">Paso <span id="current-step-es">1</span> de 3</span>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+                    <div id="progress-bar" class="step-progress bg-gradient-to-r from-purple-500 to-blue-500 h-3 rounded-full" style="width: 33.33%"></div>
+                </div>
+            </div>
+
+            <!-- Privacy Notice -->
+            <div class="mb-6 bg-purple-900 bg-opacity-30 border-2 border-purple-500 border-opacity-30 rounded-xl p-4 text-center">
+                <p class="text-sm text-purple-200">
+                    <span class="font-semibold">🔒 </span>
+                    <span class="lang-en">All calculations happen in your browser - no data is collected or stored</span>
+                    <span class="lang-ko hidden">모든 계산은 브라우저에서 이루어집니다 - 데이터는 수집되거나 저장되지 않습니다</span>
+                    <span class="lang-ja hidden">すべての計算はブラウザ内で行われます - データは収集・保存されません</span>
+                    <span class="lang-cn hidden">所有计算在您的浏览器中进行 - 不收集或存储数据</span>
+                    <span class="lang-es hidden">Todos los cálculos ocurren en tu navegador - no se recopilan ni almacenan datos</span>
+                </p>
+            </div>
+
+            <!-- Form Container -->
+            <div id="form-container" class="bg-gray-800 bg-opacity-60 backdrop-blur-lg rounded-2xl p-6 md:p-10 border-2 border-purple-500 border-opacity-30 shadow-2xl">
+                <!-- Step 1: Basic Information -->
+                <div id="step-1" class="step-content">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-purple-300">
+                        <span class="lang-en">Basic Information</span>
+                        <span class="lang-ko hidden">기본 정보</span>
+                        <span class="lang-ja hidden">基本情報</span>
+                        <span class="lang-cn hidden">基本信息</span>
+                        <span class="lang-es hidden">Información Básica</span>
+                    </h2>
+
+                    <div class="space-y-6">
+                        <!-- Birthdate -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                                <span class="text-xl">🎂</span>
+                                <span class="lang-en">Date of Birth</span>
+                                <span class="lang-ko hidden">생년월일</span>
+                                <span class="lang-ja hidden">生年月日</span>
+                                <span class="lang-cn hidden">出生日期</span>
+                                <span class="lang-es hidden">Fecha de Nacimiento</span>
+                                <span class="text-red-400 text-xs">*</span>
+                            </label>
+                            <input type="date" id="birthdate" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-purple-500 outline-none border-2 border-gray-600 transition-all" required>
+                        </div>
+
+                        <!-- Country -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                                <span class="text-xl">🌍</span>
+                                <span class="lang-en">Country</span>
+                                <span class="lang-ko hidden">국가</span>
+                                <span class="lang-ja hidden">国</span>
+                                <span class="lang-cn hidden">国家</span>
+                                <span class="lang-es hidden">País</span>
+                                <span class="text-red-400 text-xs">*</span>
+                            </label>
+                            <select id="country" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-purple-500 outline-none border-2 border-gray-600 transition-all cursor-pointer">
+                                <option value="KR">🇰🇷 South Korea / 대한민국</option>
+                                <option value="US">🇺🇸 United States</option>
+                                <option value="JP">🇯🇵 Japan / 日本</option>
+                                <option value="CN">🇨🇳 China / 中国</option>
+                                <option value="UK">🇬🇧 United Kingdom</option>
+                                <option value="DE">🇩🇪 Germany</option>
+                                <option value="FR">🇫🇷 France</option>
+                                <option value="ES">🇪🇸 Spain</option>
+                                <option value="IT">🇮🇹 Italy</option>
+                                <option value="BR">🇧🇷 Brazil</option>
+                                <option value="IN">🇮🇳 India</option>
+                                <option value="CA">🇨🇦 Canada</option>
+                                <option value="AU">🇦🇺 Australia</option>
+                                <option value="MX">🇲🇽 Mexico</option>
+                                <option value="RU">🇷🇺 Russia</option>
+                            </select>
+                        </div>
+
+                        <!-- Gender -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                                <span class="text-xl">👤</span>
+                                <span class="lang-en">Gender</span>
+                                <span class="lang-ko hidden">성별</span>
+                                <span class="lang-ja hidden">性別</span>
+                                <span class="lang-cn hidden">性别</span>
+                                <span class="lang-es hidden">Género</span>
+                                <span class="text-red-400 text-xs">*</span>
+                            </label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <button type="button" onclick="selectGender('M')" id="gender-M" class="py-4 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-600 hover:to-blue-700 rounded-xl transition-all border-2 border-blue-500 border-opacity-30 font-medium text-lg">
+                                    <span class="lang-en">♂️ Male</span>
+                                    <span class="lang-ko hidden">♂️ 남성</span>
+                                    <span class="lang-ja hidden">♂️ 男性</span>
+                                    <span class="lang-cn hidden">♂️ 男性</span>
+                                    <span class="lang-es hidden">♂️ Masculino</span>
+                                </button>
+                                <button type="button" onclick="selectGender('F')" id="gender-F" class="py-4 bg-gradient-to-r from-pink-700 to-pink-800 hover:from-pink-600 hover:to-pink-700 rounded-xl transition-all border-2 border-pink-500 border-opacity-30 font-medium text-lg">
+                                    <span class="lang-en">♀️ Female</span>
+                                    <span class="lang-ko hidden">♀️ 여성</span>
+                                    <span class="lang-ja hidden">♀️ 女性</span>
+                                    <span class="lang-cn hidden">♀️ 女性</span>
+                                    <span class="lang-es hidden">♀️ Femenino</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Height & Weight (for BMI) -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                                    <span>📏</span>
+                                    <span class="lang-en">Height (cm)</span>
+                                    <span class="lang-ko hidden">키 (cm)</span>
+                                    <span class="lang-ja hidden">身長 (cm)</span>
+                                    <span class="lang-cn hidden">身高 (cm)</span>
+                                    <span class="lang-es hidden">Altura (cm)</span>
+                                    <span class="text-red-400 text-xs">*</span>
+                                </label>
+                                <input type="number" id="height" min="100" max="250" value="170" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-purple-500 outline-none border-2 border-gray-600 transition-all" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-3 flex items-center gap-2">
+                                    <span>⚖️</span>
+                                    <span class="lang-en">Weight (kg)</span>
+                                    <span class="lang-ko hidden">체중 (kg)</span>
+                                    <span class="lang-ja hidden">体重 (kg)</span>
+                                    <span class="lang-cn hidden">体重 (kg)</span>
+                                    <span class="lang-es hidden">Peso (kg)</span>
+                                    <span class="text-red-400 text-xs">*</span>
+                                </label>
+                                <input type="number" id="weight" min="30" max="300" value="70" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-purple-500 outline-none border-2 border-gray-600 transition-all" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="mt-8 flex justify-end">
+                        <button onclick="nextStep()" class="btn-gradient-purple text-white font-bold py-4 px-8 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
+                            <span class="lang-en">Next Step</span>
+                            <span class="lang-ko hidden">다음 단계</span>
+                            <span class="lang-ja hidden">次のステップ</span>
+                            <span class="lang-cn hidden">下一步</span>
+                            <span class="lang-es hidden">Siguiente Paso</span>
+                            <span class="text-xl">→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2, Step 3, and rest of form will continue in lifespan.js -->
+                <!-- (This is getting quite long, so I'll handle the remaining steps in the JavaScript file with dynamic rendering) -->
+
+                <div id="step-2" class="step-content hidden">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-purple-300">
+                        <span class="lang-en">Lifestyle Habits</span>
+                        <span class="lang-ko hidden">생활습관</span>
+                        <span class="lang-ja hidden">ライフスタイル習慣</span>
+                        <span class="lang-cn hidden">生活习惯</span>
+                        <span class="lang-es hidden">Hábitos de Vida</span>
+                    </h2>
+                    <!-- Content will be rendered by JavaScript -->
+                    <div id="step-2-content"></div>
+
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="previousStep()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all border-2 border-gray-600 flex items-center gap-2">
+                            <span class="text-xl">←</span>
+                            <span class="lang-en">Previous</span>
+                            <span class="lang-ko hidden">이전</span>
+                            <span class="lang-ja hidden">前へ</span>
+                            <span class="lang-cn hidden">上一步</span>
+                            <span class="lang-es hidden">Anterior</span>
+                        </button>
+                        <button onclick="nextStep()" class="btn-gradient-purple text-white font-bold py-4 px-8 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
+                            <span class="lang-en">Next Step</span>
+                            <span class="lang-ko hidden">다음 단계</span>
+                            <span class="lang-ja hidden">次のステップ</span>
+                            <span class="lang-cn hidden">下一步</span>
+                            <span class="lang-es hidden">Siguiente Paso</span>
+                            <span class="text-xl">→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-3" class="step-content hidden">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-purple-300">
+                        <span class="lang-en">Mental Health & Family</span>
+                        <span class="lang-ko hidden">정신건강 & 가족력</span>
+                        <span class="lang-ja hidden">メンタルヘルス＆家族歴</span>
+                        <span class="lang-cn hidden">心理健康与家族史</span>
+                        <span class="lang-es hidden">Salud Mental y Familia</span>
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-6">
+                        <span class="lang-en">Optional - skip if you prefer</span>
+                        <span class="lang-ko hidden">선택사항 - 건너뛰셔도 됩니다</span>
+                        <span class="lang-ja hidden">オプション - スキップ可能</span>
+                        <span class="lang-cn hidden">可选 - 可跳过</span>
+                        <span class="lang-es hidden">Opcional - omitir si prefieres</span>
+                    </p>
+                    <!-- Content will be rendered by JavaScript -->
+                    <div id="step-3-content"></div>
+
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="previousStep()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all border-2 border-gray-600 flex items-center gap-2">
+                            <span class="text-xl">←</span>
+                            <span class="lang-en">Previous</span>
+                            <span class="lang-ko hidden">이전</span>
+                            <span class="lang-ja hidden">前へ</span>
+                            <span class="lang-cn hidden">上一步</span>
+                            <span class="lang-es hidden">Anterior</span>
+                        </button>
+                        <button onclick="calculateLifespanResult()" class="btn-gradient-purple text-white font-bold py-4 px-10 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
+                            <span class="lang-en">Calculate My Time</span>
+                            <span class="lang-ko hidden">내 시간 계산하기</span>
+                            <span class="lang-ja hidden">時間を計算</span>
+                            <span class="lang-cn hidden">计算我的时间</span>
+                            <span class="lang-es hidden">Calcular Mi Tiempo</span>
+                            <span class="text-xl">✨</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Animation -->
+    <div id="loading" class="hidden min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="text-center">
+            <!-- Hourglass Icon with Flip Animation -->
+            <div class="mb-8 inline-block flip-animation">
+                <div class="text-9xl">⏳</div>
+            </div>
+
+            <div class="text-4xl md:text-5xl font-bold mb-4 text-purple-300">
+                <span class="lang-en">Calculating</span>
+                <span class="lang-ko hidden">계산 중</span>
+                <span class="lang-ja hidden">計算中</span>
+                <span class="lang-cn hidden">计算中</span>
+                <span class="lang-es hidden">Calculando</span>
+                <span class="inline-block animate-pulse">.</span>
+                <span class="inline-block animate-pulse" style="animation-delay: 0.2s">.</span>
+                <span class="inline-block animate-pulse" style="animation-delay: 0.4s">.</span>
+            </div>
+
+            <div class="text-gray-400 text-lg mb-6">
+                <span class="lang-en">Calculating your remaining time...</span>
+                <span class="lang-ko hidden">남은 시간을 계산하고 있습니다...</span>
+                <span class="lang-ja hidden">残り時間を計算中...</span>
+                <span class="lang-cn hidden">正在计算您的剩余时间...</span>
+                <span class="lang-es hidden">Calculando tu tiempo restante...</span>
+            </div>
+
+            <!-- Loading Bar -->
+            <div class="max-w-md mx-auto w-full bg-gray-700 rounded-full h-3 overflow-hidden border-2 border-purple-500 border-opacity-30">
+                <div class="h-full bg-gradient-to-r from-purple-500 to-blue-500 animate-pulse" style="width: 70%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="result" class="hidden min-h-screen flex flex-col items-center justify-start p-4 py-12">
+        <!-- Results content will be dynamically generated by JavaScript -->
+        <div id="result-container" class="w-full max-w-6xl">
+            <!-- Countdown, progress bar, emotional metrics, impact chart, simulator will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-6 mb-4 text-sm">
+                <a href="about.html" class="hover:text-white transition">
+                    <span class="lang-en">About</span>
+                    <span class="lang-ko hidden">소개</span>
+                    <span class="lang-ja hidden">について</span>
+                    <span class="lang-cn hidden">关于</span>
+                    <span class="lang-es hidden">Acerca de</span>
+                </a>
+                <a href="privacy.html" class="hover:text-white transition">
+                    <span class="lang-en">Privacy Policy</span>
+                    <span class="lang-ko hidden">개인정보처리방침</span>
+                    <span class="lang-ja hidden">プライバシーポリシー</span>
+                    <span class="lang-cn hidden">隐私政策</span>
+                    <span class="lang-es hidden">Política de Privacidad</span>
+                </a>
+                <a href="terms.html" class="hover:text-white transition">
+                    <span class="lang-en">Terms of Service</span>
+                    <span class="lang-ko hidden">이용약관</span>
+                    <span class="lang-ja hidden">利用規約</span>
+                    <span class="lang-cn hidden">服务条款</span>
+                    <span class="lang-es hidden">Términos de Servicio</span>
+                </a>
+                <a href="contact.html" class="hover:text-white transition">
+                    <span class="lang-en">Contact</span>
+                    <span class="lang-ko hidden">문의</span>
+                    <span class="lang-ja hidden">お問い合わせ</span>
+                    <span class="lang-cn hidden">联系我们</span>
+                    <span class="lang-es hidden">Contacto</span>
+                </a>
+            </div>
+            <p class="text-xs text-gray-500 mb-3">
+                <span class="lang-en">This is a statistical estimate based on WHO data and research. Not medical advice. Consult a healthcare professional for health concerns.</span>
+                <span class="lang-ko hidden">이것은 WHO 데이터와 연구를 기반으로 한 통계적 추정입니다. 의학적 조언이 아닙니다. 건강 문제는 의료 전문가와 상담하세요.</span>
+                <span class="lang-ja hidden">これはWHOデータと研究に基づく統計的推定です。医学的アドバイスではありません。健康上の懸念については医療専門家に相談してください。</span>
+                <span class="lang-cn hidden">这是基于世卫组织数据和研究的统计估计。不是医疗建议。健康问题请咨询医疗专业人员。</span>
+                <span class="lang-es hidden">Esta es una estimación estadística basada en datos de la OMS e investigación. No es consejo médico. Consulta a un profesional de salud para problemas de salud.</span>
+            </p>
+            <p class="text-xs text-gray-500">
+                © 2026 Life Clock.
+                <span class="lang-en">All rights reserved.</span>
+                <span class="lang-ko hidden">모든 권리 보유.</span>
+                <span class="lang-ja hidden">全著作権所有</span>
+                <span class="lang-cn hidden">保留所有权利。</span>
+                <span class="lang-es hidden">Todos los derechos reservados.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="shared.js"></script>
+    <script src="data/life-expectancy.js"></script>
+    <script src="lifespan.js"></script>
+</body>
+</html>
