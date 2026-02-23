@@ -536,11 +536,15 @@ function renderResults() {
             </div>
 
             <div class="grid grid-cols-2 gap-3 pt-2">
-                <a href="lifespan.html" class="block bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-white font-bold py-4 rounded-xl text-center transition-all">
-                    <span class="text-lg">⏳</span><br><span class="text-sm">${t.lifeClockLink}</span>
+                <a href="lifespan.html" class="group block bg-blue-900 bg-opacity-30 border-2 border-blue-500 border-opacity-30 hover:border-yellow-500 hover:border-opacity-60 rounded-2xl p-4 text-center transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-2xl mb-1">⏳</div>
+                    <div class="font-bold text-gray-200 text-sm">${t.lifeClockLink}</div>
+                    <div class="text-gray-600 group-hover:text-yellow-400 text-xs mt-1 transition-colors">→</div>
                 </a>
-                <a href="index.html" class="block bg-gradient-to-r from-pink-700 to-orange-700 hover:from-pink-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl text-center transition-all">
-                    <span class="text-lg">🧾</span><br><span class="text-sm">${t.lifeReceiptLink}</span>
+                <a href="index.html" class="group block bg-blue-900 bg-opacity-30 border-2 border-blue-500 border-opacity-30 hover:border-yellow-500 hover:border-opacity-60 rounded-2xl p-4 text-center transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-2xl mb-1">🧾</div>
+                    <div class="font-bold text-gray-200 text-sm">${t.lifeReceiptLink}</div>
+                    <div class="text-gray-600 group-hover:text-yellow-400 text-xs mt-1 transition-colors">→</div>
                 </a>
             </div>
             <button onclick="startOver()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium py-3 rounded-xl text-sm transition-all border border-gray-700 mt-2">
