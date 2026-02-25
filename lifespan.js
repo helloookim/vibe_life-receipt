@@ -8,6 +8,7 @@ let countdownInterval = null;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo(0, 0);
     initializeLandingCountdown();
     loadDataFromLifeReceipt();
 });
@@ -15,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==================== LANDING PAGE ====================
 
 function initializeLandingCountdown() {
-    // Simple countdown animation on landing page
-    // Shows average remaining time ticking down
     const countdownEl = document.getElementById('average-countdown');
     if (!countdownEl) return;
 
@@ -48,8 +47,11 @@ function initializeLandingCountdown() {
 function startLifespanForm() {
     document.getElementById('landing').classList.add('hidden');
     document.getElementById('form').classList.remove('hidden');
-    renderStep2(); // Prepare step 2 content
-    renderStep3(); // Prepare step 3 content
+    renderStep2();
+    renderStep3();
+    // Re-apply language to dynamically rendered content
+    switchLang(currentLang);
+    window.scrollTo(0, 0);
 }
 
 function nextStep() {
@@ -318,7 +320,6 @@ function renderStep2() {
         </div>
     `;
 
-    // Set defaults
     selectOption('smoking', 'none', true);
     selectOption('drinking', 'none', true);
     selectOption('diet', 'balanced', true);
@@ -346,8 +347,8 @@ function renderStep3() {
                 </label>
                 <input type="range" id="stress" min="1" max="10" step="1" value="5" class="w-full" oninput="updateSliderValue('stress', this.value)">
                 <div class="flex justify-between text-xs text-gray-400 mt-1">
-                    <span class="lang-en">Low</span><span class="lang-ko hidden">낮음</span>
-                    <span class="lang-en">High</span><span class="lang-ko hidden">높음</span>
+                    <span class="lang-en">Low</span><span class="lang-ko hidden">낮음</span><span class="lang-ja hidden">低い</span><span class="lang-cn hidden">低</span><span class="lang-es hidden">Bajo</span>
+                    <span class="lang-en">High</span><span class="lang-ko hidden">높음</span><span class="lang-ja hidden">高い</span><span class="lang-cn hidden">高</span><span class="lang-es hidden">Alto</span>
                 </div>
             </div>
 
@@ -429,7 +430,6 @@ function renderStep3() {
                 </button>
 
                 <div id="family-history" class="hidden space-y-4 pt-4">
-                    <!-- Parents Age -->
                     <div class="bg-gray-700 bg-opacity-40 p-5 rounded-xl border-2 border-gray-600">
                         <p class="text-sm text-gray-400 mb-4">
                             <span class="lang-en">This helps calculate "time remaining with parents"</span>
@@ -466,7 +466,6 @@ function renderStep3() {
         </div>
     `;
 
-    // Set defaults
     selectOption('social', 'normal', true);
     selectOption('partner', 'false', true);
 }
@@ -485,24 +484,20 @@ function selectGender(gender) {
     const mBtn = document.getElementById('gender-M');
     const fBtn = document.getElementById('gender-F');
 
-    // Reset both buttons to original state
     [mBtn, fBtn].forEach(btn => {
         btn.classList.remove('bg-gray-500', 'text-white', 'border-gray-400');
         btn.classList.add('bg-gray-700', 'border-gray-600');
     });
 
-    // Highlight selected
     const selectedBtn = gender === 'M' ? mBtn : fBtn;
     selectedBtn.classList.remove('bg-gray-700', 'border-gray-600');
     selectedBtn.classList.add('bg-gray-500', 'text-white', 'border-gray-400');
 }
 
 function selectOption(category, value, silent = false) {
-    // Store value
     if (!lifespanUserData) lifespanUserData = {};
     lifespanUserData[category] = value;
 
-    // Visual feedback - highlight selected button
     const buttons = document.querySelectorAll(`[id^="${category}-"]`);
     buttons.forEach(btn => {
         btn.classList.remove('ring-4', 'ring-gray-500', 'bg-gray-600');
@@ -538,7 +533,6 @@ function validateCurrentStep() {
             return false;
         }
 
-        // Check age restriction (13+)
         const age = calculateAge(birthdate);
         if (age.years < 13) {
             const msg = {
@@ -559,11 +553,10 @@ function validateCurrentStep() {
 // ==================== CALCULATION ENGINE ====================
 
 function calculateLifespanResult() {
-    // Show loading
     document.getElementById('form').classList.add('hidden');
     document.getElementById('loading').classList.remove('hidden');
+    window.scrollTo(0, 0);
 
-    // Collect all data
     lifespanUserData = {
         birthdate: document.getElementById('birthdate').value,
         country: document.getElementById('country').value,
@@ -584,162 +577,92 @@ function calculateLifespanResult() {
         parent_age_father: document.getElementById('parent_age_father')?.value || null
     };
 
-    // Save to localStorage for cross-service integration
     saveDataForLifeReceipt();
 
-    // Perform calculation after 3 second delay
     setTimeout(() => {
         lifespanResult = calculateLifespan(lifespanUserData);
         renderResults();
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('result').classList.remove('hidden');
         startCountdownTimer();
+        // Re-apply language to dynamically rendered result content
+        switchLang(currentLang);
+        window.scrollTo(0, 0);
     }, 3000);
 }
 
 function calculateLifespan(userData) {
-    // Get current age
     const ageData = calculateAge(userData.birthdate);
     const currentAge = ageData.years;
-
-    // Get base life expectancy from WHO data
     const baseLifeExpectancy = getLifeExpectancy(userData.country, userData.gender);
-
-    // Calculate BMI
     const heightM = userData.height / 100;
     const bmi = userData.weight / (heightM * heightM);
 
-    // Initialize adjustment factors
     const adjustmentFactors = {};
 
-    // BMI Adjustment
     if (bmi < 18.5) {
-        adjustmentFactors.bmi = -3.0; // Underweight
+        adjustmentFactors.bmi = -3.0;
     } else if (bmi >= 18.5 && bmi < 25) {
-        adjustmentFactors.bmi = 0; // Normal
+        adjustmentFactors.bmi = 0;
     } else if (bmi >= 25 && bmi < 30) {
-        adjustmentFactors.bmi = -2.0; // Overweight
+        adjustmentFactors.bmi = -2.0;
     } else {
-        adjustmentFactors.bmi = -5.0; // Obese
+        adjustmentFactors.bmi = -5.0;
     }
 
-    // Smoking
-    const smokingImpact = {
-        none: 0,
-        past: -2.0,
-        occasional: -5.0,
-        daily: -10.0
-    };
+    const smokingImpact = { none: 0, past: -2.0, occasional: -5.0, daily: -10.0 };
     adjustmentFactors.smoking = smokingImpact[userData.smoking] || 0;
 
-    // Drinking
-    const drinkingImpact = {
-        none: 0,
-        occasional: 0,
-        moderate: -1.0,
-        daily: -5.0
-    };
+    const drinkingImpact = { none: 0, occasional: 0, moderate: -1.0, daily: -5.0 };
     adjustmentFactors.drinking = drinkingImpact[userData.drinking] || 0;
 
-    // Exercise (0-7 times/week)
-    if (userData.exercise >= 5) {
-        adjustmentFactors.exercise = 4.5;
-    } else if (userData.exercise >= 3) {
-        adjustmentFactors.exercise = 3.0;
-    } else if (userData.exercise >= 1) {
-        adjustmentFactors.exercise = 1.5;
-    } else {
-        adjustmentFactors.exercise = -3.0;
-    }
+    if (userData.exercise >= 5) adjustmentFactors.exercise = 4.5;
+    else if (userData.exercise >= 3) adjustmentFactors.exercise = 3.0;
+    else if (userData.exercise >= 1) adjustmentFactors.exercise = 1.5;
+    else adjustmentFactors.exercise = -3.0;
 
-    // Sleep
-    if (userData.sleep >= 7 && userData.sleep <= 8) {
-        adjustmentFactors.sleep = 1.0; // Optimal
-    } else if (userData.sleep >= 6 && userData.sleep <= 9) {
-        adjustmentFactors.sleep = 0; // Acceptable
-    } else {
-        adjustmentFactors.sleep = -3.0; // Too little or too much
-    }
+    if (userData.sleep >= 7 && userData.sleep <= 8) adjustmentFactors.sleep = 1.0;
+    else if (userData.sleep >= 6 && userData.sleep <= 9) adjustmentFactors.sleep = 0;
+    else adjustmentFactors.sleep = -3.0;
 
-    // Diet
-    const dietImpact = {
-        healthy: 4.0,
-        balanced: 0,
-        fast_food: -3.0
-    };
+    const dietImpact = { healthy: 4.0, balanced: 0, fast_food: -3.0 };
     adjustmentFactors.diet = dietImpact[userData.diet] || 0;
 
-    // Sitting time
-    if (userData.sitting <= 6) {
-        adjustmentFactors.sitting = 1.0;
-    } else if (userData.sitting <= 8) {
-        adjustmentFactors.sitting = 0;
-    } else {
-        adjustmentFactors.sitting = -2.0;
-    }
+    if (userData.sitting <= 6) adjustmentFactors.sitting = 1.0;
+    else if (userData.sitting <= 8) adjustmentFactors.sitting = 0;
+    else adjustmentFactors.sitting = -2.0;
 
-    // Sun exposure
-    const sunImpact = {
-        indoor: 0,
-        normal: 0,
-        outdoor: -0.5
-    };
+    const sunImpact = { indoor: 0, normal: 0, outdoor: -0.5 };
     adjustmentFactors.sun_exposure = sunImpact[userData.sun_exposure] || 0;
 
-    // Stress
-    if (userData.stress <= 3) {
-        adjustmentFactors.stress = 1.0;
-    } else if (userData.stress <= 7) {
-        adjustmentFactors.stress = 0;
-    } else {
-        adjustmentFactors.stress = -3.0;
-    }
+    if (userData.stress <= 3) adjustmentFactors.stress = 1.0;
+    else if (userData.stress <= 7) adjustmentFactors.stress = 0;
+    else adjustmentFactors.stress = -3.0;
 
-    // Social relationships
-    const socialImpact = {
-        active: 2.0,
-        normal: 0,
-        isolated: -5.0
-    };
+    const socialImpact = { active: 2.0, normal: 0, isolated: -5.0 };
     adjustmentFactors.social = socialImpact[userData.social] || 0;
 
-    // Partner/Married
-    if (userData.partner) {
-        adjustmentFactors.partner = userData.gender === 'M' ? 3.0 : 1.5;
-    } else {
-        adjustmentFactors.partner = 0;
-    }
+    if (userData.partner) adjustmentFactors.partner = userData.gender === 'M' ? 3.0 : 1.5;
+    else adjustmentFactors.partner = 0;
 
-    // Calculate total adjustment
     let totalAdjustment = Object.values(adjustmentFactors).reduce((sum, val) => sum + val, 0);
-
-    // Apply caps: total adjustment between -20 and +15 years
     totalAdjustment = Math.max(-20, Math.min(15, totalAdjustment));
 
-    // Calculate adjusted life expectancy
     let adjustedLifeExpectancy = baseLifeExpectancy + totalAdjustment;
 
-    // Add deterministic variation (±1.0 year) based on user inputs so same inputs = same result
     const seed = `${userData.birthdate}-${userData.country}-${userData.gender}-${userData.height}-${userData.weight}`;
     const hash = Array.from(seed).reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
-    const deterministicVariation = ((((hash % 2000) + 2000) % 2000) / 1000) - 1.0; // -1.0 to +1.0
+    const deterministicVariation = ((((hash % 2000) + 2000) % 2000) / 1000) - 1.0;
     adjustedLifeExpectancy += deterministicVariation;
 
-    // Apply constraints
-    const minLifeExpectancy = currentAge + 5; // Ethical floor
+    const minLifeExpectancy = currentAge + 5;
     const maxLifeExpectancy = baseLifeExpectancy + 20;
     adjustedLifeExpectancy = Math.max(minLifeExpectancy, Math.min(maxLifeExpectancy, adjustedLifeExpectancy));
 
-    // Calculate remaining time
     const yearsRemaining = adjustedLifeExpectancy - currentAge;
-
-    // Calculate progress
     const lifeProgressPercent = (currentAge / adjustedLifeExpectancy) * 100;
-
-    // Calculate emotional metrics
     const emotionalMetrics = calculateEmotionalMetrics(yearsRemaining, userData);
 
-    // Return result object
     return {
         currentAge: Math.floor(currentAge),
         baseLifeExpectancy: Math.round(baseLifeExpectancy),
@@ -748,90 +671,223 @@ function calculateLifespan(userData) {
         totalAdjustment: Math.round(totalAdjustment * 10) / 10,
         yearsRemaining: Math.round(yearsRemaining * 10) / 10,
         lifeProgressPercent: Math.round(lifeProgressPercent * 10) / 10,
+        bmi: Math.round((userData.weight / Math.pow(userData.height / 100, 2)) * 10) / 10,
         ...emotionalMetrics
     };
 }
 
 function calculateEmotionalMetrics(yearsRemaining, userData) {
-    // Remaining seasons
     const remainingSeasons = {
         spring: Math.floor(yearsRemaining),
         summer: Math.floor(yearsRemaining),
         fall: Math.floor(yearsRemaining),
         winter: Math.floor(yearsRemaining)
     };
-
-    // Remaining weekends (years * 52 weeks)
     const remainingWeekends = Math.floor(yearsRemaining * 52);
-
-    // Remaining holidays (get primary holiday for country)
     const primaryHoliday = getPrimaryHoliday(userData.country);
     const remainingHolidays = Math.floor(yearsRemaining);
-
-    // Remaining birthdays
     const remainingBirthdays = Math.floor(yearsRemaining);
-
-    // Remaining meals (years * 365.25 days * 3 meals)
     const remainingMeals = Math.floor(yearsRemaining * 365.25 * 3);
 
-    // Time with parents (KILLER FEATURE)
     let timeWithParents = null;
     if (userData.parent_age_mother || userData.parent_age_father) {
         timeWithParents = calculateParentTime(userData, yearsRemaining);
     }
 
-    return {
-        remainingSeasons,
-        remainingWeekends,
-        remainingHolidays,
-        primaryHoliday,
-        remainingBirthdays,
-        remainingMeals,
-        timeWithParents
-    };
+    return { remainingSeasons, remainingWeekends, remainingHolidays, primaryHoliday, remainingBirthdays, remainingMeals, timeWithParents };
 }
 
 function calculateParentTime(userData, yearsRemaining) {
     const result = {};
 
-    // Calculate for mother
     if (userData.parent_age_mother) {
         const motherAge = parseInt(userData.parent_age_mother);
         const motherLifeExpectancy = getLifeExpectancy(userData.country, 'F');
         const motherYearsRemaining = Math.max(0, motherLifeExpectancy - motherAge);
-
-        // Years we can spend with mother = min(our remaining years, mother's remaining years)
         const yearsWithMother = Math.min(yearsRemaining, motherYearsRemaining);
-
-        // Assume meeting frequency: 2 times/month = 24 days/year
-        const meetingDaysPerYear = 24;
-        const totalDaysWithMother = Math.floor(yearsWithMother * meetingDaysPerYear);
-
         result.mother = {
             yearsRemaining: Math.round(yearsWithMother * 10) / 10,
-            daysRemaining: totalDaysWithMother,
-            meetingsRemaining: Math.floor(yearsWithMother * 24) // 24 meetings/year
+            daysRemaining: Math.floor(yearsWithMother * 24),
+            meetingsRemaining: Math.floor(yearsWithMother * 24)
         };
     }
 
-    // Calculate for father
     if (userData.parent_age_father) {
         const fatherAge = parseInt(userData.parent_age_father);
         const fatherLifeExpectancy = getLifeExpectancy(userData.country, 'M');
         const fatherYearsRemaining = Math.max(0, fatherLifeExpectancy - fatherAge);
-
         const yearsWithFather = Math.min(yearsRemaining, fatherYearsRemaining);
-        const meetingDaysPerYear = 24;
-        const totalDaysWithFather = Math.floor(yearsWithFather * meetingDaysPerYear);
-
         result.father = {
             yearsRemaining: Math.round(yearsWithFather * 10) / 10,
-            daysRemaining: totalDaysWithFather,
+            daysRemaining: Math.floor(yearsWithFather * 24),
             meetingsRemaining: Math.floor(yearsWithFather * 24)
         };
     }
 
     return result;
+}
+
+// ==================== FACTOR DETAILS (for result page) ====================
+
+function getFactorConfig() {
+    const ud = lifespanUserData;
+    const bmi = lifespanResult.bmi;
+    const factors = lifespanResult.adjustmentFactors;
+
+    const bmiCategory = bmi < 18.5 ? 'underweight' : bmi < 25 ? 'normal' : bmi < 30 ? 'overweight' : 'obese';
+
+    return {
+        bmi: {
+            icon: '⚖️',
+            name: { en: 'Body Mass Index', ko: '체질량지수(BMI)', ja: 'BMI', cn: '体重指数', es: 'IMC' },
+            choice: {
+                underweight: { en: `${bmi} — Underweight`, ko: `${bmi} — 저체중`, ja: `${bmi} — 低体重`, cn: `${bmi} — 偏瘦`, es: `${bmi} — Bajo peso` },
+                normal: { en: `${bmi} — Normal`, ko: `${bmi} — 정상`, ja: `${bmi} — 標準`, cn: `${bmi} — 正常`, es: `${bmi} — Normal` },
+                overweight: { en: `${bmi} — Overweight`, ko: `${bmi} — 과체중`, ja: `${bmi} — 過体重`, cn: `${bmi} — 超重`, es: `${bmi} — Sobrepeso` },
+                obese: { en: `${bmi} — Obese`, ko: `${bmi} — 비만`, ja: `${bmi} — 肥満`, cn: `${bmi} — 肥胖`, es: `${bmi} — Obeso` }
+            }[bmiCategory],
+            explanation: {
+                underweight: { en: 'Being underweight can weaken your immune system and increase risk of osteoporosis and infections.', ko: '저체중은 면역 체계를 약화시키고 골다공증 및 감염 위험을 높일 수 있습니다.' },
+                normal: { en: 'Your BMI is in the healthy range. Maintaining a normal weight reduces risks of heart disease and diabetes.', ko: 'BMI가 건강한 범위에 있습니다. 정상 체중 유지는 심장병과 당뇨병 위험을 줄여줍니다.' },
+                overweight: { en: 'Being overweight increases risk of cardiovascular disease. Moderate weight loss can add years to your life.', ko: '과체중은 심혈관 질환 위험을 높입니다. 적당한 체중 감량이 수명을 연장할 수 있습니다.' },
+                obese: { en: 'Obesity significantly increases risks of heart disease, stroke, diabetes, and certain cancers.', ko: '비만은 심장병, 뇌졸중, 당뇨병 및 특정 암의 위험을 크게 높입니다.' }
+            }[bmiCategory]
+        },
+        smoking: {
+            icon: '🚬',
+            name: { en: 'Smoking', ko: '흡연', ja: '喫煙', cn: '吸烟', es: 'Tabaquismo' },
+            choice: {
+                none: { en: 'Never smoked', ko: '비흡연', ja: '喫煙しない', cn: '从不吸烟', es: 'No fumador' },
+                past: { en: 'Former smoker', ko: '과거 흡연자', ja: '元喫煙者', cn: '曾经吸烟', es: 'Ex fumador' },
+                occasional: { en: 'Occasional smoker', ko: '가끔 흡연', ja: '時々喫煙', cn: '偶尔吸烟', es: 'Fumador ocasional' },
+                daily: { en: 'Daily smoker', ko: '매일 흡연', ja: '毎日喫煙', cn: '每天吸烟', es: 'Fumador diario' }
+            }[ud.smoking],
+            explanation: {
+                none: { en: 'Non-smoking is the single most impactful lifestyle choice for longevity.', ko: '비흡연은 장수에 가장 큰 영향을 미치는 생활습관입니다.' },
+                past: { en: 'Quitting smoking was a great decision. Your body continues to recover over time.', ko: '금연은 훌륭한 결정이었습니다. 시간이 지나면서 신체가 계속 회복됩니다.' },
+                occasional: { en: 'Even occasional smoking damages lungs and blood vessels. Each cigarette shortens life by ~11 minutes.', ko: '가끔 흡연도 폐와 혈관에 손상을 줍니다. 담배 1개비당 수명이 약 11분 줄어듭니다.' },
+                daily: { en: 'Daily smoking is the #1 preventable cause of death. Quitting at any age provides major benefits.', ko: '매일 흡연은 예방 가능한 사망 원인 1위입니다. 어떤 나이에든 금연은 큰 도움이 됩니다.' }
+            }[ud.smoking]
+        },
+        drinking: {
+            icon: '🍺',
+            name: { en: 'Alcohol', ko: '음주', ja: '飲酒', cn: '饮酒', es: 'Alcohol' },
+            choice: {
+                none: { en: 'Non-drinker', ko: '비음주', ja: '飲酒しない', cn: '不饮酒', es: 'No bebedor' },
+                occasional: { en: 'Occasional', ko: '가끔', ja: '時々', cn: '偶尔', es: 'Ocasional' },
+                moderate: { en: '2-3 times/week', ko: '주 2-3회', ja: '週2-3回', cn: '每周2-3次', es: '2-3 veces/sem' },
+                daily: { en: 'Daily drinker', ko: '매일 음주', ja: '毎日飲酒', cn: '每天饮酒', es: 'Bebedor diario' }
+            }[ud.drinking],
+            explanation: {
+                none: { en: 'Abstaining from alcohol eliminates risks of liver disease and alcohol-related accidents.', ko: '금주는 간 질환 및 음주 관련 사고 위험을 없앱니다.' },
+                occasional: { en: 'Occasional drinking has minimal health impact. Moderation is key.', ko: '가끔 음주는 건강에 미치는 영향이 미미합니다. 절제가 핵심입니다.' },
+                moderate: { en: 'Regular alcohol consumption increases liver disease risk. Consider reducing intake.', ko: '규칙적인 음주는 간 질환 위험을 높입니다. 음주량을 줄이는 것을 고려하세요.' },
+                daily: { en: 'Daily drinking significantly raises risks of liver cirrhosis, cancer, and cardiovascular disease.', ko: '매일 음주는 간경변, 암, 심혈관 질환의 위험을 크게 높입니다.' }
+            }[ud.drinking]
+        },
+        exercise: {
+            icon: '🏃',
+            name: { en: 'Exercise', ko: '운동', ja: '運動', cn: '运动', es: 'Ejercicio' },
+            choice: (() => {
+                const v = ud.exercise;
+                if (v === 0) return { en: 'No exercise', ko: '운동 안 함', ja: '運動なし', cn: '不运动', es: 'Sin ejercicio' };
+                return { en: `${v} times/week`, ko: `주 ${v}회`, ja: `週${v}回`, cn: `每周${v}次`, es: `${v} veces/sem` };
+            })(),
+            explanation: (() => {
+                if (ud.exercise >= 5) return { en: 'Excellent exercise habit! 5+ sessions/week provides maximum cardiovascular and longevity benefits.', ko: '훌륭한 운동 습관! 주 5회 이상은 심혈관 건강과 장수에 최대의 효과를 줍니다.' };
+                if (ud.exercise >= 3) return { en: 'Good exercise frequency. 3-4 sessions/week significantly reduces chronic disease risk.', ko: '좋은 운동 빈도입니다. 주 3-4회는 만성 질환 위험을 크게 줄여줍니다.' };
+                if (ud.exercise >= 1) return { en: 'Some exercise is better than none. Increasing to 3+ times/week would add more years.', ko: '운동을 안 하는 것보다 낫습니다. 주 3회 이상으로 늘리면 더 많은 수명이 늘어납니다.' };
+                return { en: 'No exercise is equivalent to smoking in health risk. Even 15 min/day of walking helps.', ko: '운동 부족은 흡연만큼 건강에 해롭습니다. 하루 15분 걷기만으로도 도움이 됩니다.' };
+            })()
+        },
+        sleep: {
+            icon: '😴',
+            name: { en: 'Sleep', ko: '수면', ja: '睡眠', cn: '睡眠', es: 'Sueño' },
+            choice: { en: `${ud.sleep}h/day`, ko: `하루 ${ud.sleep}시간`, ja: `${ud.sleep}時間/日`, cn: `${ud.sleep}小时/天`, es: `${ud.sleep}h/día` },
+            explanation: (() => {
+                if (ud.sleep >= 7 && ud.sleep <= 8) return { en: 'Optimal sleep duration! 7-8 hours supports immune function, memory, and heart health.', ko: '최적의 수면 시간! 7-8시간은 면역 기능, 기억력, 심장 건강을 돕습니다.' };
+                if (ud.sleep >= 6 && ud.sleep <= 9) return { en: 'Acceptable sleep range. Closer to 7-8 hours would be ideal for long-term health.', ko: '허용 가능한 수면 범위입니다. 7-8시간에 가까울수록 장기 건강에 이상적입니다.' };
+                if (ud.sleep < 6) return { en: 'Sleep deprivation increases risks of obesity, diabetes, heart disease, and cognitive decline.', ko: '수면 부족은 비만, 당뇨, 심장병, 인지 저하의 위험을 높입니다.' };
+                return { en: 'Excessive sleep (9+ hours) is associated with higher mortality risk. Aim for 7-8 hours.', ko: '과도한 수면(9시간 이상)은 사망률 증가와 관련이 있습니다. 7-8시간을 목표로 하세요.' };
+            })()
+        },
+        diet: {
+            icon: '🥗',
+            name: { en: 'Diet', ko: '식습관', ja: '食習慣', cn: '饮食', es: 'Dieta' },
+            choice: {
+                healthy: { en: 'Healthy diet', ko: '건강식', ja: '健康的', cn: '健康饮食', es: 'Dieta saludable' },
+                balanced: { en: 'Balanced diet', ko: '균형 잡힌 식사', ja: '普通', cn: '均衡饮食', es: 'Dieta equilibrada' },
+                fast_food: { en: 'Fast food heavy', ko: '패스트푸드 위주', ja: 'ファストフード中心', cn: '快餐为主', es: 'Comida rápida' }
+            }[ud.diet],
+            explanation: {
+                healthy: { en: 'A nutrient-rich diet with fruits, vegetables, and whole grains is one of the strongest predictors of longevity.', ko: '과일, 채소, 통곡물이 풍부한 식단은 장수의 가장 강력한 예측 인자 중 하나입니다.' },
+                balanced: { en: 'A balanced diet provides adequate nutrition. Adding more fruits and vegetables would further improve outcomes.', ko: '균형 잡힌 식단은 적절한 영양을 제공합니다. 과일과 채소를 더 추가하면 더 좋아집니다.' },
+                fast_food: { en: 'Fast food diets high in sodium, sugar, and trans fats significantly increase cardiovascular disease and cancer risks.', ko: '나트륨, 설탕, 트랜스 지방이 많은 패스트푸드 식단은 심혈관 질환과 암 위험을 크게 높입니다.' }
+            }[ud.diet]
+        },
+        sitting: {
+            icon: '💺',
+            name: { en: 'Sitting Time', ko: '좌식 시간', ja: '座る時間', cn: '久坐时间', es: 'Tiempo Sentado' },
+            choice: { en: `${ud.sitting}h/day`, ko: `하루 ${ud.sitting}시간`, ja: `${ud.sitting}時間/日`, cn: `${ud.sitting}小时/天`, es: `${ud.sitting}h/día` },
+            explanation: (() => {
+                if (ud.sitting <= 6) return { en: 'Good! Lower sitting time reduces risks of metabolic syndrome and cardiovascular disease.', ko: '좋습니다! 적은 좌식 시간은 대사 증후군과 심혈관 질환 위험을 줄여줍니다.' };
+                if (ud.sitting <= 8) return { en: 'Average sitting time. Try to take breaks every 30-60 minutes to reduce health risks.', ko: '평균적인 좌식 시간입니다. 30-60분마다 휴식을 취하면 건강 위험을 줄일 수 있습니다.' };
+                return { en: 'Prolonged sitting (8+ hours) is called "the new smoking." Stand up regularly to counteract risks.', ko: '장시간 앉기(8시간 이상)는 "새로운 흡연"이라 불립니다. 정기적으로 일어나세요.' };
+            })()
+        },
+        sun_exposure: {
+            icon: '☀️',
+            name: { en: 'Sun Exposure', ko: '자외선 노출', ja: '日光', cn: '阳光照射', es: 'Exposición Solar' },
+            choice: {
+                indoor: { en: 'Indoor work', ko: '실내 근무', ja: '屋内仕事', cn: '室内工作', es: 'Trabajo interior' },
+                normal: { en: 'Normal exposure', ko: '보통', ja: '普通', cn: '正常', es: 'Normal' },
+                outdoor: { en: 'Outdoor work', ko: '야외 근무', ja: '屋外仕事', cn: '户外工作', es: 'Trabajo exterior' }
+            }[ud.sun_exposure],
+            explanation: {
+                indoor: { en: 'Indoor work reduces UV damage but consider vitamin D supplementation for bone health.', ko: '실내 근무는 자외선 손상을 줄이지만 뼈 건강을 위해 비타민 D 보충을 고려하세요.' },
+                normal: { en: 'Moderate sun exposure provides vitamin D benefits without excessive skin damage risk.', ko: '적당한 햇빛 노출은 과도한 피부 손상 없이 비타민 D 혜택을 제공합니다.' },
+                outdoor: { en: 'Prolonged UV exposure increases skin cancer risk. Use sunscreen and protective clothing.', ko: '장시간 자외선 노출은 피부암 위험을 높입니다. 자외선 차단제와 보호복을 사용하세요.' }
+            }[ud.sun_exposure]
+        },
+        stress: {
+            icon: '😰',
+            name: { en: 'Stress', ko: '스트레스', ja: 'ストレス', cn: '压力', es: 'Estrés' },
+            choice: (() => {
+                if (ud.stress <= 3) return { en: `Level ${ud.stress} — Low`, ko: `${ud.stress}단계 — 낮음`, ja: `レベル${ud.stress} — 低い`, cn: `${ud.stress}级 — 低`, es: `Nivel ${ud.stress} — Bajo` };
+                if (ud.stress <= 7) return { en: `Level ${ud.stress} — Moderate`, ko: `${ud.stress}단계 — 보통`, ja: `レベル${ud.stress} — 中`, cn: `${ud.stress}级 — 中`, es: `Nivel ${ud.stress} — Moderado` };
+                return { en: `Level ${ud.stress} — High`, ko: `${ud.stress}단계 — 높음`, ja: `レベル${ud.stress} — 高い`, cn: `${ud.stress}级 — 高`, es: `Nivel ${ud.stress} — Alto` };
+            })(),
+            explanation: (() => {
+                if (ud.stress <= 3) return { en: 'Low stress levels support immune function and cardiovascular health. Keep it up!', ko: '낮은 스트레스는 면역 기능과 심혈관 건강을 지원합니다. 잘 유지하세요!' };
+                if (ud.stress <= 7) return { en: 'Moderate stress is normal. Mindfulness, exercise, and social connection can help manage it.', ko: '적당한 스트레스는 정상입니다. 명상, 운동, 사회적 교류가 관리에 도움이 됩니다.' };
+                return { en: 'Chronic high stress increases cortisol, raising risks of heart disease, depression, and weakened immunity.', ko: '만성적 고스트레스는 코르티솔을 증가시켜 심장병, 우울증, 면역력 저하 위험을 높입니다.' };
+            })()
+        },
+        social: {
+            icon: '👥',
+            name: { en: 'Social Life', ko: '사회적 관계', ja: '社会生活', cn: '社交生活', es: 'Vida Social' },
+            choice: {
+                active: { en: 'Active social life', ko: '활발한 사회생활', ja: '活発な社会生活', cn: '活跃的社交', es: 'Vida social activa' },
+                normal: { en: 'Normal social life', ko: '보통 사회생활', ja: '普通の社会生活', cn: '正常社交', es: 'Vida social normal' },
+                isolated: { en: 'Socially isolated', ko: '사회적 고립', ja: '社会的孤立', cn: '社交孤立', es: 'Aislamiento social' }
+            }[ud.social],
+            explanation: {
+                active: { en: 'Strong social connections are as powerful as exercise in extending lifespan. Loneliness is a major health risk.', ko: '강한 사회적 유대는 운동만큼 수명 연장에 효과적입니다. 외로움은 주요 건강 위험입니다.' },
+                normal: { en: 'Normal social connections provide baseline health benefits. Deepening relationships may add more years.', ko: '보통 수준의 사회적 관계는 기본적인 건강 혜택을 제공합니다. 관계를 깊게 하면 더 도움이 됩니다.' },
+                isolated: { en: 'Social isolation is as harmful as smoking 15 cigarettes/day. Building connections can significantly extend life.', ko: '사회적 고립은 하루 담배 15개비만큼 해롭습니다. 관계를 구축하면 수명이 크게 늘어날 수 있습니다.' }
+            }[ud.social]
+        },
+        partner: {
+            icon: '💑',
+            name: { en: 'Partnership', ko: '배우자 유무', ja: 'パートナー', cn: '伴侣', es: 'Pareja' },
+            choice: ud.partner
+                ? { en: 'Has partner', ko: '배우자 있음', ja: 'パートナーあり', cn: '有伴侣', es: 'Con pareja' }
+                : { en: 'No partner', ko: '배우자 없음', ja: 'パートナーなし', cn: '无伴侣', es: 'Sin pareja' },
+            explanation: ud.partner
+                ? { en: 'Marriage/partnership provides emotional support, healthier habits, and better stress management.', ko: '결혼/배우자 관계는 정서적 지지, 건강한 습관, 더 나은 스트레스 관리를 제공합니다.' }
+                : { en: 'Being single has no inherent health penalty. Strong friendships and social networks provide similar benefits.', ko: '미혼이 건강에 불리한 것은 아닙니다. 강한 우정과 사회적 네트워크가 비슷한 효과를 줍니다.' }
+        }
+    };
 }
 
 // ==================== RESULTS RENDERING ====================
@@ -841,183 +897,187 @@ function renderResults() {
     if (!container) return;
 
     const result = lifespanResult;
-    const userData = lifespanUserData;
-
-    // Get text translations (defined at bottom of file)
-    const t = getTexts();
+    const isPositiveNet = result.totalAdjustment >= 0;
 
     container.innerHTML = `
-        <!-- Main Countdown Display -->
-        <div class="text-center mb-12 fade-in">
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 countdown-glow">
-                <span class="lang-en">HOW LONG WILL I LIVE?</span>
-                <span class="lang-ko hidden">나의 남은 수명은?</span>
-                <span class="lang-ja hidden">あと何年生きられる？</span>
-                <span class="lang-cn hidden">我还能活多久？</span>
-                <span class="lang-es hidden">¿CUÁNTO ME QUEDA DE VIDA?</span>
+        <!-- Hero: Expected Lifespan -->
+        <div class="text-center mb-10 fade-in">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 countdown-glow">
+                <span class="lang-en">YOUR LIFE CLOCK</span>
+                <span class="lang-ko hidden">나의 생명 시계</span>
+                <span class="lang-ja hidden">あなたの生命時計</span>
+                <span class="lang-cn hidden">你的生命时钟</span>
+                <span class="lang-es hidden">TU RELOJ DE VIDA</span>
             </h1>
 
-            <div class="mb-8">
-                <p class="text-2xl text-gray-400 mb-2">
+            <div class="mb-6">
+                <p class="text-lg text-gray-400 mb-2">
                     <span class="lang-en">Expected Lifespan</span>
                     <span class="lang-ko hidden">예상 수명</span>
                     <span class="lang-ja hidden">予想寿命</span>
                     <span class="lang-cn hidden">预期寿命</span>
                     <span class="lang-es hidden">Esperanza de Vida</span>
                 </p>
-                <p class="text-6xl md:text-8xl font-bold text-gray-300">
+                <p class="text-7xl md:text-9xl font-black text-white tracking-tight">
                     ${result.adjustedLifeExpectancy}
-                    <span class="text-4xl text-gray-400">
-                        <span class="lang-en">years</span>
-                        <span class="lang-ko hidden">세</span>
-                        <span class="lang-ja hidden">歳</span>
-                        <span class="lang-cn hidden">岁</span>
-                        <span class="lang-es hidden">años</span>
-                    </span>
+                </p>
+                <p class="text-2xl text-gray-400 mt-1">
+                    <span class="lang-en">years old</span>
+                    <span class="lang-ko hidden">세</span>
+                    <span class="lang-ja hidden">歳</span>
+                    <span class="lang-cn hidden">岁</span>
+                    <span class="lang-es hidden">años</span>
                 </p>
             </div>
 
+            <!-- Live Countdown -->
             <div class="mb-8">
-                <p class="text-2xl text-gray-400 mb-4">
+                <p class="text-sm text-gray-500 mb-2 uppercase tracking-wider">
                     <span class="lang-en">Time Remaining</span>
                     <span class="lang-ko hidden">남은 시간</span>
                     <span class="lang-ja hidden">残り時間</span>
                     <span class="lang-cn hidden">剩余时间</span>
                     <span class="lang-es hidden">Tiempo Restante</span>
                 </p>
-                <div id="countdown-display" class="mono-font text-4xl md:text-6xl text-gray-300 font-bold">
-                    <!-- Countdown will be updated here -->
-                </div>
+                <div id="countdown-display" class="mono-font text-3xl md:text-5xl text-gray-300 font-bold"></div>
             </div>
 
-            <!-- Progress Bar -->
-            <div class="max-w-2xl mx-auto mb-4">
-                <div class="w-full bg-gray-700 rounded-full h-6 overflow-hidden border-2 border-gray-600 border-opacity-30">
-                    <div class="progress-bar-bg h-6 transition-all duration-1000" style="width: ${result.lifeProgressPercent}%"></div>
+            <!-- Life Progress Bar -->
+            <div class="max-w-xl mx-auto mb-4">
+                <div class="flex justify-between text-xs text-gray-500 mb-1">
+                    <span>0</span>
+                    <span>${result.currentAge}
+                        <span class="lang-en">years old</span>
+                        <span class="lang-ko hidden">세 (현재)</span>
+                        <span class="lang-ja hidden">歳</span>
+                        <span class="lang-cn hidden">岁</span>
+                        <span class="lang-es hidden">años</span>
+                    </span>
+                    <span>${result.adjustedLifeExpectancy}</span>
                 </div>
-                <p class="text-lg text-gray-400 mt-2">
+                <div class="w-full bg-gray-800 rounded-full h-4 overflow-hidden border border-gray-700">
+                    <div class="bg-gradient-to-r from-gray-500 to-gray-300 h-4 rounded-full transition-all duration-1000 relative" style="width: ${result.lifeProgressPercent}%">
+                        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-2">
                     ${result.lifeProgressPercent}%
-                    <span class="lang-en">of life used</span>
-                    <span class="lang-ko hidden">사용됨</span>
-                    <span class="lang-ja hidden">使用済み</span>
-                    <span class="lang-cn hidden">已使用</span>
-                    <span class="lang-es hidden">de vida usada</span>
+                    <span class="lang-en">of your life has passed</span>
+                    <span class="lang-ko hidden">의 인생이 지나갔습니다</span>
+                    <span class="lang-ja hidden">が過ぎました</span>
+                    <span class="lang-cn hidden">的人生已经过去</span>
+                    <span class="lang-es hidden">de tu vida ha pasado</span>
                 </p>
             </div>
         </div>
 
-        <!-- Emotional Metrics Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <!-- Remaining Seasons -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
-                <div class="text-4xl mb-2">🌸🌞🍂❄️</div>
-                <p class="text-sm text-gray-400 mb-2">
-                    <span class="lang-en">Remaining Seasons</span>
-                    <span class="lang-ko hidden">남은 계절</span>
-                    <span class="lang-ja hidden">残りの季節</span>
-                    <span class="lang-cn hidden">剩余季节</span>
-                    <span class="lang-es hidden">Temporadas Restantes</span>
-                </p>
-                <p class="text-3xl font-bold text-gray-300">${result.remainingSeasons.spring}
-                    <span class="text-lg text-gray-400">
-                        <span class="lang-en">each</span>
-                        <span class="lang-ko hidden">번</span>
-                        <span class="lang-ja hidden">回</span>
-                        <span class="lang-cn hidden">次</span>
-                        <span class="lang-es hidden">cada una</span>
-                    </span>
-                </p>
-            </div>
-
-            <!-- Remaining Weekends -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
-                <div class="text-4xl mb-2">🎉</div>
-                <p class="text-sm text-gray-400 mb-2">
-                    <span class="lang-en">Remaining Weekends</span>
-                    <span class="lang-ko hidden">남은 주말</span>
-                    <span class="lang-ja hidden">残りの週末</span>
-                    <span class="lang-cn hidden">剩余周末</span>
-                    <span class="lang-es hidden">Fines de Semana Restantes</span>
-                </p>
-                <p class="text-3xl font-bold text-gray-300">${formatNumber(result.remainingWeekends)}
-                    <span class="text-lg text-gray-400">
-                        <span class="lang-en">weekends</span>
-                        <span class="lang-ko hidden">번</span>
-                        <span class="lang-ja hidden">回</span>
-                        <span class="lang-cn hidden">个</span>
-                        <span class="lang-es hidden">fines de semana</span>
-                    </span>
-                </p>
-            </div>
-
-            <!-- Remaining Holidays -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
-                <div class="text-4xl mb-2">🎄</div>
-                <p class="text-sm text-gray-400 mb-2">
-                    <span class="lang-en">Remaining ${result.primaryHoliday.name.en}</span>
-                    <span class="lang-ko hidden">남은 ${result.primaryHoliday.name.ko}</span>
-                    <span class="lang-ja hidden">残りの${result.primaryHoliday.name.ja}</span>
-                    <span class="lang-cn hidden">剩余${result.primaryHoliday.name.cn}</span>
-                    <span class="lang-es hidden">${result.primaryHoliday.name.es} Restantes</span>
-                </p>
-                <p class="text-3xl font-bold text-gray-300">${result.remainingHolidays}
-                    <span class="text-lg text-gray-400">
-                        <span class="lang-en">times</span>
-                        <span class="lang-ko hidden">번</span>
-                        <span class="lang-ja hidden">回</span>
-                        <span class="lang-cn hidden">次</span>
-                        <span class="lang-es hidden">veces</span>
-                    </span>
-                </p>
-            </div>
-
-            <!-- Remaining Birthdays -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
-                <div class="text-4xl mb-2">🎂</div>
-                <p class="text-sm text-gray-400 mb-2">
-                    <span class="lang-en">Remaining Birthdays</span>
-                    <span class="lang-ko hidden">남은 생일</span>
-                    <span class="lang-ja hidden">残りの誕生日</span>
-                    <span class="lang-cn hidden">剩余生日</span>
-                    <span class="lang-es hidden">Cumpleaños Restantes</span>
-                </p>
-                <p class="text-3xl font-bold text-gray-300">${result.remainingBirthdays}
-                    <span class="text-lg text-gray-400">
-                        <span class="lang-en">cakes</span>
-                        <span class="lang-ko hidden">번</span>
-                        <span class="lang-ja hidden">回</span>
-                        <span class="lang-cn hidden">次</span>
-                        <span class="lang-es hidden">veces</span>
-                    </span>
-                </p>
-            </div>
-
-            <!-- Remaining Meals -->
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-20 text-center">
-                <div class="text-4xl mb-2">🍽️</div>
-                <p class="text-sm text-gray-400 mb-2">
-                    <span class="lang-en">Remaining Meals</span>
-                    <span class="lang-ko hidden">남은 식사</span>
-                    <span class="lang-ja hidden">残りの食事</span>
-                    <span class="lang-cn hidden">剩余餐数</span>
-                    <span class="lang-es hidden">Comidas Restantes</span>
-                </p>
-                <p class="text-3xl font-bold text-gray-300">${formatNumber(result.remainingMeals)}</p>
-            </div>
-
-            ${result.timeWithParents ? renderParentTimeCard(result.timeWithParents) : '<div></div>'}
+        <!-- Net Impact Badge -->
+        <div class="max-w-md mx-auto mb-10 text-center p-6 rounded-2xl border-2 ${isPositiveNet ? 'bg-emerald-950/30 border-emerald-800/40' : 'bg-red-950/20 border-red-900/30'}">
+            <p class="text-sm text-gray-400 mb-1">
+                <span class="lang-en">Net Lifestyle Impact</span>
+                <span class="lang-ko hidden">생활습관 순 영향</span>
+                <span class="lang-ja hidden">ライフスタイルの影響</span>
+                <span class="lang-cn hidden">生活方式净影响</span>
+                <span class="lang-es hidden">Impacto Neto</span>
+            </p>
+            <p class="text-4xl font-black ${isPositiveNet ? 'text-emerald-400' : 'text-red-400'}">
+                ${isPositiveNet ? '+' : ''}${result.totalAdjustment}
+                <span class="text-lg">
+                    <span class="lang-en">years</span>
+                    <span class="lang-ko hidden">년</span>
+                    <span class="lang-ja hidden">年</span>
+                    <span class="lang-cn hidden">年</span>
+                    <span class="lang-es hidden">años</span>
+                </span>
+            </p>
+            <p class="text-xs text-gray-500 mt-1">
+                <span class="lang-en">vs. ${result.baseLifeExpectancy}yr national average</span>
+                <span class="lang-ko hidden">${result.baseLifeExpectancy}세 국가 평균 대비</span>
+                <span class="lang-ja hidden">${result.baseLifeExpectancy}歳の国内平均との比較</span>
+                <span class="lang-cn hidden">与${result.baseLifeExpectancy}岁国家平均相比</span>
+                <span class="lang-es hidden">vs. promedio nacional de ${result.baseLifeExpectancy} años</span>
+            </p>
         </div>
 
-        <!-- Impact Analysis Chart -->
-        <div class="bg-gray-800 bg-opacity-60 p-8 rounded-xl border-2 border-gray-600 border-opacity-20 mb-12">
-            <h2 class="text-3xl font-bold mb-6 text-center text-gray-300">
-                <span class="lang-en">What Affects Your Lifespan</span>
-                <span class="lang-ko hidden">수명에 영향을 주는 요인</span>
-                <span class="lang-ja hidden">寿命に影響する要因</span>
-                <span class="lang-cn hidden">影响寿命的因素</span>
-                <span class="lang-es hidden">Qué Afecta Tu Esperanza de Vida</span>
+        <!-- Lifestyle Analysis Section -->
+        <div class="mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">
+                <span class="lang-en">Your Lifestyle Analysis</span>
+                <span class="lang-ko hidden">나의 생활습관 분석</span>
+                <span class="lang-ja hidden">あなたのライフスタイル分析</span>
+                <span class="lang-cn hidden">你的生活方式分析</span>
+                <span class="lang-es hidden">Análisis de Tu Estilo de Vida</span>
             </h2>
-            <div id="impact-chart"></div>
+            <div id="lifestyle-analysis" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+
+        <!-- Emotional Metrics -->
+        <div class="mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">
+                <span class="lang-en">Moments Remaining</span>
+                <span class="lang-ko hidden">남은 순간들</span>
+                <span class="lang-ja hidden">残りの瞬間</span>
+                <span class="lang-cn hidden">剩余的时刻</span>
+                <span class="lang-es hidden">Momentos Restantes</span>
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="bg-gray-800/60 p-5 rounded-2xl border border-gray-700/40 text-center">
+                    <div class="text-3xl mb-2">🌸🌞🍂❄️</div>
+                    <p class="text-2xl font-bold text-white">${result.remainingSeasons.spring}</p>
+                    <p class="text-xs text-gray-400 mt-1">
+                        <span class="lang-en">seasons each</span>
+                        <span class="lang-ko hidden">번의 계절</span>
+                        <span class="lang-ja hidden">回の季節</span>
+                        <span class="lang-cn hidden">个季节</span>
+                        <span class="lang-es hidden">temporadas</span>
+                    </p>
+                </div>
+                <div class="bg-gray-800/60 p-5 rounded-2xl border border-gray-700/40 text-center">
+                    <div class="text-3xl mb-2">🎉</div>
+                    <p class="text-2xl font-bold text-white">${formatNumber(result.remainingWeekends)}</p>
+                    <p class="text-xs text-gray-400 mt-1">
+                        <span class="lang-en">weekends</span>
+                        <span class="lang-ko hidden">번의 주말</span>
+                        <span class="lang-ja hidden">回の週末</span>
+                        <span class="lang-cn hidden">个周末</span>
+                        <span class="lang-es hidden">fines de semana</span>
+                    </p>
+                </div>
+                <div class="bg-gray-800/60 p-5 rounded-2xl border border-gray-700/40 text-center">
+                    <div class="text-3xl mb-2">🎄</div>
+                    <p class="text-2xl font-bold text-white">${result.remainingHolidays}</p>
+                    <p class="text-xs text-gray-400 mt-1">
+                        <span class="lang-en">${result.primaryHoliday.name.en}</span>
+                        <span class="lang-ko hidden">${result.primaryHoliday.name.ko}</span>
+                        <span class="lang-ja hidden">${result.primaryHoliday.name.ja}</span>
+                        <span class="lang-cn hidden">${result.primaryHoliday.name.cn}</span>
+                        <span class="lang-es hidden">${result.primaryHoliday.name.es}</span>
+                    </p>
+                </div>
+                <div class="bg-gray-800/60 p-5 rounded-2xl border border-gray-700/40 text-center">
+                    <div class="text-3xl mb-2">🎂</div>
+                    <p class="text-2xl font-bold text-white">${result.remainingBirthdays}</p>
+                    <p class="text-xs text-gray-400 mt-1">
+                        <span class="lang-en">birthdays</span>
+                        <span class="lang-ko hidden">번의 생일</span>
+                        <span class="lang-ja hidden">回の誕生日</span>
+                        <span class="lang-cn hidden">个生日</span>
+                        <span class="lang-es hidden">cumpleaños</span>
+                    </p>
+                </div>
+                <div class="bg-gray-800/60 p-5 rounded-2xl border border-gray-700/40 text-center">
+                    <div class="text-3xl mb-2">🍽️</div>
+                    <p class="text-2xl font-bold text-white">${formatNumber(result.remainingMeals)}</p>
+                    <p class="text-xs text-gray-400 mt-1">
+                        <span class="lang-en">meals</span>
+                        <span class="lang-ko hidden">끼의 식사</span>
+                        <span class="lang-ja hidden">回の食事</span>
+                        <span class="lang-cn hidden">顿饭</span>
+                        <span class="lang-es hidden">comidas</span>
+                    </p>
+                </div>
+                ${result.timeWithParents ? renderParentTimeCards(result.timeWithParents) : ''}
+            </div>
         </div>
 
         <!-- Action Buttons -->
@@ -1031,7 +1091,6 @@ function renderResults() {
                 <span class="lang-es hidden">Guardar como Imagen</span>
             </button>
 
-            <!-- Share Buttons Grid -->
             <div class="grid grid-cols-3 gap-2">
                 <button onclick="shareLifespanToX()" class="flex items-center justify-center gap-1.5 py-3 bg-black text-white rounded-xl hover:opacity-80 transition-all text-sm font-medium">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -1080,49 +1139,47 @@ function renderResults() {
         </div>
 
         <!-- Disclaimer -->
-        <div class="max-w-3xl mx-auto bg-yellow-900 bg-opacity-20 border-2 border-yellow-600 border-opacity-40 rounded-xl p-6 text-center text-sm text-gray-300 mb-8">
-            <p class="mb-2 font-semibold text-yellow-400">⚠️ <span class="lang-en">Important Disclaimer</span></p>
+        <div class="max-w-3xl mx-auto bg-yellow-900/20 border border-yellow-600/40 rounded-xl p-6 text-center text-sm text-gray-300 mb-8">
+            <p class="mb-2 font-semibold text-yellow-400">
+                <span class="lang-en">Important Disclaimer</span>
+                <span class="lang-ko hidden">중요 안내</span>
+                <span class="lang-ja hidden">重要な免責事項</span>
+                <span class="lang-cn hidden">重要声明</span>
+                <span class="lang-es hidden">Aviso Importante</span>
+            </p>
             <p class="lang-en">This is a statistical estimate based on WHO data and research. It is NOT medical advice. Your actual lifespan depends on countless factors. For health concerns, please consult a healthcare professional.</p>
             <p class="lang-ko hidden">이것은 WHO 데이터와 연구를 기반으로 한 통계적 추정입니다. 의학적 조언이 아닙니다. 실제 수명은 무수히 많은 요인에 따라 결정됩니다. 건강 문제는 의료 전문가와 상담하세요.</p>
-            <p class="lang-ja hidden">これはWHOデータと研究に基づく統計的推定です。医学的アドバイスではありません。実際の寿命は無数の要因によって決まります。健康上の懸念については医療専門家に相談してください.</p>
-            <p class="lang-cn hidden">这是基于世卫组织数据和研究的统计估计。不是医疗建议。你的实际寿命取决于无数因素。健康问题请咨询医疗专业人员。</p>
-            <p class="lang-es hidden">Esta es una estimación estadística basada en datos de la OMS e investigación. NO es consejo médico. Tu esperanza de vida real depende de innumerables factores. Para problemas de salud, consulta a un profesional de salud.</p>
+            <p class="lang-ja hidden">これはWHOデータと研究に基づく統計的推定です。医学的アドバイスではありません。健康上の懸念については医療専門家に相談してください。</p>
+            <p class="lang-cn hidden">这是基于世卫组织数据和研究的统计估计。不是医疗建议。健康问题请咨询医疗专业人员。</p>
+            <p class="lang-es hidden">Esta es una estimación estadística basada en datos de la OMS. NO es consejo médico. Para problemas de salud, consulta a un profesional.</p>
         </div>
     `;
 
-    renderImpactChart();
+    renderLifestyleAnalysis();
 }
 
-function renderParentTimeCard(timeWithParents) {
+function renderParentTimeCards(timeWithParents) {
     let html = '';
 
     if (timeWithParents.mother) {
         const m = timeWithParents.mother;
         html += `
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-40 text-center">
-                <div class="text-4xl mb-2">👩</div>
-                <p class="text-sm text-gray-300 mb-2">
-                    <span class="lang-en">Time with Mother</span>
-                    <span class="lang-ko hidden">어머니와의 시간</span>
-                    <span class="lang-ja hidden">母との時間</span>
-                    <span class="lang-cn hidden">与母亲的时间</span>
-                    <span class="lang-es hidden">Tiempo con Madre</span>
-                </p>
-                <p class="text-3xl font-bold text-gray-300">${formatNumber(m.daysRemaining)}
-                    <span class="text-lg text-gray-300">
-                        <span class="lang-en">days</span>
-                        <span class="lang-ko hidden">일</span>
-                        <span class="lang-ja hidden">日</span>
-                        <span class="lang-cn hidden">天</span>
-                        <span class="lang-es hidden">días</span>
-                    </span>
-                </p>
+            <div class="bg-gray-800/60 p-5 rounded-2xl border-2 border-pink-900/30 text-center">
+                <div class="text-3xl mb-2">👩</div>
+                <p class="text-2xl font-bold text-white">${formatNumber(m.daysRemaining)}</p>
                 <p class="text-xs text-gray-400 mt-1">
-                    <span class="lang-en">≈ ${m.meetingsRemaining} meetings left</span>
-                    <span class="lang-ko hidden">≈ ${m.meetingsRemaining}번 남음</span>
-                    <span class="lang-ja hidden">≈ ${m.meetingsRemaining}回残り</span>
-                    <span class="lang-cn hidden">≈ 剩${m.meetingsRemaining}次</span>
-                    <span class="lang-es hidden">≈ ${m.meetingsRemaining} encuentros</span>
+                    <span class="lang-en">days with mother</span>
+                    <span class="lang-ko hidden">일 — 어머니와</span>
+                    <span class="lang-ja hidden">日 — 母と</span>
+                    <span class="lang-cn hidden">天与母亲</span>
+                    <span class="lang-es hidden">días con madre</span>
+                </p>
+                <p class="text-xs text-gray-500 mt-0.5">~ ${m.meetingsRemaining}
+                    <span class="lang-en">meetings</span>
+                    <span class="lang-ko hidden">번 만남</span>
+                    <span class="lang-ja hidden">回</span>
+                    <span class="lang-cn hidden">次见面</span>
+                    <span class="lang-es hidden">encuentros</span>
                 </p>
             </div>
         `;
@@ -1131,30 +1188,22 @@ function renderParentTimeCard(timeWithParents) {
     if (timeWithParents.father) {
         const f = timeWithParents.father;
         html += `
-            <div class="bg-gray-800 bg-opacity-60 p-6 rounded-xl border-2 border-gray-600 border-opacity-40 text-center">
-                <div class="text-4xl mb-2">👨</div>
-                <p class="text-sm text-gray-300 mb-2">
-                    <span class="lang-en">Time with Father</span>
-                    <span class="lang-ko hidden">아버지와의 시간</span>
-                    <span class="lang-ja hidden">父との時間</span>
-                    <span class="lang-cn hidden">与父亲的时间</span>
-                    <span class="lang-es hidden">Tiempo con Padre</span>
-                </p>
-                <p class="text-3xl font-bold text-gray-300">${formatNumber(f.daysRemaining)}
-                    <span class="text-lg text-gray-300">
-                        <span class="lang-en">days</span>
-                        <span class="lang-ko hidden">일</span>
-                        <span class="lang-ja hidden">日</span>
-                        <span class="lang-cn hidden">天</span>
-                        <span class="lang-es hidden">días</span>
-                    </span>
-                </p>
+            <div class="bg-gray-800/60 p-5 rounded-2xl border-2 border-blue-900/30 text-center">
+                <div class="text-3xl mb-2">👨</div>
+                <p class="text-2xl font-bold text-white">${formatNumber(f.daysRemaining)}</p>
                 <p class="text-xs text-gray-400 mt-1">
-                    <span class="lang-en">≈ ${f.meetingsRemaining} meetings left</span>
-                    <span class="lang-ko hidden">≈ ${f.meetingsRemaining}번 남음</span>
-                    <span class="lang-ja hidden">≈ ${f.meetingsRemaining}回残り</span>
-                    <span class="lang-cn hidden">≈ 剩${f.meetingsRemaining}次</span>
-                    <span class="lang-es hidden">≈ ${f.meetingsRemaining} encuentros</span>
+                    <span class="lang-en">days with father</span>
+                    <span class="lang-ko hidden">일 — 아버지와</span>
+                    <span class="lang-ja hidden">日 — 父と</span>
+                    <span class="lang-cn hidden">天与父亲</span>
+                    <span class="lang-es hidden">días con padre</span>
+                </p>
+                <p class="text-xs text-gray-500 mt-0.5">~ ${f.meetingsRemaining}
+                    <span class="lang-en">meetings</span>
+                    <span class="lang-ko hidden">번 만남</span>
+                    <span class="lang-ja hidden">回</span>
+                    <span class="lang-cn hidden">次见面</span>
+                    <span class="lang-es hidden">encuentros</span>
                 </p>
             </div>
         `;
@@ -1163,70 +1212,132 @@ function renderParentTimeCard(timeWithParents) {
     return html;
 }
 
-function renderImpactChart() {
-    const chartContainer = document.getElementById('impact-chart');
-    if (!chartContainer) return;
+// Factor ranges for comparative display (worst vs best case per factor)
+const FACTOR_RANGES = {
+    bmi:          { worst: -5,   best: 0,   worstLabel: { en: 'obese BMI',      ko: '비만',            ja: '肥満',            cn: '肥胖',          es: 'IMC obeso' } },
+    smoking:      { worst: -10,  best: 0,   worstLabel: { en: 'daily smoker',   ko: '매일 흡연',       ja: '毎日喫煙',        cn: '每天吸烟',      es: 'fumador diario' } },
+    drinking:     { worst: -5,   best: 0,   worstLabel: { en: 'daily drinker',  ko: '매일 음주',       ja: '毎日飲酒',        cn: '每天饮酒',      es: 'bebedor diario' } },
+    exercise:     { worst: -3,   best: 4.5, worstLabel: { en: 'no exercise',    ko: '운동 안 함',      ja: '運動なし',        cn: '不运动',        es: 'sin ejercicio' } },
+    sleep:        { worst: -3,   best: 1,   worstLabel: { en: 'poor sleep',     ko: '수면 부족',       ja: '睡眠不足',        cn: '睡眠不足',      es: 'mal sueño' } },
+    diet:         { worst: -3,   best: 4,   worstLabel: { en: 'fast food diet', ko: '패스트푸드 식단', ja: 'ファストフード',   cn: '快餐饮食',      es: 'comida rápida' } },
+    sitting:      { worst: -2,   best: 1,   worstLabel: { en: '9h+ sitting',    ko: '9시간+ 좌식',    ja: '9時間+座位',      cn: '9小时+久坐',    es: '9h+ sentado' } },
+    sun_exposure: { worst: -0.5, best: 0,   worstLabel: { en: 'excess UV',      ko: '과도한 자외선',   ja: '過度なUV',        cn: '过度紫外线',    es: 'exceso UV' } },
+    stress:       { worst: -3,   best: 1,   worstLabel: { en: 'high stress',    ko: '높은 스트레스',   ja: '高ストレス',      cn: '高压力',        es: 'alto estrés' } },
+    social:       { worst: -5,   best: 2,   worstLabel: { en: 'isolation',      ko: '사회적 고립',     ja: '社会的孤立',      cn: '社交孤立',      es: 'aislamiento' } },
+    partner:      { worst: 0,    best: 3,   worstLabel: { en: 'no partner',     ko: '배우자 없음',     ja: 'パートナーなし',   cn: '无伴侣',        es: 'sin pareja' } }
+};
 
+function renderLifestyleAnalysis() {
+    const analysisContainer = document.getElementById('lifestyle-analysis');
+    if (!analysisContainer) return;
+
+    const factorConfig = getFactorConfig();
     const factors = lifespanResult.adjustmentFactors;
 
-    // Sort by absolute impact
-    const sortedFactors = Object.entries(factors)
-        .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+    // Sort by relative benefit (biggest advantage over worst case first)
+    const sortedKeys = Object.keys(factors).sort((a, b) => {
+        const rangeA = FACTOR_RANGES[a], rangeB = FACTOR_RANGES[b];
+        const relA = rangeA ? factors[a] - rangeA.worst : 0;
+        const relB = rangeB ? factors[b] - rangeB.worst : 0;
+        return relB - relA;
+    });
 
-    let html = '<div class="space-y-3">';
+    let html = '';
 
-    sortedFactors.forEach(([factor, years]) => {
-        if (years === 0) return; // Skip zero impact
+    sortedKeys.forEach(key => {
+        const config = factorConfig[key];
+        if (!config) return;
 
-        const isPositive = years > 0;
-        const absYears = Math.abs(years);
-        const percentage = (absYears / 10) * 100; // Scale: 10 years = 100%
-        const cappedPercentage = Math.min(100, percentage);
+        const impact = factors[key];
+        const range = FACTOR_RANGES[key];
+        if (!range) return;
 
-        const factorNames = {
-            bmi: { en: 'BMI', ko: 'BMI', ja: 'BMI', cn: 'BMI', es: 'IMC' },
-            smoking: { en: 'Smoking', ko: '흡연', ja: '喫煙', cn: '吸烟', es: 'Fumar' },
-            drinking: { en: 'Alcohol', ko: '음주', ja: '飲酒', cn: '饮酒', es: 'Alcohol' },
-            exercise: { en: 'Exercise', ko: '운동', ja: '運動', cn: '运动', es: 'Ejercicio' },
-            sleep: { en: 'Sleep', ko: '수면', ja: '睡眠', cn: '睡眠', es: 'Sueño' },
-            diet: { en: 'Diet', ko: '식습관', ja: '食習慣', cn: '饮食', es: 'Dieta' },
-            sitting: { en: 'Sitting Time', ko: '좌식 시간', ja: '座る時間', cn: '坐着时间', es: 'Tiempo Sentado' },
-            sun_exposure: { en: 'Sun Exposure', ko: '자외선', ja: '日光', cn: '阳光', es: 'Sol' },
-            stress: { en: 'Stress', ko: '스트레스', ja: 'ストレス', cn: '压力', es: 'Estrés' },
-            social: { en: 'Social Life', ko: '사회생활', ja: '社会生活', cn: '社交', es: 'Vida Social' },
-            partner: { en: 'Partnership', ko: '배우자', ja: 'パートナー', cn: '伴侣', es: 'Pareja' }
-        };
+        // Dynamic best for partner (gender-dependent)
+        const bestVal = key === 'partner' ? (lifespanUserData.gender === 'M' ? 3 : 1.5) : range.best;
 
-        const name = factorNames[factor] || { en: factor };
+        // Relative impact: how much better than worst case
+        const relativeImpact = Math.round((impact - range.worst) * 10) / 10;
+        const totalRange = bestVal - range.worst;
+        const positionPercent = totalRange > 0 ? Math.round((relativeImpact / totalRange) * 100) : 100;
+
+        // Color based on position in range (green=great, amber=ok, red=poor)
+        let impactColor, badgeBg, barColor;
+        if (positionPercent >= 70) {
+            impactColor = 'text-emerald-400';
+            badgeBg = 'bg-emerald-900/40 border-emerald-800/40';
+            barColor = 'bg-emerald-500/60';
+        } else if (positionPercent >= 35) {
+            impactColor = 'text-amber-400';
+            badgeBg = 'bg-amber-900/30 border-amber-800/30';
+            barColor = 'bg-amber-500/50';
+        } else {
+            impactColor = 'text-red-400';
+            badgeBg = 'bg-red-950/30 border-red-900/30';
+            barColor = 'bg-red-500/40';
+        }
+
+        const barWidth = Math.max(5, Math.min(100, positionPercent));
+        const worstLabel = range.worstLabel || {};
+        const choiceText = config.choice || {};
+        const explanationText = config.explanation || {};
+        const nameText = config.name || {};
+
+        // Badge: show relative value (always >= 0, compared to worst case)
+        const badgeValue = relativeImpact === 0 ? '0' : '+' + relativeImpact.toFixed(1);
 
         html += `
-            <div class="flex items-center gap-3">
-                <div class="w-32 text-right text-sm">
-                    <span class="lang-en">${name.en}</span>
-                    <span class="lang-ko hidden">${name.ko}</span>
-                    <span class="lang-ja hidden">${name.ja}</span>
-                    <span class="lang-cn hidden">${name.cn}</span>
-                    <span class="lang-es hidden">${name.es}</span>
-                </div>
-                <div class="flex-1 flex items-center ${isPositive ? 'justify-start' : 'justify-end'}">
-                    <div class="${isPositive ? 'impact-bar-positive' : 'impact-bar-negative'} h-8 rounded flex items-center px-3 text-sm font-bold"
-                         style="width: ${cappedPercentage}%">
-                        ${isPositive ? '+' : ''}${years.toFixed(1)}
-                        <span class="ml-1 text-xs">
-                            <span class="lang-en">yr</span>
-                            <span class="lang-ko hidden">년</span>
-                            <span class="lang-ja hidden">年</span>
-                            <span class="lang-cn hidden">年</span>
-                            <span class="lang-es hidden">a</span>
-                        </span>
+            <div class="bg-gray-800/50 rounded-2xl p-5 border border-gray-700/40 hover:border-gray-600/60 transition-all">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gray-700/60 flex items-center justify-center text-xl shrink-0">${config.icon}</div>
+                        <div>
+                            <div class="font-semibold text-gray-200 text-sm">
+                                <span class="lang-en">${nameText.en || key}</span>
+                                <span class="lang-ko hidden">${nameText.ko || key}</span>
+                                <span class="lang-ja hidden">${nameText.ja || key}</span>
+                                <span class="lang-cn hidden">${nameText.cn || key}</span>
+                                <span class="lang-es hidden">${nameText.es || key}</span>
+                            </div>
+                            <div class="text-xs text-gray-400 mt-0.5">
+                                <span class="lang-en">${choiceText.en || ''}</span>
+                                <span class="lang-ko hidden">${choiceText.ko || ''}</span>
+                                <span class="lang-ja hidden">${choiceText.ja || ''}</span>
+                                <span class="lang-cn hidden">${choiceText.cn || ''}</span>
+                                <span class="lang-es hidden">${choiceText.es || ''}</span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="text-right shrink-0 ml-2">
+                        <div class="px-2.5 py-1 rounded-lg text-sm font-bold ${badgeBg} border ${impactColor}">
+                            ${badgeValue}
+                            <span class="text-xs ml-0.5">
+                                <span class="lang-en">yr</span>
+                                <span class="lang-ko hidden">년</span>
+                                <span class="lang-ja hidden">年</span>
+                                <span class="lang-cn hidden">年</span>
+                                <span class="lang-es hidden">a</span>
+                            </span>
+                        </div>
+                        <div class="text-[10px] text-gray-500 mt-1">
+                            vs <span class="lang-en">${worstLabel.en || ''}</span><span class="lang-ko hidden">${worstLabel.ko || ''}</span><span class="lang-ja hidden">${worstLabel.ja || ''}</span><span class="lang-cn hidden">${worstLabel.cn || ''}</span><span class="lang-es hidden">${worstLabel.es || ''}</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                    <span class="lang-en">${explanationText.en || ''}</span>
+                    <span class="lang-ko hidden">${explanationText.ko || ''}</span>
+                    <span class="lang-ja hidden">${explanationText.ja || ''}</span>
+                    <span class="lang-cn hidden">${explanationText.cn || ''}</span>
+                    <span class="lang-es hidden">${explanationText.es || ''}</span>
+                </p>
+                <div class="w-full bg-gray-700/40 rounded-full h-1.5">
+                    <div class="${barColor} h-1.5 rounded-full transition-all duration-700" style="width: ${barWidth}%"></div>
                 </div>
             </div>
         `;
     });
 
-    html += '</div>';
-    chartContainer.innerHTML = html;
+    analysisContainer.innerHTML = html;
 }
 
 // ==================== COUNTDOWN TIMER ====================
@@ -1234,52 +1345,54 @@ function renderImpactChart() {
 let visibilityChangeHandler = null;
 
 function startCountdownTimer() {
-    // Stop any existing countdown and remove previous listener
-    if (countdownInterval) {
-        clearInterval(countdownInterval);
-    }
-    if (visibilityChangeHandler) {
-        document.removeEventListener('visibilitychange', visibilityChangeHandler);
-    }
+    if (countdownInterval) clearInterval(countdownInterval);
+    if (visibilityChangeHandler) document.removeEventListener('visibilitychange', visibilityChangeHandler);
 
     const birthdate = new Date(lifespanUserData.birthdate);
     const yearsToAdd = lifespanResult.adjustedLifeExpectancy;
     const targetDate = new Date(birthdate);
     targetDate.setFullYear(birthdate.getFullYear() + Math.floor(yearsToAdd));
-
-    // Add remaining months/days
     const fractionalDays = (yearsToAdd - Math.floor(yearsToAdd)) * 365.25;
     targetDate.setDate(targetDate.getDate() + Math.floor(fractionalDays));
+
+    const countdownFormats = {
+        en: (y, mo, d, h, mi, s) => `${y}y ${mo}m ${d}d ${h}:${mi}:${s}`,
+        ko: (y, mo, d, h, mi, s) => `${y}년 ${mo}개월 ${d}일 ${h}:${mi}:${s}`,
+        ja: (y, mo, d, h, mi, s) => `${y}年 ${mo}ヶ月 ${d}日 ${h}:${mi}:${s}`,
+        cn: (y, mo, d, h, mi, s) => `${y}年 ${mo}个月 ${d}天 ${h}:${mi}:${s}`,
+        es: (y, mo, d, h, mi, s) => `${y}a ${mo}m ${d}d ${h}:${mi}:${s}`
+    };
 
     function updateCountdown() {
         const now = new Date();
         const remaining = targetDate - now;
+        const el = document.getElementById('countdown-display');
+        if (!el) return;
 
         if (remaining <= 0) {
-            document.getElementById('countdown-display').textContent = '0y 0m 0d 00:00:00';
+            el.textContent = '0y 0m 0d 00:00:00';
             return;
         }
 
-        const seconds = Math.floor(remaining / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-        const years = Math.floor(days / 365.25);
-        const months = Math.floor((days % 365.25) / 30.44);
-        const daysLeft = Math.floor((days % 365.25) % 30.44);
+        const totalSec = Math.floor(remaining / 1000);
+        const totalMin = Math.floor(totalSec / 60);
+        const totalHr = Math.floor(totalMin / 60);
+        const totalDays = Math.floor(totalHr / 24);
+        const years = Math.floor(totalDays / 365.25);
+        const months = Math.floor((totalDays % 365.25) / 30.44);
+        const days = Math.floor((totalDays % 365.25) % 30.44);
 
-        const sec = seconds % 60;
-        const min = minutes % 60;
-        const hr = hours % 24;
+        const h = String(totalHr % 24).padStart(2, '0');
+        const mi = String(totalMin % 60).padStart(2, '0');
+        const s = String(totalSec % 60).padStart(2, '0');
 
-        const display = `${years}y ${months}m ${daysLeft}d ${hr.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-        document.getElementById('countdown-display').textContent = display;
+        const formatter = countdownFormats[currentLang] || countdownFormats.en;
+        el.textContent = formatter(years, months, days, h, mi, s);
     }
 
     updateCountdown();
     countdownInterval = setInterval(updateCountdown, 1000);
 
-    // Stop countdown when page is hidden (performance)
     visibilityChangeHandler = () => {
         if (document.hidden) {
             clearInterval(countdownInterval);
@@ -1328,7 +1441,6 @@ function loadDataFromLifeReceipt() {
         const lifeReceiptData = localStorage.getItem('lifeReceiptData');
         if (lifeReceiptData) {
             const data = JSON.parse(lifeReceiptData);
-            // Pre-fill birthdate, country, gender if available
             if (data.birthdate) setBirthdate(data.birthdate);
             if (data.country) document.getElementById('country').value = data.country;
             if (data.gender) selectGender(data.gender);
@@ -1360,7 +1472,6 @@ function startOver() {
     document.getElementById('result').classList.add('hidden');
     document.getElementById('landing').classList.remove('hidden');
 
-    // Clear countdown and remove visibility listener
     if (countdownInterval) {
         clearInterval(countdownInterval);
         countdownInterval = null;
@@ -1370,13 +1481,11 @@ function startOver() {
         visibilityChangeHandler = null;
     }
 
-    // Reset form
     currentStep = 1;
     selectedGender = null;
     lifespanUserData = {};
     lifespanResult = {};
 
-    // Reset to step 1
     document.getElementById('step-1').classList.remove('hidden');
     document.getElementById('step-2').classList.add('hidden');
     document.getElementById('step-3').classList.add('hidden');
@@ -1384,10 +1493,4 @@ function startOver() {
     updateStepIndicators();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function getTexts() {
-    // Placeholder for future text localization
-    // For now, texts are embedded in HTML with lang-XX classes
-    return {};
 }

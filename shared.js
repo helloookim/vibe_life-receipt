@@ -166,6 +166,9 @@ function calculateAge(birthdate) {
 function switchLang(lang) {
     currentLang = lang;
 
+    // Persist language choice across pages
+    try { localStorage.setItem('preferredLang', lang); } catch (e) {}
+
     // Update HTML lang attribute for date picker and browser localization
     document.documentElement.lang = lang;
 
@@ -376,20 +379,30 @@ function detectUserCountry() {
  * @returns {string} - Language code (defaults to 'en')
  */
 function getInitialLang() {
+    const supported = ['en', 'ko', 'ja', 'cn', 'es'];
+
     // 1. Check URL parameter: ?lang=ko
     const params = new URLSearchParams(window.location.search);
     const urlLang = params.get('lang');
-    if (urlLang && ['en', 'ko', 'ja', 'cn', 'es'].includes(urlLang)) {
+    if (urlLang && supported.includes(urlLang)) {
         return urlLang;
     }
 
     // 2. Check data-lang attribute on <html> (set by stub pages)
     const htmlLang = document.documentElement.getAttribute('data-default-lang');
-    if (htmlLang) {
+    if (htmlLang && supported.includes(htmlLang)) {
         return htmlLang;
     }
 
-    // 3. Default to English
+    // 3. Check localStorage (persisted from previous page/session)
+    try {
+        const savedLang = localStorage.getItem('preferredLang');
+        if (savedLang && supported.includes(savedLang)) {
+            return savedLang;
+        }
+    } catch (e) {}
+
+    // 4. Default to English
     return 'en';
 }
 
