@@ -3,28 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Clock - How Much Time Do You Have Left?</title>
+    <title>How Long Will I Live? - Life Expectancy Calculator</title>
     <meta name="description" content="Calculate your remaining lifespan based on health and lifestyle. See your remaining weekends, seasons, and time with parents — down to the second.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Life Clock - How Much Time Do You Have Left?">
+    <meta property="og:title" content="How Long Will I Live? - Life Expectancy Calculator">
     <meta property="og:description" content="See exactly how many years, days, and seconds you have left. Based on your health and lifestyle.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lifereceipt.uk/lifespan.html">
     <meta property="og:site_name" content="Life in Numbers">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="ko_KR">
+    <meta property="og:image" content="https://lifereceipt.uk/og-image-lifespan.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Life Clock - How Much Time Do You Have Left?">
+    <meta name="twitter:title" content="How Long Will I Live? - Life Expectancy Calculator">
     <meta name="twitter:description" content="See exactly how many years, days, and seconds you have left. Based on your health and lifestyle.">
+    <meta name="twitter:image" content="https://lifereceipt.uk/og-image-lifespan.png">
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#111113">
 
     <!-- hreflang -->
     <link rel="alternate" hreflang="en" href="https://lifereceipt.uk/lifespan.html">
     <link rel="alternate" hreflang="ko" href="https://lifereceipt.uk/ko/lifespan.html">
     <link rel="alternate" hreflang="x-default" href="https://lifereceipt.uk/lifespan.html">
     <link rel="canonical" href="https://lifereceipt.uk/lifespan.html">
+
+    <!-- Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "How Long Will I Live?",
+        "url": "https://lifereceipt.uk/lifespan.html",
+        "description": "Calculate your remaining lifespan based on health and lifestyle. See your remaining weekends, seasons, and time with parents.",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "inLanguage": ["en", "ko", "ja", "zh", "es"],
+        "author": { "@type": "Organization", "name": "Life in Numbers", "url": "https://lifereceipt.uk" }
+    }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -220,11 +249,11 @@
             <!-- Title Section -->
             <div class="mb-12">
                 <h1 class="text-6xl md:text-8xl font-extrabold mb-6 countdown-glow">
-                    <span class="lang-en">YOUR LIFE CLOCK</span>
-                    <span class="lang-ko hidden">당신의 생명시계</span>
-                    <span class="lang-ja hidden">あなたの命の時計</span>
-                    <span class="lang-cn hidden">你的生命时钟</span>
-                    <span class="lang-es hidden">TU RELOJ DE VIDA</span>
+                    <span class="lang-en">HOW LONG WILL I LIVE?</span>
+                    <span class="lang-ko hidden">나의 남은 수명은?</span>
+                    <span class="lang-ja hidden">あと何年生きられる？</span>
+                    <span class="lang-cn hidden">我还能活多久？</span>
+                    <span class="lang-es hidden">¿CUÁNTO ME QUEDA DE VIDA?</span>
                 </h1>
                 <p class="text-3xl md:text-4xl mb-4 text-gray-300 font-bold">
                     <span class="lang-en">How much time do you have left?</span>
@@ -643,7 +672,7 @@
                 <span class="lang-es hidden">Esta es una estimación estadística basada en datos de la OMS e investigación. No es consejo médico. Consulta a un profesional de salud para problemas de salud.</span>
             </p>
             <p class="text-xs text-gray-500">
-                © 2026 Life Clock.
+                © 2026 Life in Numbers.
                 <span class="lang-en">All rights reserved.</span>
                 <span class="lang-ko hidden">모든 권리 보유.</span>
                 <span class="lang-ja hidden">全著作権所有</span>

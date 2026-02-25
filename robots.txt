@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /en/
+Disallow: /ko/
+
+Sitemap: https://lifereceipt.uk/sitemap.xml

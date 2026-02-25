@@ -67,7 +67,10 @@ function onCountryChange() {
     // Update helper text below input
     const unitText = {
         en: data.incomeUnit > 1 ? `Enter amount in ${unitLabel}` : `Enter annual income in ${data.currencyCode}`,
-        ko: data.incomeUnit > 1 ? `${unitLabel} 단위로 입력하세요` : `${data.currencyCode} 연소득을 입력하세요`
+        ko: data.incomeUnit > 1 ? `${unitLabel} 단위로 입력하세요` : `${data.currencyCode} 연소득을 입력하세요`,
+        ja: data.incomeUnit > 1 ? `${unitLabel}単位で入力してください` : `${data.currencyCode}の年収を入力してください`,
+        cn: data.incomeUnit > 1 ? `请以${unitLabel}为单位输入` : `请输入${data.currencyCode}年收入`,
+        es: data.incomeUnit > 1 ? `Ingrese la cantidad en ${unitLabel}` : `Ingrese el ingreso anual en ${data.currencyCode}`
     };
     document.getElementById('income-unit-label').textContent = unitText[lang] || unitText.en;
 
@@ -100,7 +103,14 @@ function setPreset(type) {
     if (value === 0) {
         // No minimum wage for this country
         const lang = currentLang || 'en';
-        const msg = lang === 'ko' ? '이 국가에는 해당 데이터가 없습니다.' : 'Data not available for this country.';
+        const msgs = {
+            en: 'Data not available for this country.',
+            ko: '이 국가에는 해당 데이터가 없습니다.',
+            ja: 'この国のデータはありません。',
+            cn: '该国家没有相关数据。',
+            es: 'Datos no disponibles para este país.'
+        };
+        const msg = msgs[lang] || msgs.en;
         alert(msg);
         return;
     }
@@ -144,7 +154,10 @@ function showAlert() {
     const lang = currentLang || 'en';
     const msgs = {
         en: 'Please select a country first.',
-        ko: '먼저 국가를 선택해주세요.'
+        ko: '먼저 국가를 선택해주세요.',
+        ja: 'まず国を選択してください。',
+        cn: '请先选择一个国家。',
+        es: 'Por favor, selecciona un país primero.'
     };
     alert(msgs[lang] || msgs.en);
 }
@@ -155,13 +168,27 @@ function validateForm() {
     const lang = currentLang || 'en';
 
     if (!country) {
-        const msg = lang === 'ko' ? '국가를 선택해주세요.' : 'Please select a country.';
+        const countryMsgs = {
+            en: 'Please select a country.',
+            ko: '국가를 선택해주세요.',
+            ja: '国を選択してください。',
+            cn: '请选择一个国家。',
+            es: 'Por favor, selecciona un país.'
+        };
+        const msg = countryMsgs[lang] || countryMsgs.en;
         alert(msg);
         return false;
     }
 
     if (!income || parseFloat(income) < 0) {
-        const msg = lang === 'ko' ? '소득을 입력해주세요.' : 'Please enter your income.';
+        const incomeMsgs = {
+            en: 'Please enter your income.',
+            ko: '소득을 입력해주세요.',
+            ja: '収入を入力してください。',
+            cn: '请输入您的收入。',
+            es: 'Por favor, ingresa tu ingreso.'
+        };
+        const msg = incomeMsgs[lang] || incomeMsgs.en;
         alert(msg);
         return false;
     }
@@ -403,7 +430,7 @@ function getTexts() {
             insightTitle: 'Perspective',
             shareTitle: 'Share My Rank',
             saveImage: 'Save as Image',
-            lifeClockLink: 'Check My Life Clock',
+            lifeClockLink: 'How Long Will I Live?',
             lifeReceiptLink: 'See My Life Receipt',
             startOver: 'Calculate Again',
             disclaimer: 'Based on World Bank 2023 data. This is a statistical estimate.',
@@ -433,11 +460,101 @@ function getTexts() {
             insightTitle: '한 가지 관점',
             shareTitle: '내 순위 공유하기',
             saveImage: '이미지로 저장',
-            lifeClockLink: '생명시계 확인하기',
+            lifeClockLink: '나의 남은 수명은?',
             lifeReceiptLink: '인생 영수증 보기',
             startOver: '다시 확인하기',
             disclaimer: 'World Bank 2023 데이터 기반 통계적 추정치입니다.',
             householdNote: 'OECD 균등화 소득 기준으로 가구 인원수를 반영했습니다.'
+        },
+        ja: {
+            youAreRicherThan: 'あなたは',
+            ofPeopleWorldwide: 'より裕福です',
+            outOf: '世界80億人の中で',
+            people: '人',
+            andRicherThanYou: '人があなたより裕福です',
+            globalRank: '世界ランキング',
+            nationalRank: '国内順位',
+            topGlobal: '上位',
+            globally: '（世界）',
+            inCountry: '',
+            yourIncome: 'あなたの収入',
+            timesGlobalMedian: '世界の中央値所得の倍',
+            equivUSD: 'USD換算',
+            positionBarTitle: '世界でのあなたの位置',
+            positionYou: 'あなた',
+            positionPoorest: '低所得',
+            positionRichest: '高所得',
+            positionBelowYou: 'があなたより少ない',
+            positionAboveYou: 'があなたより多い',
+            comparisonTitle: '順位比較',
+            insightTitle: 'ひとつの視点',
+            shareTitle: '順位をシェア',
+            saveImage: '画像として保存',
+            lifeClockLink: 'あと何年生きられる？',
+            lifeReceiptLink: 'ライフレシートを見る',
+            startOver: 'もう一度確認する',
+            disclaimer: '世界銀行2023年データに基づく統計的推定値です。',
+            householdNote: 'OECD等価尺度に基づき世帯人数を調整しています。'
+        },
+        cn: {
+            youAreRicherThan: '你比',
+            ofPeopleWorldwide: '的人更富有',
+            outOf: '在全球80亿人中，你比',
+            people: '人',
+            andRicherThanYou: '人比你更富有',
+            globalRank: '全球排名',
+            nationalRank: '国内排名',
+            topGlobal: '前',
+            globally: '（全球）',
+            inCountry: '',
+            yourIncome: '你的收入',
+            timesGlobalMedian: '全球中位数收入的倍',
+            equivUSD: 'USD等值',
+            positionBarTitle: '你在世界中的位置',
+            positionYou: '你',
+            positionPoorest: '低收入',
+            positionRichest: '高收入',
+            positionBelowYou: '收入低于你',
+            positionAboveYou: '收入高于你',
+            comparisonTitle: '排名比较',
+            insightTitle: '一个视角',
+            shareTitle: '分享我的排名',
+            saveImage: '保存为图片',
+            lifeClockLink: '我还能活多久？',
+            lifeReceiptLink: '查看人生收据',
+            startOver: '重新计算',
+            disclaimer: '基于世界银行2023年数据的统计估算。',
+            householdNote: '已根据OECD等价尺度调整家庭人数。'
+        },
+        es: {
+            youAreRicherThan: 'ERES MÁS RICO QUE',
+            ofPeopleWorldwide: 'de las personas en el mundo',
+            outOf: 'De 8 mil millones de personas, eres más rico que',
+            people: 'personas',
+            andRicherThanYou: 'personas son más ricas que tú',
+            globalRank: 'Ranking Global',
+            nationalRank: 'en',
+            topGlobal: 'Top',
+            globally: 'globalmente',
+            inCountry: 'en',
+            yourIncome: 'Tu Ingreso',
+            timesGlobalMedian: 'veces el ingreso medio global',
+            equivUSD: 'equivalente en USD',
+            positionBarTitle: 'Tu posición en el mundo',
+            positionYou: 'TÚ',
+            positionPoorest: 'Menor ingreso',
+            positionRichest: 'Mayor ingreso',
+            positionBelowYou: 'ganan menos que tú',
+            positionAboveYou: 'ganan más que tú',
+            comparisonTitle: 'Comparación',
+            insightTitle: 'Perspectiva',
+            shareTitle: 'Compartir Mi Ranking',
+            saveImage: 'Guardar como Imagen',
+            lifeClockLink: '¿Cuánto me queda de vida?',
+            lifeReceiptLink: 'Ver Mi Recibo de Vida',
+            startOver: 'Calcular de Nuevo',
+            disclaimer: 'Basado en datos del Banco Mundial 2023. Esta es una estimación estadística.',
+            householdNote: 'Ajustado por tamaño del hogar usando la escala de equivalencia OCDE.'
         }
     };
 }
@@ -629,7 +746,7 @@ function renderComparisonBars(result, countryName, t, lang) {
     <div class="space-y-6 max-w-xl mx-auto">
         <div>
             <div class="flex justify-between text-sm mb-2">
-                <span class="text-gray-300">🌍 ${lang === 'ko' ? '전 세계' : 'Global'}</span>
+                <span class="text-gray-300">🌍 ${{en:'Global',ko:'전 세계',ja:'世界',cn:'全球',es:'Global'}[lang] || 'Global'}</span>
                 <span class="text-yellow-400 font-bold">${t.topGlobal} ${topG}%</span>
             </div>
             <div class="w-full bg-gray-700 rounded-full h-7 overflow-hidden">
@@ -684,7 +801,10 @@ function getWealthShareText() {
     const topP = wealthResult.topPercent < 1 ? wealthResult.topPercent.toFixed(2) : wealthResult.topPercent.toFixed(1);
     const texts = {
         en: `I'm in the top ${topP}% globally! Where do you rank among 8 billion people?`,
-        ko: `나는 전 세계 상위 ${topP}%래! 80억 명 중 너는 몇 등이야?`
+        ko: `나는 전 세계 상위 ${topP}%래! 80억 명 중 너는 몇 등이야?`,
+        ja: `世界の上位${topP}%だって！80億人の中であなたは何位？`,
+        cn: `我在全球前${topP}%！80亿人中你排第几？`,
+        es: `¡Estoy en el top ${topP}% mundial! ¿Dónde te ubicas entre 8 mil millones?`
     };
     return texts[currentLang] || texts.en;
 }
@@ -694,7 +814,8 @@ function shareWealthToFacebook() { shareToFacebook(getShareUrl('/wealth.html'));
 function shareWealthToThreads() { shareToThreads(getWealthShareText(), getShareUrl('/wealth.html')); }
 function shareWealthToLine() { shareToLine(getWealthShareText(), getShareUrl('/wealth.html')); }
 function shareWealthToKakao() {
-    const title = currentLang === 'ko' ? '글로벌 부 순위' : 'Global Wealth Rank';
+    const titles = {en:'Global Wealth Rank', ko:'글로벌 부 순위', ja:'グローバル資産ランキング', cn:'全球财富排名', es:'Ranking de Riqueza Global'};
+    const title = titles[currentLang] || titles.en;
     shareToKakao(title, getWealthShareText(), getShareUrl('/wealth.html'));
 }
 function copyLink() { copyLinkShared(); }
@@ -779,6 +900,24 @@ function formatLargeNumber(num, lang) {
             return (num / 100000000).toFixed(1) + '억';
         } else if (num >= 10000) {
             return Math.round(num / 10000).toLocaleString() + '만';
+        }
+        return num.toLocaleString();
+    }
+
+    if (lang === 'ja') {
+        if (num >= 100000000) {
+            return (num / 100000000).toFixed(1) + '億';
+        } else if (num >= 10000) {
+            return Math.round(num / 10000).toLocaleString() + '万';
+        }
+        return num.toLocaleString();
+    }
+
+    if (lang === 'cn') {
+        if (num >= 100000000) {
+            return (num / 100000000).toFixed(1) + '亿';
+        } else if (num >= 10000) {
+            return Math.round(num / 10000).toLocaleString() + '万';
         }
         return num.toLocaleString();
     }

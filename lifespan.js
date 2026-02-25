@@ -850,11 +850,11 @@ function renderResults() {
         <!-- Main Countdown Display -->
         <div class="text-center mb-12 fade-in">
             <h1 class="text-5xl md:text-7xl font-extrabold mb-4 countdown-glow">
-                <span class="lang-en">YOUR LIFE CLOCK</span>
-                <span class="lang-ko hidden">당신의 생명시계</span>
-                <span class="lang-ja hidden">あなたの命の時計</span>
-                <span class="lang-cn hidden">你的生命时钟</span>
-                <span class="lang-es hidden">TU RELOJ DE VIDA</span>
+                <span class="lang-en">HOW LONG WILL I LIVE?</span>
+                <span class="lang-ko hidden">나의 남은 수명은?</span>
+                <span class="lang-ja hidden">あと何年生きられる？</span>
+                <span class="lang-cn hidden">我还能活多久？</span>
+                <span class="lang-es hidden">¿CUÁNTO ME QUEDA DE VIDA?</span>
             </h1>
 
             <div class="mb-8">
@@ -1315,7 +1315,8 @@ function shareLifespanToFacebook() { shareToFacebook(getShareUrl('/lifespan.html
 function shareLifespanToThreads() { shareToThreads(getLifespanShareText(), getShareUrl('/lifespan.html')); }
 function shareLifespanToLine() { shareToLine(getLifespanShareText(), getShareUrl('/lifespan.html')); }
 function shareLifespanToKakao() {
-    const title = currentLang === 'ko' ? '나의 생명시계' : 'My Life Clock';
+    const titles = {en:'How Long Will I Live?', ko:'나의 남은 수명은?', ja:'あと何年生きられる？', cn:'我还能活多久？', es:'¿Cuánto me queda de vida?'};
+    const title = titles[currentLang] || titles.en;
     shareToKakao(title, getLifespanShareText(), getShareUrl('/lifespan.html'));
 }
 function copyLink() { copyLinkShared(); }
