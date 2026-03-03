@@ -285,13 +285,11 @@
 
 ## 8. 다국어 / 글로벌 전략
 
-### 8-1. URL 구조 (통합 사이트)
+### 8-1. URL 구조 (구현된 상태)
 
-    lifereceipt.com/wealth/         -> 영어
-    lifereceipt.com/ko/wealth/      -> 한국어
-    lifereceipt.com/ja/wealth/      -> 일본어
-    lifereceipt.com/es/wealth/      -> 스페인어
-    lifereceipt.com/pt/wealth/      -> 포르투갈어
+    lifereceipt.uk/wealth.html      -> 메인 (5개 언어, ?lang= 파라미터)
+    lifereceipt.uk/en/wealth.html   -> 영어 리디렉트 스텁
+    lifereceipt.uk/ko/wealth.html   -> 한국어 리디렉트 스텁
 
 ### 8-2. 로컬라이징 포인트
 
@@ -431,34 +429,40 @@
 
 ### Week 1: MVP
 
-- 연소득 + 국가 입력 (필수 2개)
-- 글로벌 퍼센타일 계산 (World Bank PPP 데이터)
-- 결과 페이지: 퍼센타일 + "X명보다 부유합니다"
-- 인구 도트맵 시각화
-- 한국어 + 영어
-- 이미지 저장 + 카카오톡/트위터 공유
-- 프라이버시 안내 + 면책 문구
+- [x] 연소득 + 국가 입력 (필수 2개)
+- [x] 글로벌 퍼센타일 계산 (World Bank PPP 데이터, 로그정규분포 CDF)
+- [x] 결과 페이지: 퍼센타일 + "X명보다 부유합니다"
+- [x] 퍼센타일 비교 바 시각화
+- [x] 한국어 + 영어
+- [x] 이미지 저장 + 카카오톡/트위터 공유
+- [x] 프라이버시 안내 + 면책 문구
+- [x] 프리셋 버튼 (최저임금/중위소득/상위10%)
 
 ### Week 2: 비교 강화
 
-- 국가 내 퍼센타일 추가
-- 연령별 비교 추가 (나이 선택 입력)
-- "만약에" 시뮬레이션 (소득 슬라이더)
-- 동적 OG 이미지
-- 수명 계산기 / 인생 영수증 교차 유도
+- [x] 국가 내 퍼센타일 추가 (calculateNationalPercentile)
+- [x] 소득으로 살 수 있는 것 시각화 (renderIncomeBuysGrid)
+- [x] 역사적 부 비교 (renderHistoricalComparison)
+- [x] 정적 OG 이미지 생성
+- [x] 수명 계산기 / 인생 영수증 교차 유도 (loadDataFromOtherServices)
+- [x] Facebook, Threads, LINE 공유 추가
+- [ ] "만약에" 인터랙티브 시뮬레이션 (소득 슬라이더)
+- [ ] 동적 OG 이미지 (서버사이드)
 
 ### Week 3: 글로벌 확장
 
-- 일본어 + 스페인어
-- 국가별 비유 로컬라이징 (빅맥, 치킨, 라멘 등)
-- 순자산 기준 순위 추가
-- 직업군별 비교
+- [x] 일본어 + 스페인어 + 중국어 추가 (5개 언어, getTexts()에 562줄 번역)
+- [x] 50개국+ 국가 드롭다운 (populateCountryDropdown)
+- [x] 블로그 방법론 페이지 (blog/how-wealth-percentile-works.html)
+- [x] 직업군 선택 입력 (selectOccupation)
+- [ ] 국가별 비유 로컬라이징 (빅맥, 치킨, 라멘 등)
+- [ ] 순자산 기준 순위 추가
 
 ### Week 4+: 수익화
 
-- AdSense 연동 (금융 카테고리 고단가)
-- 재테크/투자 플랫폼 제휴
-- 상세 리포트 유료화
+- [ ] AdSense 연동 (금융 카테고리 고단가)
+- [ ] 재테크/투자 플랫폼 제휴
+- [ ] 상세 리포트 유료화
 
 ---
 

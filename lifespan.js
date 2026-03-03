@@ -971,6 +971,38 @@ function renderResults() {
             </div>
         </div>
 
+        <!-- Life Calendar Dot Grid -->
+        <div class="max-w-xl mx-auto mb-10 text-center fade-in">
+            <p class="text-xs text-gray-500 mb-3 uppercase tracking-wider">
+                <span class="lang-en">Your Life in Years</span>
+                <span class="lang-ko hidden">나의 인생 (1칸 = 1년)</span>
+                <span class="lang-ja hidden">あなたの人生（1マス＝1年）</span>
+                <span class="lang-cn hidden">你的人生（1格=1年）</span>
+                <span class="lang-es hidden">Tu Vida en Años</span>
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 420px; margin: 0 auto;">
+                ${renderLifeCalendarDots(result.currentAge, result.adjustedLifeExpectancy)}
+            </div>
+            <div style="display: flex; justify-content: center; gap: 16px; margin-top: 10px;">
+                <span style="display: flex; align-items: center; gap: 4px; font-size: 11px; color: #9ca3af;">
+                    <span style="width: 10px; height: 10px; border-radius: 50%; background: #9ca3af; display: inline-block;"></span>
+                    <span class="lang-en">Lived</span>
+                    <span class="lang-ko hidden">지나간 해</span>
+                    <span class="lang-ja hidden">過ぎた年</span>
+                    <span class="lang-cn hidden">已过</span>
+                    <span class="lang-es hidden">Vivido</span>
+                </span>
+                <span style="display: flex; align-items: center; gap: 4px; font-size: 11px; color: #9ca3af;">
+                    <span style="width: 10px; height: 10px; border-radius: 50%; border: 2px solid #4b5563; display: inline-block;"></span>
+                    <span class="lang-en">Remaining</span>
+                    <span class="lang-ko hidden">남은 해</span>
+                    <span class="lang-ja hidden">残りの年</span>
+                    <span class="lang-cn hidden">剩余</span>
+                    <span class="lang-es hidden">Restante</span>
+                </span>
+            </div>
+        </div>
+
         <!-- Net Impact Badge -->
         <div class="max-w-md mx-auto mb-10 text-center p-6 rounded-2xl border-2 ${isPositiveNet ? 'bg-emerald-950/30 border-emerald-800/40' : 'bg-red-950/20 border-red-900/30'}">
             <p class="text-sm text-gray-400 mb-1">
@@ -1078,6 +1110,17 @@ function renderResults() {
                 </div>
                 ${result.timeWithParents ? renderParentTimeCards(result.timeWithParents) : ''}
             </div>
+        </div>
+
+        <!-- Jar of Weekends -->
+        <div class="max-w-xl mx-auto mb-12 bg-gray-900/80 border-2 border-gray-700 rounded-2xl p-8 text-center fade-in">
+            <p class="text-xl md:text-2xl text-gray-200 italic leading-relaxed">
+                <span class="lang-en">"You have <span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span> weekends left.<br>If each were a marble in a jar,<br>how many would you waste?"</span>
+                <span class="lang-ko hidden">"남은 주말은 <span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span>번.<br>구슬 한 알씩 담긴 유리병이라면,<br>몇 개를 낭비하시겠습니까?"</span>
+                <span class="lang-ja hidden">"残りの週末は<span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span>回。<br>ビー玉が入った瓶だとしたら、<br>いくつ無駄にしますか？"</span>
+                <span class="lang-cn hidden">"你还剩<span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span>个周末。<br>如果每个都是罐子里的一颗弹珠，<br>你会浪费多少颗？"</span>
+                <span class="lang-es hidden">"Te quedan <span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span> fines de semana.<br>Si cada uno fuera una canica en un frasco,<br>¿cuántas desperdiciarías?"</span>
+            </p>
         </div>
 
         <!-- Action Buttons -->
@@ -1407,8 +1450,49 @@ function startCountdownTimer() {
 
 // ==================== SHARING ====================
 
+function renderLifeCalendarDots(currentAge, lifeExpectancy) {
+    const totalDots = Math.round(lifeExpectancy);
+    const filledDots = Math.floor(currentAge);
+    let html = '';
+    for (let i = 0; i < totalDots; i++) {
+        if (i === filledDots) {
+            // Current year - white pulsing dot
+            html += `<span style="width: 12px; height: 12px; border-radius: 50%; background: #ffffff; display: inline-block; box-shadow: 0 0 6px rgba(255,255,255,0.8);"></span>`;
+        } else if (i < filledDots) {
+            // Past years - filled gray
+            html += `<span style="width: 12px; height: 12px; border-radius: 50%; background: #9ca3af; display: inline-block;"></span>`;
+        } else {
+            // Future years - outlined
+            html += `<span style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #4b5563; display: inline-block;"></span>`;
+        }
+    }
+    return html;
+}
+
 function getLifespanShareText() {
     const result = lifespanResult;
+    // Emotional version with parent data or weekends
+    if (result.timeWithParents && result.timeWithParents.mother) {
+        const days = result.timeWithParents.mother.daysRemaining;
+        const texts = {
+            en: `I only have ${formatNumber(days)} days left with my mother. How many do you have?`,
+            ko: `어머니와 보낼 수 있는 날이 ${formatNumber(days)}일밖에 안 남았대. 당신은?`,
+            ja: `母と過ごせる日はあと${formatNumber(days)}日だけ。あなたは？`,
+            cn: `和母亲在一起的日子只剩${formatNumber(days)}天了。你呢？`,
+            es: `Solo me quedan ${formatNumber(days)} días con mi madre. ¿Y tú?`
+        };
+        return texts[currentLang] || texts.en;
+    }
+    if (result.remainingWeekends) {
+        const texts = {
+            en: `I only have ${formatNumber(result.remainingWeekends)} weekends left in my life. How about you?`,
+            ko: `남은 주말이 ${formatNumber(result.remainingWeekends)}번밖에 없대. 너는?`,
+            ja: `残りの週末はたった${formatNumber(result.remainingWeekends)}回。あなたは？`,
+            cn: `我的人生只剩${formatNumber(result.remainingWeekends)}个周末了。你呢？`,
+            es: `¡Solo me quedan ${formatNumber(result.remainingWeekends)} fines de semana! ¿Y tú?`
+        };
+        return texts[currentLang] || texts.en;
+    }
     const texts = {
         en: `I have ${result.yearsRemaining} years remaining! Check your time`,
         ko: `나에게 ${result.yearsRemaining}년이 남았대! 당신의 시간도 확인해보세요`,

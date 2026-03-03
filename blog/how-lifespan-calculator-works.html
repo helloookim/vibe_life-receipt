@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How We Estimate Your Lifespan — The Science Explained | Life Receipt</title>
+    <meta name="description" content="A detailed look at the WHO data, medical research, and lifestyle factor weights behind our lifespan calculator. Learn how smoking, exercise, diet, and social connections affect life expectancy.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="How We Estimate Your Lifespan — The Science Explained">
+    <meta property="og:description" content="WHO data, medical research, and lifestyle factor weights behind our lifespan calculator explained in detail.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://lifereceipt.uk/blog/how-lifespan-calculator-works.html">
+    <meta property="og:site_name" content="Life in Numbers">
+    <meta property="og:image" content="https://lifereceipt.uk/og-image-lifespan.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How We Estimate Your Lifespan — The Science Explained">
+    <meta name="twitter:description" content="WHO data, medical research, and lifestyle factor weights behind our lifespan calculator.">
+    <meta name="twitter:image" content="https://lifereceipt.uk/og-image-lifespan.png">
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://lifereceipt.uk/blog/how-lifespan-calculator-works.html">
+
+    <!-- Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How We Estimate Your Lifespan — The Science Explained",
+        "description": "A detailed look at the WHO data, medical research, and lifestyle factor weights behind our lifespan calculator.",
+        "url": "https://lifereceipt.uk/blog/how-lifespan-calculator-works.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Life in Numbers"
+        },
+        "datePublished": "2026-03-03",
+        "dateModified": "2026-03-03"
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .formula-box {
+            font-family: 'Courier New', monospace;
+            background: #f8f5f1;
+            border-left: 4px solid #6366f1;
+        }
+        .impact-positive {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+        }
+        .impact-negative {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+        }
+        .toc a {
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .toc a:hover {
+            color: #6366f1;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-50 via-pink-50 to-blue-50 text-gray-800 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-500 via-orange-500 to-green-500 bg-clip-text text-transparent">
+                How We Estimate Your Lifespan
+            </h1>
+            <p class="text-xl text-gray-600">The medical research, WHO data, and statistical methods behind the calculator</p>
+        </div>
+
+        <!-- Content -->
+        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
+
+            <!-- Table of Contents -->
+            <nav class="toc mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200">
+                <h2 class="text-lg font-bold mb-3 text-gray-800">Table of Contents</h2>
+                <ol class="space-y-2 text-sm text-blue-700 list-decimal list-inside">
+                    <li><a href="#overview">The Approach: Baseline + Adjustments</a></li>
+                    <li><a href="#baseline">Baseline Life Expectancy (WHO Data)</a></li>
+                    <li><a href="#bmi">Body Mass Index (BMI)</a></li>
+                    <li><a href="#negative">Life-Shortening Factors</a></li>
+                    <li><a href="#positive">Life-Extending Factors</a></li>
+                    <li><a href="#family">Family History & Genetics</a></li>
+                    <li><a href="#bounds">Ethical Bounds & Safety Limits</a></li>
+                    <li><a href="#emotional">Emotional Impact Metrics</a></li>
+                    <li><a href="#limitations">Limitations</a></li>
+                    <li><a href="#sources">Scientific Sources</a></li>
+                </ol>
+            </nav>
+
+            <!-- Section: Overview -->
+            <section id="overview" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">The Approach: Baseline + Adjustments</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our lifespan calculator uses an additive adjustment model. We start with a statistically robust baseline — your country's average life expectancy for your gender — and then adjust it up or down based on lifestyle factors that medical research has shown to meaningfully affect longevity.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>Core Formula:</strong></p>
+                    <p class="text-sm mt-1">Estimated Lifespan = Base Life Expectancy + Sum(All Lifestyle Adjustments) + Minor Variation</p>
+                    <p class="text-sm mt-2 text-gray-500">Where adjustments range from −20 years (worst case) to +15 years (best case)</p>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                    This approach is similar to how actuarial science works in the insurance industry. Life insurers begin with population-level mortality tables and apply individual risk factors (smoking status, BMI, occupation) to calculate individual premiums. Our model simplifies this into a user-friendly three-step questionnaire.
+                </p>
+            </section>
+
+            <!-- Section: Baseline -->
+            <section id="baseline" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Baseline Life Expectancy (WHO Data)</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The foundation of our calculation is the <strong>World Health Organization's Global Health Observatory</strong> life expectancy database (2023 revision). WHO compiles life expectancy estimates for 194 member states using national vital registration systems, census data, and demographic surveys.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Life expectancy is reported separately by sex because the gender gap is one of the most consistent findings in demography. Globally, women outlive men by an average of 5.1 years. This gap is driven by a combination of biological factors (estrogen's cardioprotective effects, two X chromosomes providing redundancy against genetic mutations) and behavioral factors (men have higher rates of smoking, alcohol use, workplace injuries, and risk-taking behavior).
+                </p>
+
+                <h3 class="text-xl font-bold mb-3 text-gray-800">Sample Data Points (WHO 2023)</h3>
+                <div class="overflow-x-auto mb-4">
+                    <table class="w-full text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="text-left p-3 border-b font-semibold">Country</th>
+                                <th class="text-center p-3 border-b font-semibold">Male</th>
+                                <th class="text-center p-3 border-b font-semibold">Female</th>
+                                <th class="text-center p-3 border-b font-semibold">Gap</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border-b">Japan</td><td class="text-center p-3 border-b">81.5</td><td class="text-center p-3 border-b">87.6</td><td class="text-center p-3 border-b text-gray-500">6.1</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">South Korea</td><td class="text-center p-3 border-b">80.5</td><td class="text-center p-3 border-b">86.5</td><td class="text-center p-3 border-b text-gray-500">6.0</td></tr>
+                            <tr><td class="p-3 border-b">United Kingdom</td><td class="text-center p-3 border-b">79.0</td><td class="text-center p-3 border-b">82.9</td><td class="text-center p-3 border-b text-gray-500">3.9</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">United States</td><td class="text-center p-3 border-b">74.8</td><td class="text-center p-3 border-b">80.2</td><td class="text-center p-3 border-b text-gray-500">5.4</td></tr>
+                            <tr><td class="p-3 border-b">Brazil</td><td class="text-center p-3 border-b">72.0</td><td class="text-center p-3 border-b">79.4</td><td class="text-center p-3 border-b text-gray-500">7.4</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">India</td><td class="text-center p-3 border-b">69.5</td><td class="text-center p-3 border-b">72.2</td><td class="text-center p-3 border-b text-gray-500">2.7</td></tr>
+                            <tr><td class="p-3">Global Average</td><td class="text-center p-3">70.8</td><td class="text-center p-3">75.9</td><td class="text-center p-3 text-gray-500">5.1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-gray-600 text-sm">
+                    The U.S. has a notably lower life expectancy compared to other high-income countries, a phenomenon researchers attribute to higher rates of gun violence, opioid overdoses, obesity, and unequal access to healthcare. This "American health disadvantage" has been documented extensively by the National Academies of Sciences.
+                </p>
+            </section>
+
+            <!-- Section: BMI -->
+            <section id="bmi" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Body Mass Index (BMI)</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    BMI is one of the strongest predictors of all-cause mortality at the population level. While it has well-known limitations as an individual health measure (it doesn't distinguish muscle from fat, or account for fat distribution), large-scale epidemiological studies consistently show a J-shaped or U-shaped relationship between BMI and mortality risk.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>BMI = Weight (kg) ÷ Height (m)²</strong></p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">We apply the following adjustments based on WHO BMI categories:</p>
+                <div class="space-y-3 mb-4">
+                    <div class="impact-negative rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Underweight (BMI &lt; 18.5): −3.0 years</p>
+                        <p class="text-sm text-gray-600 mt-1">Low BMI is associated with malnutrition, weakened immune function, and greater susceptibility to respiratory and infectious diseases. A 2016 meta-analysis in the <em>BMJ</em> found that underweight individuals had a 1.6× higher risk of all-cause mortality.</p>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Normal Weight (BMI 18.5–25): No adjustment (baseline)</p>
+                        <p class="text-sm text-gray-600 mt-1">This range has the lowest all-cause mortality across virtually all large cohort studies.</p>
+                    </div>
+                    <div class="impact-negative rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Overweight (BMI 25–30): −2.0 years</p>
+                        <p class="text-sm text-gray-600 mt-1">Moderately elevated risk of cardiovascular disease, type 2 diabetes, and certain cancers. The Global BMI Mortality Collaboration (published in <em>The Lancet</em>, 2016) analyzed 10.6 million participants and found each 5 kg/m² increase above 25 was associated with about 31% higher all-cause mortality.</p>
+                    </div>
+                    <div class="impact-negative rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Obese (BMI ≥ 30): −5.0 years</p>
+                        <p class="text-sm text-gray-600 mt-1">Substantially elevated risk for heart disease, stroke, diabetes, and at least 13 types of cancer. The <em>New England Journal of Medicine</em> (2010) reported that severe obesity can reduce life expectancy by 8–14 years, depending on the degree.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Negative Factors -->
+            <section id="negative" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Life-Shortening Factors</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    Each negative factor below is supported by peer-reviewed medical research. The year adjustments represent population-level averages — individual impact varies based on duration, intensity, and genetic susceptibility.
+                </p>
+
+                <div class="space-y-4">
+                    <!-- Smoking -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Smoking (daily): −10.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed mb-2">
+                            Smoking is the single largest modifiable risk factor for premature death. The CDC estimates that cigarette smoking causes more than 480,000 deaths per year in the United States alone. A landmark 2013 study in the <em>New England Journal of Medicine</em> by Jha et al. followed over 200,000 participants and found that current smokers had mortality rates 2–3 times higher than never-smokers, corresponding to a loss of more than 10 years of life expectancy.
+                        </p>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            The good news: the same study found that quitting before age 40 reduces the excess risk by about 90%. Quitting at any age produces measurable benefits within weeks.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Sources: CDC Tobacco Statistics; Jha et al., NEJM 2013; Doll et al., BMJ 2004</p>
+                    </div>
+
+                    <!-- Alcohol -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Heavy Daily Drinking: −5.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed mb-2">
+                            A comprehensive 2018 study published in <em>The Lancet</em> analyzed data from 599,912 current drinkers across 83 prospective studies in 19 high-income countries. The researchers found that consuming more than 100 grams of alcohol per week (roughly 7 standard drinks) was associated with increased all-cause mortality. At 350+ grams/week (heavy daily drinking), life expectancy was reduced by approximately 4–5 years.
+                        </p>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            The study also challenged the popular notion that moderate drinking is protective. While some earlier studies suggested a cardiovascular benefit, the Lancet analysis found that any level of alcohol consumption increases the risk of stroke, heart failure, and hypertensive disease.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Source: Wood et al., The Lancet, 2018</p>
+                    </div>
+
+                    <!-- Social Isolation -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Social Isolation: −5.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed mb-2">
+                            A pioneering 2010 meta-analysis by Julianne Holt-Lunstad at Brigham Young University, published in <em>PLOS Medicine</em>, analyzed 148 studies with over 308,000 participants. It found that people with strong social relationships had a 50% greater likelihood of survival compared to those with weak or absent social connections. The mortality impact of loneliness was comparable to smoking 15 cigarettes per day.
+                        </p>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            A follow-up meta-analysis in 2015 by the same researcher found that social isolation, loneliness, and living alone each increased mortality risk by 26%, 26%, and 32% respectively, independent of other risk factors.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Sources: Holt-Lunstad et al., PLOS Medicine, 2010; Holt-Lunstad et al., Perspectives on Psychological Science, 2015</p>
+                    </div>
+
+                    <!-- Sedentary -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Sedentary Lifestyle (8+ hours/day sitting): −2.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            A 2016 meta-analysis published in <em>The Lancet</em> by Ekelund et al. pooled data from over 1 million participants across 16 studies. Sitting for more than 8 hours per day was associated with a 17–50% increased risk of death, depending on the level of physical activity. The researchers concluded that 60–75 minutes of moderate-intensity physical activity per day could eliminate the excess mortality from prolonged sitting.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Source: Ekelund et al., The Lancet, 2016</p>
+                    </div>
+
+                    <!-- No Exercise -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">No Exercise: −3.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            Physical inactivity is the fourth leading risk factor for global mortality according to the WHO, accounting for approximately 3.2 million deaths annually. A 2012 study in <em>PLOS Medicine</em> by Moore et al. analyzed data from 654,827 individuals and found that physical inactivity was associated with a loss of 3.1–4.2 years of life, even after controlling for BMI.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Sources: WHO Physical Activity Guidelines, 2020; Moore et al., PLOS Medicine, 2012</p>
+                    </div>
+
+                    <!-- Poor Sleep -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Poor Sleep (&lt;6 or &gt;9 hours): −3.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            A 2010 meta-analysis in the journal <em>Sleep</em> by Cappuccio et al. reviewed 16 prospective studies covering over 1.3 million participants. Both short sleepers (&lt;6 hours) and long sleepers (&gt;9 hours) had significantly increased mortality risk — 12% and 30% higher respectively — compared to those sleeping 7–8 hours. Chronic sleep deprivation increases inflammation, impairs immune function, and is linked to cardiovascular disease, obesity, and cognitive decline.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Source: Cappuccio et al., Sleep, 2010</p>
+                    </div>
+
+                    <!-- Poor Diet -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Poor Diet (predominantly fast food): −3.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            The Global Burden of Disease Study (2017), published in <em>The Lancet</em>, found that poor diet was responsible for more deaths globally than any other risk factor — including smoking. Diets high in sodium, low in whole grains, and low in fruits were the leading dietary risk factors. The study estimated that dietary risks were associated with 11 million deaths and 255 million disability-adjusted life years (DALYs) in 2017.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Sources: GBD 2017 Diet Collaborators, The Lancet, 2019</p>
+                    </div>
+
+                    <!-- Stress -->
+                    <div class="impact-negative rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Extreme Chronic Stress: −3.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            Chronic stress accelerates biological aging through multiple pathways. Research published by the American Psychological Association shows that prolonged stress elevates cortisol levels, promotes chronic inflammation, shortens telomeres (protective caps on chromosomes), and increases the risk of cardiovascular disease, diabetes, and depression. A 2012 study by Epel et al. in <em>Molecular Psychiatry</em> found that high-stress individuals had telomere shortening equivalent to 9–17 additional years of aging.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Sources: APA Stress in America Reports; Epel et al., Molecular Psychiatry, 2012</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Positive Factors -->
+            <section id="positive" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Life-Extending Factors</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    The research is clear: healthy lifestyle choices can add years to your life. Here are the positive adjustments our calculator applies, and the science behind them.
+                </p>
+
+                <div class="space-y-4">
+                    <div class="impact-positive rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Regular Exercise (3+ times/week): +4.5 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            The WHO recommends at least 150 minutes of moderate-intensity aerobic exercise per week. A 2011 prospective cohort study published in <em>The Lancet</em> by Wen et al. tracked 416,175 individuals and found that even 15 minutes of exercise per day reduced all-cause mortality by 14% and increased life expectancy by 3 years. Those meeting the 150-minute recommendation gained approximately 4–4.5 years. A separate study in <em>JAMA Internal Medicine</em> (2015) by Arem et al. found that the mortality benefit plateaus at about 3–5 times the minimum recommendation.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Sources: Wen et al., The Lancet, 2011; Arem et al., JAMA Internal Medicine, 2015; WHO Physical Activity Guidelines</p>
+                    </div>
+
+                    <div class="impact-positive rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Healthy Diet (Mediterranean style): +4.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            The Mediterranean diet — rich in fruits, vegetables, whole grains, legumes, nuts, olive oil, and fish — is the most studied dietary pattern for longevity. A 2014 meta-analysis in the <em>BMJ</em> by Sofi et al. found that high adherence to the Mediterranean diet was associated with a 9% reduction in all-cause mortality and significant reductions in cardiovascular disease, cancer, and neurodegenerative disease. The PREDIMED trial (2018, <em>NEJM</em>) demonstrated that a Mediterranean diet supplemented with extra-virgin olive oil or nuts reduced the incidence of major cardiovascular events by approximately 30%.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Sources: Sofi et al., BMJ, 2014; Estruch et al., NEJM, 2018 (PREDIMED trial)</p>
+                    </div>
+
+                    <div class="impact-positive rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Marriage / Partnership: +1.5 to +3.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            Multiple large-scale studies have found that married individuals tend to live longer than their unmarried counterparts. A 2011 meta-analysis by Manzoli et al. in <em>Social Science & Medicine</em> encompassing over 500 million person-years found that married people had a 15% lower risk of all-cause mortality. This effect is stronger for men (+3 years) than for women (+1.5 years). The proposed mechanisms include better health behaviors (spouses encourage each other to seek medical care), greater financial resources, and reduced social isolation.
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">Source: Manzoli et al., Social Science & Medicine, 2011</p>
+                    </div>
+
+                    <div class="impact-positive rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Strong Social Relationships: +2.0 years</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            Beyond the absence of isolation, actively maintaining strong social connections provides a protective effect. The Holt-Lunstad meta-analyses (cited above) demonstrate that social integration, quality of relationships, and social support networks all independently predict survival. People with rich social lives have lower levels of inflammatory biomarkers, better immune function, and lower rates of depression.
+                        </p>
+                    </div>
+
+                    <div class="impact-positive rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Optimal Sleep (7–8 hours): +1.0 year</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            Sleeping within the 7–8 hour "sweet spot" is associated with the lowest all-cause mortality. This isn't just about avoiding the risks of too-little or too-much sleep — consistent, quality sleep actively supports cardiovascular health, metabolic function, immune response, and cognitive maintenance. The sleep research by Walker (2017, "Why We Sleep") synthesizes decades of evidence showing that optimal sleep is one of the most underappreciated health behaviors.
+                        </p>
+                    </div>
+
+                    <div class="impact-positive rounded-lg p-5">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">Low Stress: +1.0 year</h3>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            Effective stress management — through mindfulness, social support, work-life balance, or other coping strategies — is associated with slower biological aging. Studies on long-lived populations in "Blue Zones" (Okinawa, Sardinia, Nicoya, Ikaria, and Loma Linda) consistently find low chronic stress as one of the common factors among centenarians.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Family History -->
+            <section id="family" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Family History & Genetics</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Genetics plays a meaningful role in longevity, though perhaps less than most people assume. Twin studies — particularly the large Danish Twin Registry study by Herskind et al. (1996) and the Swedish Twin Registry analysis by Ljungquist et al. (1998) — estimate that genetics account for approximately 20–30% of the variation in human lifespan. The remaining 70–80% is attributable to environmental and lifestyle factors.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our calculator captures family history through a simplified question about whether parents and grandparents lived past 80. This is a rough proxy for genetic predisposition.
+                </p>
+                <div class="space-y-3">
+                    <div class="impact-positive rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Favorable family history (parents/grandparents lived past 80): +3.0 years</p>
+                        <p class="text-sm text-gray-600 mt-1">Having long-lived first-degree relatives is one of the strongest predictors of personal longevity, even after controlling for shared environmental factors.</p>
+                    </div>
+                    <div class="impact-negative rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Unfavorable family history (parents had significant health issues): −3.0 years</p>
+                        <p class="text-sm text-gray-600 mt-1">Family history of cardiovascular disease, cancer, or other conditions before age 65 is associated with elevated personal risk.</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm mt-4">
+                    <strong>Important context:</strong> A 2018 study in <em>Genetics</em> by Ruby et al. analyzed 400 million historical records and concluded that the heritability of lifespan is closer to 7% when controlling for assortative mating (the tendency for people to marry partners with similar lifestyles). This suggests that lifestyle choices are even more important than previously thought.
+                </p>
+            </section>
+
+            <!-- Section: Bounds -->
+            <section id="bounds" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Ethical Bounds & Safety Limits</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Because our calculator addresses a sensitive topic, we apply strict safety bounds to the output:
+                </p>
+                <div class="bg-gradient-to-br from-yellow-50 to-pink-50 rounded-xl p-6 border-2 border-pink-200 mb-4">
+                    <ul class="space-y-3 text-gray-700">
+                        <li><strong>Total negative adjustment cap:</strong> −20 years maximum. Even with every risk factor maximized, we never subtract more than 20 years from the baseline. This prevents unreasonably low estimates that could cause distress.</li>
+                        <li><strong>Total positive adjustment cap:</strong> +15 years maximum. This prevents unrealistically optimistic predictions.</li>
+                        <li><strong>Minimum lifespan floor:</strong> The calculator never predicts a lifespan less than your current age plus 5 years. This ethical safeguard ensures that no one receives a result suggesting they have very little time left, which could cause genuine psychological harm.</li>
+                        <li><strong>Maximum lifespan ceiling:</strong> Base life expectancy + 20 years. Even with perfect lifestyle factors, we don't project lifespans that exceed what's demographically plausible.</li>
+                    </ul>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                    These bounds reflect our commitment to responsible design. While the calculator is meant to motivate healthy behavior, we recognize that showing someone a very low number could be harmful, particularly for users dealing with health anxiety or depression.
+                </p>
+            </section>
+
+            <!-- Section: Emotional Metrics -->
+            <section id="emotional" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Emotional Impact Metrics</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Beyond the raw lifespan number, our calculator translates years remaining into tangible, emotionally resonant metrics:
+                </p>
+                <div class="space-y-3 mb-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Remaining Seasons: years remaining × 4</p>
+                        <p class="text-sm text-gray-600 mt-1">How many more springs, summers, autumns, and winters you're likely to experience.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Remaining Weekends: years remaining × 52</p>
+                        <p class="text-sm text-gray-600 mt-1">Weekends feel infinite, but the number is finite — and often surprisingly small.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Time Remaining with Parents</p>
+                        <p class="text-sm text-gray-600 mt-1">Based on your parents' ages and the life expectancy for their gender and country, we estimate how many years of overlap remain. This is consistently the most emotionally impactful metric and the primary driver of social sharing. Research by Bronnie Ware, a palliative care nurse, documented that one of the top five regrets of the dying is "I wish I had stayed in touch with my friends" — and by extension, family.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Limitations -->
+            <section id="limitations" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Limitations</h2>
+                <div class="bg-gradient-to-br from-yellow-50 to-pink-50 rounded-xl p-6 border-2 border-pink-200">
+                    <p class="text-gray-700 leading-relaxed mb-3">
+                        Our lifespan calculator is an educational tool that illustrates how lifestyle factors affect life expectancy at a population level. It has inherent limitations:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>Linear model:</strong> We add and subtract years independently for each factor. In reality, risk factors interact — a smoker who also drinks heavily faces compounded risks greater than the sum of each factor alone.</li>
+                        <li><strong>Population averages, not individual predictions:</strong> Life expectancy is a statistical concept describing groups. No calculator can predict an individual's lifespan with certainty.</li>
+                        <li><strong>Binary/categorical inputs:</strong> Complex behaviors like "diet quality" are reduced to a few categories. Your actual diet quality exists on a spectrum.</li>
+                        <li><strong>No medical history:</strong> We don't ask about pre-existing conditions, medications, or detailed health data. A comprehensive actuarial assessment would include these factors.</li>
+                        <li><strong>Cultural factors:</strong> Stress levels, social connection norms, and health behaviors are culturally mediated in ways our model doesn't fully capture.</li>
+                        <li><strong>Historical cohort effects:</strong> Today's life expectancy data reflects past mortality patterns. Future medical advances (or pandemics) could significantly alter outcomes.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section: Sources -->
+            <section id="sources" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Scientific Sources</h2>
+                <ul class="space-y-3 text-gray-700 text-sm">
+                    <li><strong>World Health Organization (WHO)</strong> — Global Health Observatory life expectancy data (2023 revision)</li>
+                    <li><strong>Jha et al.</strong> — "21st-Century Hazards of Smoking and Benefits of Cessation," <em>NEJM</em>, 2013</li>
+                    <li><strong>Doll et al.</strong> — "Mortality in Relation to Smoking: 50 Years' Observations," <em>BMJ</em>, 2004</li>
+                    <li><strong>Wood et al.</strong> — "Risk thresholds for alcohol consumption," <em>The Lancet</em>, 2018</li>
+                    <li><strong>Holt-Lunstad et al.</strong> — "Social Relationships and Mortality Risk: A Meta-analytic Review," <em>PLOS Medicine</em>, 2010</li>
+                    <li><strong>Ekelund et al.</strong> — "Does physical activity attenuate the detrimental association of sitting time with mortality?" <em>The Lancet</em>, 2016</li>
+                    <li><strong>Moore et al.</strong> — "Leisure Time Physical Activity and Mortality," <em>PLOS Medicine</em>, 2012</li>
+                    <li><strong>Cappuccio et al.</strong> — "Sleep Duration and All-Cause Mortality: A Systematic Review and Meta-Analysis," <em>Sleep</em>, 2010</li>
+                    <li><strong>GBD 2017 Diet Collaborators</strong> — "Health effects of dietary risks," <em>The Lancet</em>, 2019</li>
+                    <li><strong>Global BMI Mortality Collaboration</strong> — "Body-mass index and all-cause mortality," <em>The Lancet</em>, 2016</li>
+                    <li><strong>Wen et al.</strong> — "Minimum amount of physical activity for reduced mortality," <em>The Lancet</em>, 2011</li>
+                    <li><strong>Estruch et al.</strong> — "Primary Prevention of Cardiovascular Disease with a Mediterranean Diet," <em>NEJM</em>, 2018 (PREDIMED)</li>
+                    <li><strong>Herskind et al.</strong> — "The heritability of human longevity: a population-based study," <em>Human Genetics</em>, 1996</li>
+                    <li><strong>Ruby et al.</strong> — "Estimates of the Heritability of Human Longevity," <em>Genetics</em>, 2018</li>
+                    <li><strong>Epel et al.</strong> — "Accelerated telomere shortening in response to life stress," <em>Molecular Psychiatry</em>, 2012</li>
+                    <li><strong>Centers for Disease Control and Prevention (CDC)</strong> — Tobacco use and mortality statistics</li>
+                    <li><strong>American Psychological Association (APA)</strong> — Stress in America annual reports</li>
+                </ul>
+            </section>
+
+            <!-- CTA -->
+            <div class="text-center mt-10 pt-8 border-t border-gray-200">
+                <p class="text-gray-600 mb-4">Curious about your own estimated lifespan?</p>
+                <a href="../lifespan.html" class="inline-block bg-gradient-to-r from-red-500 via-orange-500 to-green-500 text-white font-bold py-4 px-8 rounded-full hover:shadow-2xl transition-all transform hover:scale-105">
+                    Try the Lifespan Calculator
+                </a>
+            </div>
+
+            <!-- Related Articles -->
+            <div class="mt-10 pt-8 border-t border-gray-200">
+                <h3 class="text-lg font-bold mb-4 text-gray-800">Related Articles</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <a href="how-life-receipt-works.html" class="block bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition border border-gray-200">
+                        <p class="font-semibold text-gray-800 mb-1">The Science Behind Your Life Receipt</p>
+                        <p class="text-sm text-gray-600">How we calculate sleep hours, coffee consumption, steps walked, and the rest of your life statistics.</p>
+                    </a>
+                    <a href="how-wealth-percentile-works.html" class="block bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition border border-gray-200">
+                        <p class="font-semibold text-gray-800 mb-1">How We Calculate Your Global Wealth Rank</p>
+                        <p class="text-sm text-gray-600">Log-normal distributions, PPP adjustments, and Pareto corrections explained.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <a href="../index.html" class="inline-block bg-gradient-to-r from-red-500 via-orange-500 to-green-500 text-white font-bold py-4 px-8 rounded-full hover:shadow-2xl transition-all transform hover:scale-105">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

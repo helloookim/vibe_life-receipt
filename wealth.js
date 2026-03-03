@@ -612,10 +612,23 @@ function renderResults() {
             </div>
         </div>
 
+        <!-- What Your Income Buys -->
+        <div class="mb-12 fade-in" style="animation-delay: 0.8s">
+            <h3 class="text-center text-lg font-bold mb-4 text-gray-300">
+                <span class="lang-en">What Your Income Could Buy</span>
+                <span class="lang-ko hidden">당신의 연소득으로 살 수 있는 것</span>
+                <span class="lang-ja hidden">あなたの年収で買えるもの</span>
+                <span class="lang-cn hidden">你的年收入能买什么</span>
+                <span class="lang-es hidden">Lo Que Tu Ingreso Podría Comprar</span>
+            </h3>
+            ${renderIncomeBuysGrid(r.incomeInUSD, lang)}
+        </div>
+
         <!-- Insight -->
         <div class="mb-12 fade-in" style="animation-delay: 0.9s">
             <h3 class="text-center text-lg font-bold mb-4 text-gray-300">${t.insightTitle}</h3>
-            <div class="bg-blue-900 bg-opacity-30 border-l-4 border-yellow-500 rounded-r-xl p-6">
+            ${renderHistoricalComparison(r.incomeInUSD, lang)}
+            <div class="bg-blue-900 bg-opacity-30 border-l-4 border-yellow-500 rounded-r-xl p-6 mt-3">
                 <p class="text-blue-200 text-lg italic">"${r.insight[lang] || r.insight.en}"</p>
             </div>
         </div>
@@ -795,16 +808,84 @@ function animatePercentile(target) {
     requestAnimationFrame(update);
 }
 
+// ==================== VIRAL CONTENT ====================
+
+function renderIncomeBuysGrid(incomeUSD, lang) {
+    const items = [
+        { emoji: '🍔', costUSD: 5.15, en: 'Big Macs', ko: '빅맥', ja: 'ビッグマック', cn: '巨无霸', es: 'Big Macs' },
+        { emoji: '📱', costUSD: 1199, en: 'iPhones', ko: '아이폰', ja: 'iPhone', cn: 'iPhone', es: 'iPhones' },
+        { emoji: '✈️', costUSD: 3000, en: 'Round-the-world flights', ko: '세계일주 항공권', ja: '世界一周航空券', cn: '环球机票', es: 'Vuelos al mundo' },
+        { emoji: '🚗', costUSD: 35000, en: 'Tesla Model 3s', ko: '테슬라 Model 3', ja: 'テスラ Model 3', cn: '特斯拉 Model 3', es: 'Tesla Model 3' },
+        { emoji: '🎓', costUSD: 200, en: 'Years of education (developing countries)', ko: '개도국 교육 1년분', ja: '途上国の教育年数', cn: '发展中国家教育年', es: 'Años de educación' },
+        { emoji: '🎬', costUSD: 180, en: 'Years of Netflix', ko: '넷플릭스 구독 연수', ja: 'Netflix年数', cn: 'Netflix年数', es: 'Años de Netflix' }
+    ];
+
+    const cards = items.map(item => {
+        const count = Math.floor(incomeUSD / item.costUSD);
+        if (count < 1) return '';
+        const label = item[lang] || item.en;
+        return `
+            <div class="bg-gray-800 bg-opacity-50 rounded-xl p-4 border border-gray-700 text-center">
+                <div class="text-2xl mb-1">${item.emoji}</div>
+                <div class="text-xl font-bold text-yellow-400">${formatNumber(count)}</div>
+                <div class="text-xs text-gray-400 mt-1">${label}</div>
+            </div>
+        `;
+    }).filter(c => c).slice(0, 6);
+
+    return `<div class="grid grid-cols-3 gap-3 max-w-xl mx-auto">${cards.join('')}</div>`;
+}
+
+function renderHistoricalComparison(incomeUSD, lang) {
+    const comparisons = [
+        { minUSD: 75000,
+            en: 'You earn more than 99% of all humans who have ever lived.',
+            ko: '역사상 존재한 인류의 99%보다 많이 벌고 있습니다.',
+            ja: '歴史上存在した人類の99%より多く稼いでいます。',
+            cn: '你的收入超过了历史上99%的人类。',
+            es: 'Ganas más que el 99% de todos los humanos que han existido.' },
+        { minUSD: 30000,
+            en: 'You have more purchasing power than a medieval European king.',
+            ko: '중세 유럽 왕의 구매력보다 당신이 더 높습니다.',
+            ja: '中世ヨーロッパの王より購買力が高いです。',
+            cn: '你的购买力超过了中世纪欧洲国王。',
+            es: 'Tienes más poder adquisitivo que un rey medieval europeo.' },
+        { minUSD: 5000,
+            en: 'Your daily income exceeds what a Roman citizen earned in a week.',
+            ko: '당신의 하루 소득은 로마 시민의 일주일 소득을 넘습니다.',
+            ja: 'あなたの日収はローマ市民の週収を超えています。',
+            cn: '你的日收入超过了罗马公民一周的收入。',
+            es: 'Tu ingreso diario supera lo que un romano ganaba en una semana.' },
+        { minUSD: 500,
+            en: 'You earn more per year than 90% of humans who ever lived.',
+            ko: '역사상 90%의 인류보다 연소득이 높습니다.',
+            ja: '歴史上90%の人類より年収が高いです。',
+            cn: '你的年收入超过了历史上90%的人类。',
+            es: 'Ganas más al año que el 90% de los humanos que han existido.' }
+    ];
+
+    const match = comparisons.find(c => incomeUSD >= c.minUSD);
+    if (!match) return '';
+
+    const text = match[lang] || match.en;
+    return `
+        <div class="bg-yellow-900 bg-opacity-20 border border-yellow-600 border-opacity-40 rounded-xl p-5 text-center mb-3">
+            <p class="text-yellow-200 text-base font-semibold">${text}</p>
+        </div>
+    `;
+}
+
 // ==================== SHARING ====================
 
 function getWealthShareText() {
     const topP = wealthResult.topPercent < 1 ? wealthResult.topPercent.toFixed(2) : wealthResult.topPercent.toFixed(1);
+    const richerFormatted = formatLargeNumber(wealthResult.richerThan, currentLang);
     const texts = {
-        en: `I'm in the top ${topP}% globally! Where do you rank among 8 billion people?`,
-        ko: `나는 전 세계 상위 ${topP}%래! 80억 명 중 너는 몇 등이야?`,
-        ja: `世界の上位${topP}%だって！80億人の中であなたは何位？`,
-        cn: `我在全球前${topP}%！80亿人中你排第几？`,
-        es: `¡Estoy en el top ${topP}% mundial! ¿Dónde te ubicas entre 8 mil millones?`
+        en: `I'm richer than ${richerFormatted} people on Earth (top ${topP}%). How about you?`,
+        ko: `지구에서 ${richerFormatted}보다 부유하대 (상위 ${topP}%). 너는?`,
+        ja: `地球上の${richerFormatted}人より裕福だって（上位${topP}%）。あなたは？`,
+        cn: `我比地球上${richerFormatted}人更富有（前${topP}%）。你呢？`,
+        es: `Soy más rico que ${richerFormatted} personas en la Tierra (top ${topP}%). ¿Y tú?`
     };
     return texts[currentLang] || texts.en;
 }

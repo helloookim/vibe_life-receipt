@@ -155,15 +155,14 @@ LIFE RECEIPT
 
 ## 5. 다국어 / 글로벌 전략
 
-### 5-1. 언어별 페이지 구조
+### 5-1. 언어별 페이지 구조 (구현된 상태)
 ```
-lifereceipt.com/         → 영어 (기본)
-lifereceipt.com/ko/      → 한국어
-lifereceipt.com/ja/      → 일본어
-lifereceipt.com/zh/      → 중국어 간체
-lifereceipt.com/es/      → 스페인어
-lifereceipt.com/pt/      → 포르투갈어 (브라질)
+lifereceipt.uk/            → 메인 (5개 언어 지원, ?lang= 파라미터로 전환)
+lifereceipt.uk/en/         → 영어 리디렉트 스텁 (?lang=en)
+lifereceipt.uk/ko/         → 한국어 리디렉트 스텁 (?lang=ko)
 ```
+> 참고: ja, cn, es는 별도 서브디렉토리 없이 ?lang= 파라미터로 지원.
+> 도메인이 lifereceipt.com에서 lifereceipt.uk로 변경됨.
 
 ### 5-2. 우선순위
 | 순위 | 언어 | 이유 |
@@ -248,19 +247,20 @@ lifereceipt.com/r/{hash}     → 공유용 결과 페이지
 
 | 구성 요소 | 기술 | 이유 |
 |---|---|---|
-| 프레임워크 | Astro 또는 순수 HTML/JS | 정적 사이트, 빌드 빠름, Cloudflare Pages 최적 |
-| 스타일링 | Tailwind CSS | 빠른 개발, 반응형 쉬움 |
+| 프레임워크 | 순수 HTML/JS (채택) | 정적 사이트, 빌드 불필요, Cloudflare Pages 최적 |
+| 스타일링 | Tailwind CSS v3 via CDN | 빠른 개발, 반응형 쉬움, 설치 불필요 |
 | 호스팅 | Cloudflare Pages | 무료, 글로벌 CDN, 빠름 |
-| OG 이미지 | Cloudflare Workers + Satori | 서버리스 동적 이미지 생성 |
-| i18n | JSON 파일 기반 | 단순, 유지보수 쉬움 |
-| 분석 | Cloudflare Analytics + GA4 | 무료, GDPR 친화적 |
-| 공유 | 카카오 SDK + Web Share API | 한국 + 글로벌 공유 |
-| 도메인 | Cloudflare Registrar | 도메인+호스팅+DNS 통합 관리 |
+| OG 이미지 | 정적 PNG (tools/generate-og-images.html로 생성) | html2canvas 기반, 서버 불필요 |
+| i18n | DOM visibility 토글 (.lang-{code} 클래스) | 빌드 불필요, JS inline 번역 객체 병행 |
+| 분석 | 미연동 | 향후 Cloudflare Analytics + GA4 계획 |
+| 공유 | 카카오 SDK + X/Facebook/Threads/LINE/링크복사 | 한국 + 글로벌 공유 |
+| 도메인 | lifereceipt.uk (Cloudflare) | 도메인+호스팅+DNS 통합 관리 |
+| 폰트 | Inter + Pretendard + JetBrains Mono (CDN) | Latin, CJK, 영수증 모노스페이스 |
 
-**대안: 순수 정적 사이트 (가장 단순)**
-- 단일 HTML + JS + CSS
+**채택한 아키텍처: 순수 정적 사이트**
+- 서비스별 HTML + JS 파일 (빌드 도구 없음)
 - 모든 계산은 클라이언트에서 수행
-- OG 이미지만 Cloudflare Workers로 처리
+- OG 이미지는 정적 PNG (서버사이드 동적 생성 미구현)
 - DB, 서버, API 일절 없음 → 유지비 0원
 
 ---
@@ -286,30 +286,37 @@ lifereceipt.com/r/{hash}     → 공유용 결과 페이지
 ## 9. MVP 우선순위
 
 ### Week 1: MVP 런칭
-- [ ] 한국어 + 영어 동시
-- [ ] 필수 입력 3개 + 선택 3개 (수면, 커피, 스마트폰)
-- [ ] 영수증 결과 페이지 (시간 카테고리 + 소비량 카테고리)
-- [ ] 이미지 저장 기능
-- [ ] 카카오톡 공유 + 트위터 공유 + 링크 복사
-- [ ] 반응형 (모바일 퍼스트)
-- [ ] 기본 OG 태그 (정적 이미지라도)
+- [x] 한국어 + 영어 동시
+- [x] 필수 입력 3개 + 선택 3개 (수면, 커피, 스마트폰)
+- [x] 영수증 결과 페이지 (시간 카테고리 + 소비량 카테고리)
+- [x] 이미지 저장 기능
+- [x] 카카오톡 공유 + 트위터 공유 + 링크 복사
+- [x] 반응형 (모바일 퍼스트)
+- [x] 기본 OG 태그 (정적 이미지라도)
 
 ### Week 2: 바이럴 최적화
-- [ ] 동적 OG 이미지 생성
-- [ ] 프린터 로딩 애니메이션
-- [ ] 선택 입력 전체 추가
-- [ ] 돈 카테고리 추가
+- [x] 정적 OG 이미지 생성 (tools/generate-og-images.html로 생성)
+- [ ] 동적 OG 이미지 생성 (서버사이드)
+- [x] 프린터 로딩 애니메이션
+- [x] 선택 입력 전체 추가
+- [x] 돈 카테고리 추가
 - [ ] GA4 이벤트 트래킹
 
 ### Week 3: 글로벌 확장
-- [ ] 일본어 추가
-- [ ] 스페인어 추가
-- [ ] 국가별 통계 상수 정교화
+- [x] 일본어 추가
+- [x] 스페인어 추가
+- [x] 중국어 추가
+- [x] 국가별 통계 상수 정교화 (10개국 COUNTRY_DATA)
 - [ ] AdSense 연동
 
 ### Week 4+: 플랫폼 확장
-- [ ] 수명 계산기 탭 추가
-- [ ] 글로벌 부 순위 탭 추가
+- [x] 수명 계산기 서비스 추가 (lifespan.html)
+- [x] 글로벌 부 순위 서비스 추가 (wealth.html)
+- [x] 블로그/방법론 페이지 추가 (blog/)
+- [x] 정보 페이지 추가 (about, contact, privacy, terms)
+- [x] SEO 최적화 (sitemap.xml, robots.txt, JSON-LD, hreflang)
+- [x] Facebook, Threads, LINE 공유 추가
+- [x] 교차 서비스 데이터 공유 (localStorage)
 - [ ] 프리미엄 영수증 유료화 테스트
 
 ---

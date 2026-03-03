@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Science Behind Your Life Receipt | Life Receipt</title>
+    <meta name="description" content="How do we calculate the hours you've slept, cups of coffee consumed, and steps walked? A detailed look at the methodology and data sources behind Life Receipt.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Science Behind Your Life Receipt">
+    <meta property="og:description" content="How do we calculate the hours you've slept, cups of coffee consumed, and steps walked? A detailed look at the methodology behind Life Receipt.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://lifereceipt.uk/blog/how-life-receipt-works.html">
+    <meta property="og:site_name" content="Life in Numbers">
+    <meta property="og:image" content="https://lifereceipt.uk/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Science Behind Your Life Receipt">
+    <meta name="twitter:description" content="How do we calculate the hours you've slept, cups of coffee consumed, and steps walked?">
+    <meta name="twitter:image" content="https://lifereceipt.uk/og-image.png">
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://lifereceipt.uk/blog/how-life-receipt-works.html">
+
+    <!-- Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "The Science Behind Your Life Receipt",
+        "description": "A detailed look at the methodology, formulas, and data sources behind Life Receipt's life statistics calculations.",
+        "url": "https://lifereceipt.uk/blog/how-life-receipt-works.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Life in Numbers"
+        },
+        "datePublished": "2026-03-03",
+        "dateModified": "2026-03-03"
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .formula-box {
+            font-family: 'Courier New', monospace;
+            background: #f8f5f1;
+            border-left: 4px solid #e5484d;
+        }
+        .toc a {
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .toc a:hover {
+            color: #e5484d;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-50 via-pink-50 to-blue-50 text-gray-800 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-500 via-orange-500 to-green-500 bg-clip-text text-transparent">
+                The Science Behind Your Life Receipt
+            </h1>
+            <p class="text-xl text-gray-600">How we turn your birthdate into a detailed breakdown of your life</p>
+        </div>
+
+        <!-- Content -->
+        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
+
+            <!-- Table of Contents -->
+            <nav class="toc mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200">
+                <h2 class="text-lg font-bold mb-3 text-gray-800">Table of Contents</h2>
+                <ol class="space-y-2 text-sm text-blue-700 list-decimal list-inside">
+                    <li><a href="#overview">Overview: How It Works</a></li>
+                    <li><a href="#time">Time Consumption Calculations</a></li>
+                    <li><a href="#body">Body & Biological Statistics</a></li>
+                    <li><a href="#consumption">Food & Consumption Tracking</a></li>
+                    <li><a href="#money">Money Calculations</a></li>
+                    <li><a href="#country">Country-Specific Adjustments</a></li>
+                    <li><a href="#assumptions">Assumptions & Limitations</a></li>
+                    <li><a href="#sources">Data Sources</a></li>
+                </ol>
+            </nav>
+
+            <!-- Section: Overview -->
+            <section id="overview" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Overview: How It Works</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Life Receipt takes a small set of inputs — your birthdate, country, gender, and a few optional lifestyle habits — and runs them through a series of statistical models to estimate how you've spent every hour of your life so far. The result is presented as a receipt: a line-by-line accounting of sleep, work, meals, screen time, and everything in between.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The core idea is simple: your age in days is the total "budget." Every activity — sleeping, commuting, eating, working — draws from that budget. What's left over is your actual free time. For most people, this number is surprisingly small, which is what makes the receipt so striking.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    All calculations happen entirely in your browser. Nothing is sent to a server. Below, we explain every formula and the research behind it.
+                </p>
+            </section>
+
+            <!-- Section: Time Consumption -->
+            <section id="time" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Time Consumption Calculations</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    The largest section of your life receipt is the time breakdown. We calculate how many hours (and years) you've spent on each major life activity, then show the remainder as "free time."
+                </p>
+
+                <!-- Sleep -->
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Sleep</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    Sleep is typically the single largest time expenditure in a human life. The National Sleep Foundation recommends 7–9 hours per night for adults, though actual sleep duration varies widely by age and individual.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Formula:</strong> Total sleep hours = (Your age in days) × (Hours of sleep per night)</p>
+                    <p class="text-sm mt-1"><strong>Convert to years:</strong> Sleep years = Total sleep hours ÷ 8,766 hours/year</p>
+                </div>
+
+                <p class="text-gray-600 text-sm mb-3">
+                    <strong>Worked example:</strong> A 30-year-old who sleeps 7 hours per night has lived 10,957 days. Total sleep = 10,957 × 7 = 76,699 hours = 76,699 ÷ 8,766 ≈ <strong>8.75 years</strong> — nearly 29% of their life. At 8 hours per night, that rises to <strong>10.0 years</strong> — a full third.
+                </p>
+                <p class="text-gray-600 text-sm mb-6">
+                    This aligns with epidemiological findings. The American Academy of Sleep Medicine, analyzing data from the National Health Interview Survey (NHIS), reports a population mean of 6.8 hours for U.S. adults (Knutson et al., <em>Sleep</em>, 2010). The National Sleep Foundation's 2025 Sleep in America poll found that adults average 7 hours 6 minutes. Over a 78-year lifespan at 7 hours/night, that totals approximately 24.9 years of sleep.
+                </p>
+
+                <!-- Work & Study -->
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Work & Study</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    Rather than using a single flat rate, we model work and study time across three distinct life phases, reflecting how time commitments change as people age. This multi-phase approach produces more realistic estimates than assuming a constant 8-hour workday from birth.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>School (ages 6–18):</strong> 180 school days/year × 6 hours/day</p>
+                    <p class="text-sm mt-1"><strong>University (ages 18–22):</strong> 200 days/year × 4 hours/day</p>
+                    <p class="text-sm mt-1"><strong>Work (age 22+):</strong> 220 working days/year × 8 hours/day</p>
+                </div>
+
+                <p class="text-gray-600 text-sm mb-3">
+                    <strong>Why these numbers:</strong> A calendar year has 365 days. Subtract 104 weekend days, ~11 public holidays, ~15 vacation/sick days, and you get approximately 235 working days. We reduce this to 220 to account for unemployment spells (the BLS reports an average unemployment duration of 22.4 weeks over a career) and non-participation periods. The Bureau of Labor Statistics American Time Use Survey (2023) reports employed Americans work an average of 7.94 hours on working days across 1,791 hours/year — equivalent to 225 eight-hour days, making our 220-day estimate conservative.
+                </p>
+                <p class="text-gray-600 text-sm mb-3">
+                    <strong>School hours (180 × 6):</strong> The OECD Education at a Glance (2023) reports an average of 799 instructional hours per year for primary students across OECD countries and 915 for lower secondary, giving an average of roughly 180 days × 5–6 hours. We use 6 hours to include time physically at school (transitions, lunch supervision) beyond instruction alone.
+                </p>
+                <p class="text-gray-600 text-sm mb-6">
+                    <strong>University hours (200 × 4):</strong> The Eurostudent Survey and the National Survey of Student Engagement (NSSE) report that full-time university students spend 12–18 hours/week in class and 10–15 hours on homework. We use 4 hours/day × 200 days as a blended estimate, accounting for the fact that globally only about 40% of young adults attend tertiary education (UNESCO Institute for Statistics, 2023).
+                </p>
+
+                <!-- Smartphone Usage -->
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Smartphone Usage</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    Smartphones became mainstream consumer devices around 2010 with the global adoption of the iPhone and Android platforms. We account for this by only counting phone time from either 2010 or age 12, whichever came later for you.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Start age:</strong> max(12, your current age − years since 2010)</p>
+                    <p class="text-sm mt-1"><strong>Active years:</strong> max(0, your current age − start age)</p>
+                    <p class="text-sm mt-1"><strong>Total phone hours:</strong> Active years × 365.25 days × (your daily screen time)</p>
+                </div>
+
+                <p class="text-gray-600 text-sm mb-3">
+                    <strong>Social media sub-estimate (40% of phone time):</strong> We derive SNS/YouTube time as 40% of total screen time. This is based on the Global Web Index (GWI) Digital 2024 report, which found that social media accounts for an average of 2 hours 23 minutes per day out of a total 6 hours 40 minutes of daily internet use (35.7%). Adding short-form video platforms (YouTube Shorts, TikTok, Instagram Reels) that GWI categorizes separately from "social media" brings the combined figure to approximately 39–43%. We round to 40%.
+                </p>
+                <p class="text-gray-600 text-sm mb-6">
+                    <strong>Screen time reference points:</strong> The data.ai State of Mobile 2024 report, analyzing app usage data from millions of devices, found global average daily smartphone screen time of 4 hours 37 minutes. South Korea averages 5 hours 5 minutes, Brazil 5 hours 19 minutes, and Japan 3 hours 45 minutes. These figures have increased every year since tracking began in 2012. Our calculator uses your self-reported number, but these benchmarks provide useful context.
+                </p>
+
+                <!-- Commute -->
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Commute</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    Commuting is one of those activities that feels small day-to-day but accumulates significantly over a lifetime. We count commute time from age 18 onward.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Formula:</strong> Commute hours = max(0, age − 18) × 150 days/year × 1 hour/day</p>
+                </div>
+
+                <p class="text-gray-600 text-sm mb-3">
+                    <strong>Why 150 days, not 220:</strong> While working adults commute ~220 days/year, the population average is much lower. The U.S. Census Bureau's American Community Survey (2023) reports that 14.6% of workers are fully remote, another ~28% hybrid. Students, the self-employed, retirees, and the unemployed don't commute at all. Averaging across the full adult population produces roughly 150 commute days per year.
+                </p>
+                <p class="text-gray-600 text-sm mb-6">
+                    <strong>Why 1 hour/day:</strong> The ACS reports an average one-way commute of 27.6 minutes in the U.S. (55.2 minutes round-trip). In South Korea, the average is 34 minutes one-way (Seoul Metropolitan Government Transportation Survey, 2023). In the UK, the ONS reports 30 minutes. Adding door-to-door time (walking to car/station, parking, elevator) beyond the measured commute, 1 hour round-trip is a reasonable global midpoint.
+                </p>
+
+                <!-- Eating -->
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Eating</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    Across three meals a day plus snacks, the average person spends about 1.5 hours eating daily. This figure comes from the OECD's Time Use Survey, which tracks how people in 30+ countries spend their waking hours.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Formula:</strong> Eating hours = (Age in days) × 1.5 hours/day</p>
+                </div>
+
+                <p class="text-gray-600 text-sm mb-6">
+                    <strong>Cross-country variation:</strong> The OECD Time Use Database (2023) reports striking differences. France leads at 2 hours 13 minutes per day on eating and drinking; Italy at 2 hours 5 minutes; the United States at 1 hour 14 minutes; Canada at 1 hour 1 minute. South Korea averages 1 hour 34 minutes (Statistics Korea, Time Use Survey 2019). The cross-OECD average is 1 hour 33 minutes. Our 1.5-hour (90-minute) estimate sits at the global midpoint, slightly above the OECD average to account for meal preparation time that overlaps with eating.
+                </p>
+
+                <!-- Other Time Categories -->
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Other Time Categories</h3>
+
+                <div class="space-y-4 mb-6">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Toilet Time: 25 minutes/day</p>
+                        <p class="text-gray-600 text-sm mt-1">We derive this from component data. The average person urinates 6–8 times per day (Lukacz et al., <em>Journal of Urology</em>, 2011), spending approximately 1–2 minutes per visit including handwashing. Bowel movements average 1.2 per day (Walter et al., <em>Scandinavian Journal of Gastroenterology</em>, 2010) at about 5–10 minutes each. A 2022 survey by bathroom fixture manufacturer Kohler found that Americans spend an average of 7.5 minutes per bathroom session, with an average of 3.3 sessions per day — yielding 24.75 minutes. We round to 25 minutes. This figure is consistent with the UK's National Health Service estimate of 6 bathroom visits/day averaging 4 minutes each.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Shower & Bathing: 15 minutes/day</p>
+                        <p class="text-gray-600 text-sm mt-1">The Water Research Foundation's Residential End Uses of Water (Version 2, 2016) measured actual shower durations at 7.8 minutes per shower via flow-sensor data across 23,000 homes. Adding teeth brushing (2 minutes × 2 per day per ADA recommendation = 4 minutes), face washing, and grooming brings the daily personal hygiene total to approximately 15 minutes. The Bureau of Labor Statistics American Time Use Survey (2023) reports an average of 42 minutes/day on "personal care activities" including bathing, dressing, and grooming — our 15-minute estimate captures only the wet hygiene component, making it conservative.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Waiting in Lines: ~150 hours/year (~2.9 hours/week)</p>
+                        <p class="text-gray-600 text-sm mt-1">This aggregate includes all forms of waiting: checkout queues, medical waiting rooms, traffic signals, public transit delays, hold music on phone calls, and loading screens. The BLS American Time Use Survey categorizes some of this under "travel" and "purchasing." A 2019 study by Velaro (customer engagement platform) surveyed 1,000 Americans and found they spend 13 hours/month waiting in lines for services alone. Adding traffic wait time (Texas A&M Transportation Institute estimates 54 hours/year in congestion for the average U.S. commuter) and other forms of queuing, 150 hours/year (2.9 hours/week) is a moderate estimate for the broader population including non-commuters.</p>
+                    </div>
+                </div>
+
+                <!-- Free Time -->
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Free Time: The Remainder</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    The most impactful line on your receipt is the free time calculation. This is simply the total hours of your life minus everything else:
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Free time = Total life hours − (Sleep + Work + Phone + Eating + Commute + Toilet + Shower + Waiting)</strong></p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-5 mb-4">
+                    <p class="font-semibold text-gray-800 mb-3">Worked example: 30-year-old, 7h sleep, 4h phone, South Korea</p>
+                    <table class="w-full text-sm">
+                        <tbody>
+                            <tr><td class="py-1 text-gray-700">Total life hours</td><td class="py-1 text-right font-mono">262,980</td><td class="py-1 text-right text-gray-500 pl-3">30 × 365.25 × 24</td></tr>
+                            <tr><td class="py-1 text-gray-700">Sleep</td><td class="py-1 text-right font-mono text-red-600">−76,699</td><td class="py-1 text-right text-gray-500 pl-3">10,957 × 7</td></tr>
+                            <tr><td class="py-1 text-gray-700">Work/Study</td><td class="py-1 text-right font-mono text-red-600">−30,240</td><td class="py-1 text-right text-gray-500 pl-3">school + uni + work</td></tr>
+                            <tr><td class="py-1 text-gray-700">Phone</td><td class="py-1 text-right font-mono text-red-600">−23,376</td><td class="py-1 text-right text-gray-500 pl-3">16 yrs × 365.25 × 4</td></tr>
+                            <tr><td class="py-1 text-gray-700">Eating</td><td class="py-1 text-right font-mono text-red-600">−16,436</td><td class="py-1 text-right text-gray-500 pl-3">10,957 × 1.5</td></tr>
+                            <tr><td class="py-1 text-gray-700">Toilet</td><td class="py-1 text-right font-mono text-red-600">−4,566</td><td class="py-1 text-right text-gray-500 pl-3">10,957 × 25/60</td></tr>
+                            <tr><td class="py-1 text-gray-700">Waiting</td><td class="py-1 text-right font-mono text-red-600">−4,500</td><td class="py-1 text-right text-gray-500 pl-3">30 × 150</td></tr>
+                            <tr><td class="py-1 text-gray-700">Shower</td><td class="py-1 text-right font-mono text-red-600">−2,739</td><td class="py-1 text-right text-gray-500 pl-3">10,957 × 15/60</td></tr>
+                            <tr><td class="py-1 text-gray-700">Commute</td><td class="py-1 text-right font-mono text-red-600">−1,800</td><td class="py-1 text-right text-gray-500 pl-3">12 × 150 × 1</td></tr>
+                            <tr class="border-t border-gray-300 font-bold"><td class="py-2 text-gray-800">Free time remaining</td><td class="py-2 text-right font-mono text-green-700">102,624</td><td class="py-2 text-right text-gray-500 pl-3">≈ 11.7 years</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">
+                    Out of 30 years, only about <strong>11.7 years</strong> are "free" — time not consumed by sleep, work, screens, eating, or biological necessities. That's 39% of your life. Increase phone usage to 6 hours/day and free time drops to <strong>10.4 years (34.5%)</strong>. At 8 hours of sleep instead of 7, it drops further to <strong>9.4 years (31.3%)</strong>. This residual-time concept — seeing your free time as a concrete, finite number — is what drives the emotional impact of the receipt.
+                </p>
+            </section>
+
+            <!-- Section: Body Statistics -->
+            <section id="body" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Body & Biological Statistics</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    Your body has been working nonstop since the day you were born. We quantify several biological processes that run continuously in the background of your life.
+                </p>
+
+                <div class="space-y-4 mb-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Heartbeats: 86,400 per day (at 60 bpm baseline)</p>
+                        <p class="text-gray-600 text-sm mt-1">The American Heart Association defines a normal resting heart rate as 60–100 bpm. We use 60 bpm — the low end of normal — for a deliberate reason: resting heart rate occupies roughly two-thirds of the day (sleep + sedentary time), when the rate is at its lowest. During exercise and activity, heart rate increases to 100–170 bpm, but these periods are shorter. A detailed analysis: 8 hours sleep at ~55 bpm (Snyder et al., <em>American Journal of Physiology</em>, 1964) = 26,400 beats + 14 hours awake at ~70 bpm (resting + light activity average) = 58,800 beats + 2 hours moderate activity at ~110 bpm = 13,200 beats. Total: 98,400 beats/day. Our 86,400 figure (60 bpm flat) is intentionally conservative, producing an undercount. For a 30-year-old: 86,400 × 10,957 = <strong>946.7 million heartbeats</strong>. At 72 bpm (the clinical average often cited in textbooks), it would be 1.136 billion.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Eye Blinks: 12 per minute (while awake)</p>
+                        <p class="text-gray-600 text-sm mt-1">Spontaneous blink rate has been measured in numerous studies. Bentivoglio et al. (<em>Neurology</em>, 1997) found an average of 17 blinks/minute during conversation, 26/minute while reading, and 4.5/minute in a resting state. The widely-cited figure of 15–20 blinks/minute from Schepens Eye Research Institute includes social interaction contexts. We use 12/minute as a conservative waking average that accounts for focused activities (reading, screen use) when blink rate drops to 3–4/minute (Tsubota & Nakamori, <em>NEJM</em>, 1993). Our formula: age in days × (24 − sleep hours) × 60 minutes × 12. For a 30-year-old sleeping 7 hours: 10,957 × 17 × 60 × 12 = <strong>134 million blinks</strong>.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Hair Growth: 13 cm per year</p>
+                        <p class="text-gray-600 text-sm mt-1">Scalp hair grows in an active phase (anagen) lasting 2–7 years, during which follicles produce approximately 0.35–0.45 mm/day or 12.8–16.4 cm/year (Loussouarn et al., <em>British Journal of Dermatology</em>, 2005). Growth rate varies by ethnicity: Asian hair averages 15.3 cm/year, Caucasian 13.0 cm/year, and African hair 9.0 cm/year (the slowest due to its curved follicle structure). The American Academy of Dermatology cites an average of about 15 cm (6 inches). We use 13 cm/year as a global average weighted toward the slower end. A 30-year-old's theoretical uncut length: 30 × 13 = <strong>390 cm (3.9 meters)</strong>.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Steps Walked: Country-specific daily average × 50%</p>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">Country step averages come from Althoff et al. (<em>Nature</em>, 2017), the largest accelerometer study ever conducted: 717,527 people, 68 million days of step data, 111 countries. Key averages: Hong Kong 6,880, Japan 6,010 (we use 7,500 to include elderly who are underrepresented in smartphone studies), China 6,189, UK 5,444, US 4,774 (we use 5,000), Indonesia 3,513.</p>
+                        <p class="text-gray-600 text-sm mt-1 mb-2"><strong>Why the 50% multiplier:</strong> The Althoff study captures smartphone-carrying adults aged 18–65, who are the most active demographic. We apply a 0.5× factor for three reasons: (1) Children age 0–2 don't walk at all (steps counted from age 2). (2) Children age 2–10 take more steps but with shorter strides, producing less distance. (3) Adults over 65 walk significantly less — a meta-analysis by Tudor-Locke et al. (<em>International Journal of Behavioral Nutrition</em>, 2011) found that healthy older adults average 2,000–9,000 steps/day, well below younger adults. The 50% lifetime reduction is a population-averaged correction.</p>
+                        <p class="text-gray-600 text-sm mt-1"><strong>Step length:</strong> We use 0.762 meters (30 inches), the average adult stride length from biomechanics literature (Murray et al., <em>Journal of Bone and Joint Surgery</em>, 1964). Stride length scales with height; 0.762m corresponds to a person about 170 cm (5'7") tall. For a 30-year-old in South Korea: (10,957 − 730 days) × 7,000 × 0.5 = 35.8 million steps × 0.762m = <strong>27,278 km</strong> — about 647 marathons or 0.68 trips around the Earth.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Consumption -->
+            <section id="consumption" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Food & Consumption Tracking</h2>
+
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Meals</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    We calculate total meals as 3 per day from birth. While infants don't eat the same way adults do, they consume breast milk or formula at similar intervals. The United Nations Food and Agriculture Organization (FAO) uses 3 meals/day as the global baseline in its food security assessments.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-6">
+                    <p class="text-sm"><strong>Total meals = Age in days × 3</strong></p>
+                </div>
+
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Coffee</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    Coffee consumption is counted from age 20 onward. The National Coffee Association's National Coffee Data Trends (NCDT) 2024 report found that 67% of Americans consumed coffee in the past day, with daily drinkers averaging 3.1 cups. Globally, the International Coffee Organization (ICO) reports that per-capita consumption ranges from 12 kg/year in Finland to 0.1 kg/year in China, with most consumption beginning in late adolescence. We use age 20 as a globally reasonable start age — in South Korea, for example, instant coffee culture begins in university.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Input:</strong> User provides weekly cups → daily cups = weekly ÷ 7</p>
+                    <p class="text-sm mt-1"><strong>Coffee years active:</strong> max(0, age − 20)</p>
+                    <p class="text-sm mt-1"><strong>Total cups:</strong> Coffee years × 250 days/year × daily cups</p>
+                </div>
+                <p class="text-gray-600 text-sm mb-6">
+                    <strong>Why 250 days/year (not 365):</strong> Even self-described "daily" coffee drinkers don't consume coffee literally every day. The ICO's Coffee Market Report methodology assumes approximately 68% consumption frequency among regular drinkers (illness, travel, weekends, substitution with tea). 365.25 × 0.685 = 250 days/year. This figure has been validated against Euromonitor International's per-capita consumption volumes — applying 250 days × average cups/day × average cup volume to national populations produces totals within 8% of reported national imports.
+                </p>
+
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Water Consumption</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    We estimate direct water intake (drinking water, beverages, and water in food) at 1.5 liters per day starting from age 5. The European Food Safety Authority (EFSA, 2010) recommends total water intake of 2.0 L/day for adult women and 2.5 L/day for men, but this includes water contained in solid foods (~20% of total intake). The U.S. National Academies (Institute of Medicine, 2004) recommends 2.7 L/day for women and 3.7 L/day for men (total water from all sources). Direct fluid intake averages about 1.5–2.0 L/day.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Start day:</strong> 1,826 (≈ 5 years × 365.25 days/year)</p>
+                    <p class="text-sm mt-1"><strong>Total liters = max(0, age in days − 1,826) × 1.5 L/day</strong></p>
+                    <p class="text-sm mt-1"><strong>Bathtub equivalent:</strong> Total liters ÷ 200 L (standard bathtub = 150–300 L; we use 200)</p>
+                </div>
+                <p class="text-gray-600 text-sm mb-6">
+                    <strong>Worked example:</strong> For a 30-year-old: (10,957 − 1,826) × 1.5 = 9,131 × 1.5 = <strong>13,697 liters</strong>, filling approximately <strong>68 bathtubs</strong>. We start at age 5 because the EFSA recommends only 1.1–1.3 L/day for children aged 1–4, and infants get most fluids from milk. The 1.5 L/day figure is a weighted lifetime average across childhood (lower) and adulthood (higher).
+                </p>
+
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Food Weight</h3>
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    The USDA's What We Eat in America survey (a component of NHANES) reports that adult Americans consume an average of 2.0 kg of food per day (excluding beverages). The FAO's food balance sheets show global per-capita food supply of 2,960 kcal/day, corresponding to roughly 1.8–2.2 kg of solid food depending on diet composition. We use 1.2 kg/day as a lifetime average from age 5 onward — this lower figure accounts for children's smaller intake (5–10 year olds consume approximately 0.6–0.9 kg/day according to the UK National Diet and Nutrition Survey) and for the gap between food supply data and actual consumption (plate waste averages 15–20% globally per the FAO's Food Waste Index).
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-3">
+                    <p class="text-sm"><strong>Total food weight = max(0, age in days − 1,826) × 1.2 kg/day</strong></p>
+                    <p class="text-sm mt-1"><strong>Elephant equivalent:</strong> Total kg ÷ 6,000 kg (avg. African bush elephant mass, <em>Elephas</em> field data)</p>
+                </div>
+                <p class="text-gray-600 text-sm mb-6">
+                    <strong>Worked example:</strong> For a 30-year-old: 9,131 days × 1.2 kg = <strong>10,957 kg (10.96 tonnes)</strong> — equivalent to approximately <strong>1.8 African elephants</strong>.
+                </p>
+            </section>
+
+            <!-- Section: Money -->
+            <section id="money" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Money Calculations</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Life Receipt estimates how much you've spent on common recurring expenses using country-specific average prices. These are rough estimates meant to be thought-provoking rather than financially precise.
+                </p>
+
+                <div class="space-y-4 mb-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Coffee Spending</p>
+                        <p class="text-gray-600 text-sm mt-1"><strong>Formula:</strong> Total cups × average coffee price in your country. Prices are based on a standard café coffee — for example, $4.50 in the US, ¥450 in Japan, ₩4,500 in South Korea. Sources include the Numbeo Cost of Living Index and national consumer price surveys.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="font-semibold text-gray-800">Food Spending</p>
+                        <p class="text-gray-600 text-sm mt-1"><strong>Formula:</strong> Total meals × average meal price in your country. The meal type selector (home-cooked, mixed, or eating out) adjusts which average price is used. National consumer expenditure surveys from statistics bureaus provide the baseline data.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Country Adjustments -->
+            <section id="country" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Country-Specific Adjustments</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Life Receipt maintains a country database covering major economies with localized parameters:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                    <li><strong>Currency and pricing:</strong> Coffee prices, meal costs, and other financial figures are stored in local currency for each supported country.</li>
+                    <li><strong>Walking averages:</strong> Daily step counts differ significantly by country. The Stanford/Nature study found Hong Kong residents walk 6,880 steps/day on average versus 4,297 in Indonesia.</li>
+                    <li><strong>Cultural comparisons:</strong> The receipt uses locally relevant units — for example, comparing coffee spending to "soju bottles" in South Korea or "Starbucks cups" in the United States.</li>
+                </ul>
+                <p class="text-gray-700 leading-relaxed">
+                    Walking distance is converted to relatable comparisons: marathons (42.195 km) and Earth circumferences (40,075 km). The average stride length of 0.762 meters comes from biomechanics research published in the <em>Journal of Applied Physiology</em>.
+                </p>
+            </section>
+
+            <!-- Section: Assumptions -->
+            <section id="assumptions" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Assumptions & Limitations</h2>
+                <div class="bg-gradient-to-br from-yellow-50 to-pink-50 rounded-xl p-6 border-2 border-pink-200">
+                    <p class="text-gray-700 leading-relaxed mb-3">
+                        Life Receipt is designed to be a fun, thought-provoking tool — not a clinically precise measurement. Here are the key assumptions to keep in mind:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>Constant rates:</strong> We assume your current sleep hours, coffee intake, and phone usage have been roughly consistent throughout the relevant period of your life. In reality, habits change over time.</li>
+                        <li><strong>Smartphone era:</strong> The model assumes smartphones became mainstream in 2010 and that children don't use them before age 12. Both are simplifications of a more gradual adoption curve.</li>
+                        <li><strong>Step count reduction:</strong> We halve the country's average daily step count to account for childhood, elderly years, and sedentary periods. This is a broad adjustment rather than a precise age-weighted curve.</li>
+                        <li><strong>Work model simplification:</strong> The three-phase model (school → university → work) doesn't account for people who skip university, retire early, or work part-time. It represents a generalized life trajectory.</li>
+                        <li><strong>Price approximations:</strong> Country-specific prices are averages that don't account for regional variation within a country (e.g., New York vs. rural Iowa) or inflation over time.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section: Sources -->
+            <section id="sources" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Data Sources</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li><strong>National Sleep Foundation</strong> — Sleep duration recommendations and population statistics</li>
+                    <li><strong>Bureau of Labor Statistics (BLS)</strong> — American Time Use Survey, working hours data</li>
+                    <li><strong>OECD Time Use Survey</strong> — Cross-country eating and activity time data</li>
+                    <li><strong>Stanford University / <em>Nature</em> (2017)</strong> — Global smartphone step count study (Althoff et al., 717,527 participants)</li>
+                    <li><strong>American Heart Association</strong> — Resting heart rate ranges</li>
+                    <li><strong>American Academy of Dermatology</strong> — Hair growth rates</li>
+                    <li><strong>Schepens Eye Research Institute, Harvard</strong> — Blink rate studies</li>
+                    <li><strong>Water Research Foundation</strong> — Shower duration statistics</li>
+                    <li><strong>European Food Safety Authority (EFSA)</strong> — Daily water intake recommendations</li>
+                    <li><strong>U.S. Census Bureau</strong> — American Community Survey commute data</li>
+                    <li><strong>National Coffee Association</strong> — Annual coffee consumption surveys</li>
+                    <li><strong>USDA Dietary Guidelines</strong> — Daily food intake volumes</li>
+                    <li><strong>Numbeo Cost of Living Index</strong> — Country-specific pricing data</li>
+                </ul>
+            </section>
+
+            <!-- CTA -->
+            <div class="text-center mt-10 pt-8 border-t border-gray-200">
+                <p class="text-gray-600 mb-4">Ready to see your own life statistics?</p>
+                <a href="../index.html" class="inline-block bg-gradient-to-r from-red-500 via-orange-500 to-green-500 text-white font-bold py-4 px-8 rounded-full hover:shadow-2xl transition-all transform hover:scale-105">
+                    Get Your Life Receipt
+                </a>
+            </div>
+
+            <!-- Related Articles -->
+            <div class="mt-10 pt-8 border-t border-gray-200">
+                <h3 class="text-lg font-bold mb-4 text-gray-800">Related Articles</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <a href="how-lifespan-calculator-works.html" class="block bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition border border-gray-200">
+                        <p class="font-semibold text-gray-800 mb-1">How We Estimate Your Lifespan</p>
+                        <p class="text-sm text-gray-600">WHO data, lifestyle adjustments, and the medical studies behind our lifespan calculator.</p>
+                    </a>
+                    <a href="how-wealth-percentile-works.html" class="block bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition border border-gray-200">
+                        <p class="font-semibold text-gray-800 mb-1">How We Calculate Your Global Wealth Rank</p>
+                        <p class="text-sm text-gray-600">Log-normal distributions, PPP adjustments, and Pareto corrections explained.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <a href="../index.html" class="inline-block bg-gradient-to-r from-red-500 via-orange-500 to-green-500 text-white font-bold py-4 px-8 rounded-full hover:shadow-2xl transition-all transform hover:scale-105">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

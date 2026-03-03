@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How We Calculate Your Global Wealth Rank — The Math Explained | Life Receipt</title>
+    <meta name="description" content="A detailed explanation of the log-normal distribution model, PPP adjustments, Pareto tail corrections, and World Bank data behind our global wealth percentile calculator.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="How We Calculate Your Global Wealth Rank — The Math Explained">
+    <meta property="og:description" content="Log-normal distributions, PPP adjustments, and Pareto tail corrections: the full methodology behind our wealth percentile calculator.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://lifereceipt.uk/blog/how-wealth-percentile-works.html">
+    <meta property="og:site_name" content="Life in Numbers">
+    <meta property="og:image" content="https://lifereceipt.uk/og-image-wealth.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How We Calculate Your Global Wealth Rank — The Math Explained">
+    <meta name="twitter:description" content="Log-normal distributions, PPP adjustments, and Pareto tail corrections explained.">
+    <meta name="twitter:image" content="https://lifereceipt.uk/og-image-wealth.png">
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://lifereceipt.uk/blog/how-wealth-percentile-works.html">
+
+    <!-- Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How We Calculate Your Global Wealth Rank — The Math Explained",
+        "description": "A detailed explanation of the log-normal distribution model, PPP adjustments, and Pareto tail corrections behind our global wealth percentile calculator.",
+        "url": "https://lifereceipt.uk/blog/how-wealth-percentile-works.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Life in Numbers"
+        },
+        "datePublished": "2026-03-03",
+        "dateModified": "2026-03-03"
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .formula-box {
+            font-family: 'Courier New', monospace;
+            background: #f8f5f1;
+            border-left: 4px solid #d4a017;
+        }
+        .math-note {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+        }
+        .toc a {
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .toc a:hover {
+            color: #d4a017;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-50 via-pink-50 to-blue-50 text-gray-800 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-500 via-orange-500 to-green-500 bg-clip-text text-transparent">
+                How We Calculate Your Global Wealth Rank
+            </h1>
+            <p class="text-xl text-gray-600">The economics, statistics, and data behind the percentile</p>
+        </div>
+
+        <!-- Content -->
+        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 mb-8">
+
+            <!-- Table of Contents -->
+            <nav class="toc mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200">
+                <h2 class="text-lg font-bold mb-3 text-gray-800">Table of Contents</h2>
+                <ol class="space-y-2 text-sm text-blue-700 list-decimal list-inside">
+                    <li><a href="#overview">The Big Picture</a></li>
+                    <li><a href="#ppp">Purchasing Power Parity (PPP)</a></li>
+                    <li><a href="#lognormal">The Log-Normal Distribution Model</a></li>
+                    <li><a href="#gini">The Gini Coefficient</a></li>
+                    <li><a href="#global">Global Percentile: Summing Across Countries</a></li>
+                    <li><a href="#pareto">Pareto Tail Correction for Top Earners</a></li>
+                    <li><a href="#national">National vs. Global Percentile</a></li>
+                    <li><a href="#data">Data Sources & Coverage</a></li>
+                    <li><a href="#limitations">Limitations & Caveats</a></li>
+                    <li><a href="#sources">References</a></li>
+                </ol>
+            </nav>
+
+            <!-- Section: Overview -->
+            <section id="overview" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">The Big Picture</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    When you enter your annual income and country into our calculator, we answer a deceptively complex question: <em>what percentage of the world's 8 billion people earn less than you?</em>
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    This is not as simple as looking up your income on a single global list. There is no master database of every person's earnings. Instead, economists model income distributions within each country using statistical distributions, then aggregate across all countries weighted by population.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our calculator follows the same methodology used by the World Bank's Poverty and Inequality Platform and academic researchers like Branko Milanovic, whose pioneering work on global income distribution has been widely published. The process works in three steps:
+                </p>
+                <ol class="list-decimal list-inside space-y-2 text-gray-700 mb-4">
+                    <li><strong>Convert your income to a common unit</strong> using Purchasing Power Parity (PPP)</li>
+                    <li><strong>Model each country's income distribution</strong> as a log-normal curve using the country's median income and Gini coefficient</li>
+                    <li><strong>Sum across all countries</strong> to find what fraction of the global population earns less than your PPP-adjusted income</li>
+                </ol>
+            </section>
+
+            <!-- Section: PPP -->
+            <section id="ppp" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Step 1: Purchasing Power Parity (PPP)</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A software engineer in San Francisco earning $120,000 and a software engineer in Bangalore earning ₹2,000,000 (roughly $24,000 at market exchange rates) might actually have similar living standards. That's because a dollar buys far more in India than in the United States — more food, more housing, more services. Market exchange rates don't capture this difference.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    <strong>Purchasing Power Parity</strong> is an economic concept that adjusts for these price differences. The idea originates from the "law of one price" — identical goods should cost the same everywhere when expressed in a common currency. In practice, the World Bank's International Comparison Program (ICP) sends researchers to price a basket of hundreds of goods and services in every participating country, then computes conversion factors.
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>Conversion:</strong> Income in PPP dollars = Local income × PPP conversion factor</p>
+                    <p class="text-sm mt-2"><strong>Example (South Korea):</strong></p>
+                    <p class="text-sm">Annual salary: ₩50,000,000</p>
+                    <p class="text-sm">PPP factor: 1 ÷ 855.4 ≈ 0.001169</p>
+                    <p class="text-sm">PPP income: ₩50,000,000 × 0.001169 ≈ $58,450 PPP</p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    PPP conversion factors are updated periodically by the World Bank. The most recent comprehensive round (ICP 2021, published 2024) involved 176 participating economies. Our calculator uses 2023 estimated factors.
+                </p>
+                <div class="math-note rounded-lg p-4 mb-4">
+                    <p class="text-sm text-gray-700"><strong>Why not use market exchange rates?</strong> Exchange rates are heavily influenced by capital flows, interest rate differentials, speculation, and trade imbalances. They can fluctuate 20–30% in a single year without any change in actual purchasing power. PPP provides a much more stable and meaningful basis for comparing living standards across borders.</p>
+                </div>
+            </section>
+
+            <!-- Section: Log-Normal -->
+            <section id="lognormal" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Step 2: The Log-Normal Distribution Model</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    How is income distributed within a country? This has been studied extensively by economists since Vilfredo Pareto first observed in 1896 that wealth in Italy followed a power law. Since then, researchers have found that the <strong>log-normal distribution</strong> provides an excellent fit for the vast majority of the income spectrum (roughly the bottom 99%).
+                </p>
+
+                <h3 class="text-xl font-bold mb-2 text-gray-800">What is a Log-Normal Distribution?</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A variable is log-normally distributed if its natural logarithm follows a normal (Gaussian, or "bell curve") distribution. Income is a textbook example: most people cluster around the median, with a long right tail of high earners. Unlike a normal distribution (which is symmetric), the log-normal is right-skewed — it naturally captures the fact that there are many more people earning slightly below the median than there are people earning 10× the median.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The log-normal distribution is defined by two parameters:
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>Parameters:</strong></p>
+                    <p class="text-sm mt-1"><strong>μ (mu)</strong> = ln(median income) — the center of the distribution on the log scale</p>
+                    <p class="text-sm mt-1"><strong>σ (sigma)</strong> = √2 × erfinv(Gini coefficient) — the spread, derived from inequality</p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The connection between σ and the Gini coefficient is an elegant mathematical result. For a log-normal distribution, the Gini coefficient <em>G</em> equals <em>erf(σ / √2)</em>, where <em>erf</em> is the Gaussian error function. Inverting this relationship lets us derive σ directly from the Gini coefficient.
+                </p>
+
+                <h3 class="text-xl font-bold mb-2 text-gray-800">The Cumulative Distribution Function (CDF)</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Once we have μ and σ for a country, we can calculate the probability that a randomly selected person in that country earns less than any given income level. This is the CDF of the log-normal distribution:
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>P(Income ≤ x) = ½ × [1 + erf((ln(x) − μ) / (σ × √2))]</strong></p>
+                    <p class="text-sm mt-2 text-gray-500">Where erf is the Gaussian error function, ln is the natural logarithm, and √2 ≈ 1.4142</p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The error function (<em>erf</em>) is a well-studied mathematical function that appears throughout probability and statistics. It computes the probability that a normally distributed variable falls within a given range. Our implementation uses the <strong>Abramowitz and Stegun approximation</strong> (Formula 7.1.26 from the <em>Handbook of Mathematical Functions</em>, 1964), which provides accuracy to within 1.5 × 10⁻⁷ — more than sufficient for percentile calculations.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    For the inverse error function (<em>erfinv</em>), needed to convert Gini coefficients to σ values, we use <strong>Winitzki's approximation</strong> (2003), a compact closed-form formula that provides good accuracy across the full domain.
+                </p>
+            </section>
+
+            <!-- Section: Gini -->
+            <section id="gini" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">The Gini Coefficient: Measuring Inequality</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The Gini coefficient, developed by Italian statistician Corrado Gini in 1912, is the most widely used measure of income inequality. It ranges from 0 (perfect equality — everyone earns the same) to 1 (perfect inequality — one person earns everything).
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Geometrically, the Gini coefficient is defined as twice the area between the Lorenz curve and the line of perfect equality. The Lorenz curve plots the cumulative share of income (y-axis) against the cumulative share of the population ranked by income (x-axis). In a perfectly equal society, the Lorenz curve would be a straight diagonal line; in practice, it bows below the diagonal, and the further it bows, the higher the Gini.
+                </p>
+
+                <h3 class="text-xl font-bold mb-3 text-gray-800">Gini Coefficients Around the World</h3>
+                <div class="overflow-x-auto mb-4">
+                    <table class="w-full text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="text-left p-3 border-b font-semibold">Country</th>
+                                <th class="text-center p-3 border-b font-semibold">Gini</th>
+                                <th class="text-left p-3 border-b font-semibold">Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border-b">South Korea</td><td class="text-center p-3 border-b">0.312</td><td class="p-3 border-b text-gray-600">Relatively equal (OECD member)</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">Japan</td><td class="text-center p-3 border-b">0.329</td><td class="p-3 border-b text-gray-600">Moderate inequality</td></tr>
+                            <tr><td class="p-3 border-b">United Kingdom</td><td class="text-center p-3 border-b">0.351</td><td class="p-3 border-b text-gray-600">Moderate inequality</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">United States</td><td class="text-center p-3 border-b">0.398</td><td class="p-3 border-b text-gray-600">High for a developed nation</td></tr>
+                            <tr><td class="p-3 border-b">China</td><td class="text-center p-3 border-b">0.382</td><td class="p-3 border-b text-gray-600">Moderate-high</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">Brazil</td><td class="text-center p-3 border-b">0.489</td><td class="p-3 border-b text-gray-600">High inequality</td></tr>
+                            <tr><td class="p-3">South Africa</td><td class="text-center p-3">0.630</td><td class="p-3 text-gray-600">Among the highest in the world</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-gray-600 text-sm">
+                    Scandinavian countries (Denmark, Norway, Sweden) typically have Gini coefficients around 0.27–0.29, while sub-Saharan African and Latin American countries often exceed 0.45. The global Gini coefficient (treating all humans as one population) is approximately 0.65–0.70, reflecting the enormous gap between rich and poor nations.
+                </p>
+            </section>
+
+            <!-- Section: Global Percentile -->
+            <section id="global" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Step 3: Global Percentile — Summing Across Countries</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The global percentile is where all the pieces come together. For each country in our database, we compute the fraction of that country's population earning less than your PPP-adjusted income, then weight by population:
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>Global Percentile Calculation:</strong></p>
+                    <p class="text-sm mt-2">For each country <em>i</em>:</p>
+                    <p class="text-sm ml-4">1. Compute σᵢ = √2 × erfinv(Giniᵢ)</p>
+                    <p class="text-sm ml-4">2. Compute μᵢ = ln(median incomeᵢ)</p>
+                    <p class="text-sm ml-4">3. Compute fractionᵢ = LogNormalCDF(your PPP income, μᵢ, σᵢ)</p>
+                    <p class="text-sm ml-4">4. Compute weightedᵢ = fractionᵢ × populationᵢ</p>
+                    <p class="text-sm mt-2"><strong>Global percentile = Σ(weightedᵢ) ÷ Σ(populationᵢ)</strong></p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    This is equivalent to imagining that you randomly select a person from the entire world population and asking: <em>what is the probability that they earn less than you?</em> Each country contributes to this probability in proportion to its population — China and India, with populations exceeding 1 billion each, dominate the calculation. This is why even a modest middle-class income in a developed country often places you in the top 5–10% globally.
+                </p>
+                <div class="math-note rounded-lg p-4 mb-4">
+                    <p class="text-sm text-gray-700"><strong>Example:</strong> An American earning $55,000/year (close to the U.S. median) translates to roughly $55,000 in PPP terms (the U.S. dollar is the PPP reference currency). This income is higher than the median income in virtually every other country on Earth. After summing across all countries weighted by population, this person typically lands around the 92nd–95th global percentile.</p>
+                </div>
+            </section>
+
+            <!-- Section: Pareto -->
+            <section id="pareto" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Pareto Tail Correction for Top Earners</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The log-normal distribution is an excellent model for the bottom 99% of the income distribution, but it systematically underestimates the thickness of the upper tail. In plain terms: there are more extremely wealthy people than a log-normal model would predict.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    This observation goes back to Vilfredo Pareto himself, who noticed that the upper tail of wealth distributions follows a <strong>power law</strong> — the famous "Pareto distribution." The probability of earning more than a given amount <em>x</em> falls off as <em>x<sup>−α</sup></em>, where α (alpha) is typically between 1.5 and 2.5 for income distributions across different countries.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our calculator applies a Pareto correction for incomes above a threshold (the approximate entry point to the global top 1%):
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>Pareto correction (for top 1% incomes):</strong></p>
+                    <p class="text-sm mt-1">α (Pareto exponent) = 1.8</p>
+                    <p class="text-sm">Survival function: S(x) = (x_min / x)^α</p>
+                    <p class="text-sm">Corrected percentile = 1 − (0.01 × S(x))</p>
+                    <p class="text-sm mt-2 text-gray-500">Where x_min is the income threshold marking the top 1%</p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The Pareto exponent of 1.8 is empirically derived from wealth distribution studies, including the World Inequality Database (WID) and research by Thomas Piketty, Emmanuel Saez, and Gabriel Zucman. A lower alpha means a "fatter" tail (more extreme wealth), while a higher alpha means wealth drops off more quickly.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    Without this correction, someone earning $500,000/year might calculate as the 99.99th percentile under the log-normal model, when the Pareto-corrected estimate is closer to the 99.5th — because the real distribution has far more people at $500K+ than the log-normal predicts.
+                </p>
+            </section>
+
+            <!-- Section: National -->
+            <section id="national" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">National vs. Global Percentile</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our calculator also shows your percentile within your own country. This uses the same log-normal model but applied to a single country rather than aggregated globally:
+                </p>
+                <div class="formula-box rounded-lg p-4 mb-4">
+                    <p class="text-sm"><strong>National percentile = LogNormalCDF(your PPP income, μ_country, σ_country)</strong></p>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The difference between national and global percentile can be dramatic. Someone at the 50th percentile in the United States (median U.S. income) is simultaneously at roughly the 93rd percentile globally. Conversely, someone at the 50th percentile in India is at about the 25th percentile globally.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    This gap illustrates one of the central findings of global inequality research: <strong>where you are born matters more than almost any other factor</strong> in determining your income. Milanovic (2016) estimated that about two-thirds of global income inequality is explained by country of birth alone — the "citizenship premium."
+                </p>
+            </section>
+
+            <!-- Section: Data -->
+            <section id="data" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Data Sources & Coverage</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our calculator draws on authoritative economic data from multiple sources. For each country in our database, we maintain six key data points:
+                </p>
+                <div class="overflow-x-auto mb-4">
+                    <table class="w-full text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="text-left p-3 border-b font-semibold">Data Point</th>
+                                <th class="text-left p-3 border-b font-semibold">Primary Source</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-3 border-b">Median income (PPP)</td><td class="p-3 border-b text-gray-600">World Bank Poverty & Inequality Platform</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">Gini coefficient</td><td class="p-3 border-b text-gray-600">World Bank / OECD Income Distribution Database</td></tr>
+                            <tr><td class="p-3 border-b">PPP conversion factor</td><td class="p-3 border-b text-gray-600">World Bank International Comparison Program (ICP 2021)</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3 border-b">Nominal exchange rate</td><td class="p-3 border-b text-gray-600">IMF International Financial Statistics</td></tr>
+                            <tr><td class="p-3 border-b">Population</td><td class="p-3 border-b text-gray-600">UN World Population Prospects (2023 revision)</td></tr>
+                            <tr class="bg-gray-50"><td class="p-3">Wage benchmarks</td><td class="p-3 text-gray-600">National statistical offices (minimum wage, median, top 10%)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Our database currently covers countries representing over 85% of the world's population and GDP. For countries not individually modeled, the global distribution calculation still provides meaningful results because the major population centers (China, India, the US, Indonesia, Brazil, etc.) are all included.
+                </p>
+
+                <h3 class="text-xl font-bold mb-2 text-gray-800">Country-Specific Wage Benchmarks</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    To make the calculator more useful, we include three reference points for each country sourced from national statistics bureaus:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                    <li><strong>Minimum wage:</strong> The legal minimum annual income for a full-time worker</li>
+                    <li><strong>Median income:</strong> The 50th percentile in the national income distribution</li>
+                    <li><strong>Top 10% threshold:</strong> The income level above which you enter the top decile nationally</li>
+                </ul>
+                <p class="text-gray-700 leading-relaxed">
+                    These benchmarks are provided in local currency to give users an intuitive sense of where their income falls relative to their country's norms, before seeing the global comparison.
+                </p>
+            </section>
+
+            <!-- Section: Limitations -->
+            <section id="limitations" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Limitations & Caveats</h2>
+                <div class="bg-gradient-to-br from-yellow-50 to-pink-50 rounded-xl p-6 border-2 border-pink-200">
+                    <ul class="space-y-3 text-gray-700">
+                        <li><strong>Income ≠ wealth:</strong> Our calculator measures income (annual earnings), not wealth (accumulated assets minus debts). A retired person with $2 million in savings but no current income would show as low-percentile. The UBS Global Wealth Report provides complementary wealth distribution data, but modeling wealth requires different methodologies.</li>
+                        <li><strong>Informal economy:</strong> In many developing countries, a substantial share of economic activity occurs outside the formal economy and is not captured in official income statistics. The ILO estimates that 60% of workers globally are in informal employment. Our model may overestimate poverty in countries with large informal sectors.</li>
+                        <li><strong>Household vs. individual income:</strong> Income data varies in whether it represents individual earnings or household income divided by household members (equivalized income). Our calculator asks for individual income, which may not capture household dynamics like single-income families or multi-generational households.</li>
+                        <li><strong>Log-normal approximation:</strong> While the log-normal is a good model for most of the income distribution, real-world distributions have features (bimodality in some developing countries, thicker tails) that it doesn't capture perfectly.</li>
+                        <li><strong>Data currency:</strong> PPP factors, Gini coefficients, and population figures are based on the most recently available data (mostly 2022–2023). Economic conditions change, particularly in rapidly developing economies.</li>
+                        <li><strong>Non-monetary welfare:</strong> Income doesn't capture important aspects of well-being like access to free healthcare, public education, environmental quality, personal safety, or leisure time. A moderate-income Scandinavian may have a higher quality of life than a higher-income American due to these factors.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section: Sources -->
+            <section id="sources" class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">References</h2>
+                <ul class="space-y-3 text-gray-700 text-sm">
+                    <li><strong>World Bank</strong> — Poverty and Inequality Platform (PIP): global income distribution data</li>
+                    <li><strong>World Bank</strong> — International Comparison Program (ICP 2021): PPP conversion factors</li>
+                    <li><strong>OECD</strong> — Income Distribution Database: Gini coefficients for 38 member countries</li>
+                    <li><strong>United Nations</strong> — World Population Prospects (2023 revision): country population figures</li>
+                    <li><strong>Milanovic, Branko</strong> — <em>Global Inequality: A New Approach for the Age of Globalization</em>, Harvard University Press, 2016</li>
+                    <li><strong>Piketty, Thomas</strong> — <em>Capital in the Twenty-First Century</em>, Harvard University Press, 2014</li>
+                    <li><strong>World Inequality Database (WID)</strong> — Top income shares and Pareto coefficients</li>
+                    <li><strong>UBS Global Wealth Report</strong> (formerly Credit Suisse) — Global wealth distribution</li>
+                    <li><strong>Abramowitz & Stegun</strong> — <em>Handbook of Mathematical Functions</em>, NBS, 1964: Error function approximation (Formula 7.1.26)</li>
+                    <li><strong>Winitzki, Sergei</strong> — "A handy approximation for the error function and its inverse," 2003: Inverse error function</li>
+                    <li><strong>Pareto, Vilfredo</strong> — <em>Cours d'Économie Politique</em>, 1896: Original observation of power-law wealth distributions</li>
+                    <li><strong>Gini, Corrado</strong> — "Variabilità e mutabilità," 1912: Original definition of the Gini coefficient</li>
+                    <li><strong>ILO (International Labour Organization)</strong> — Informal economy statistics</li>
+                    <li><strong>IMF</strong> — International Financial Statistics: Exchange rate data</li>
+                    <li><strong>National statistical offices:</strong> Statistics Korea, U.S. Census Bureau, Statistics Bureau of Japan, National Bureau of Statistics of China — Country-specific wage and income data</li>
+                </ul>
+            </section>
+
+            <!-- CTA -->
+            <div class="text-center mt-10 pt-8 border-t border-gray-200">
+                <p class="text-gray-600 mb-4">Ready to find out where you stand globally?</p>
+                <a href="../wealth.html" class="inline-block bg-gradient-to-r from-red-500 via-orange-500 to-green-500 text-white font-bold py-4 px-8 rounded-full hover:shadow-2xl transition-all transform hover:scale-105">
+                    Calculate Your Wealth Rank
+                </a>
+            </div>
+
+            <!-- Related Articles -->
+            <div class="mt-10 pt-8 border-t border-gray-200">
+                <h3 class="text-lg font-bold mb-4 text-gray-800">Related Articles</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <a href="how-life-receipt-works.html" class="block bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition border border-gray-200">
+                        <p class="font-semibold text-gray-800 mb-1">The Science Behind Your Life Receipt</p>
+                        <p class="text-sm text-gray-600">How we calculate sleep hours, coffee consumption, steps walked, and the rest of your life statistics.</p>
+                    </a>
+                    <a href="how-lifespan-calculator-works.html" class="block bg-gray-50 rounded-xl p-5 hover:bg-gray-100 transition border border-gray-200">
+                        <p class="font-semibold text-gray-800 mb-1">How We Estimate Your Lifespan</p>
+                        <p class="text-sm text-gray-600">WHO data, lifestyle adjustments, and the medical studies behind our lifespan calculator.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <a href="../index.html" class="inline-block bg-gradient-to-r from-red-500 via-orange-500 to-green-500 text-white font-bold py-4 px-8 rounded-full hover:shadow-2xl transition-all transform hover:scale-105">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

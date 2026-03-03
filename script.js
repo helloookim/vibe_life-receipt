@@ -2,6 +2,7 @@
 let selectedGender = null;
 let selectedMeal = 'mixed';
 let userData = {};
+let lastReceiptData = null;
 
 // Navigation
 function startForm() {
@@ -106,6 +107,7 @@ function generateReceipt() {
     // Simulate loading time
     setTimeout(() => {
         const receipt = calculateReceiptData(userData);
+        lastReceiptData = receipt;
         renderReceipt(receipt);
 
         document.getElementById('loading').classList.add('hidden');
@@ -591,6 +593,10 @@ function renderReceipt(data) {
 
         <div class="border-t-2 border-dashed border-gray-400 my-5"></div>
 
+        ${getShockingFact(data)}
+
+        <div class="border-t-2 border-dashed border-gray-400 my-5"></div>
+
         <div class="text-center font-bold mb-4 text-base tracking-wide">${t.moneyCategory}</div>
 
         <div class="text-xs space-y-1.5 mb-5 leading-relaxed">
@@ -624,6 +630,10 @@ function renderReceipt(data) {
 
         <div class="border-t-2 border-dashed border-gray-400 my-5"></div>
 
+        ${renderTimePieGrid(data)}
+
+        <div class="border-t-2 border-dashed border-gray-400 my-5"></div>
+
         <div class="text-center text-xs space-y-2 leading-relaxed opacity-70">
             <div>${t.thanks}</div>
             <div>${t.continues}</div>
@@ -652,12 +662,145 @@ function generateBarcode() {
     return bars;
 }
 
+function getShockingFact(data) {
+    const facts = [
+        {
+            condition: () => data.phoneYears > data.eatingYears,
+            en: `You spent more time on your phone (${data.phoneYears.toFixed(1)}yr) than eating (${data.eatingYears.toFixed(1)}yr)`,
+            ko: `스마트폰 사용시간(${data.phoneYears.toFixed(1)}년)이 식사시간(${data.eatingYears.toFixed(1)}년)보다 많습니다`,
+            ja: `スマホ使用時間(${data.phoneYears.toFixed(1)}年)が食事時間(${data.eatingYears.toFixed(1)}年)を上回っています`,
+            cn: `手机使用时间(${data.phoneYears.toFixed(1)}年)超过了吃饭时间(${data.eatingYears.toFixed(1)}年)`,
+            es: `Pasaste más tiempo en el celular (${data.phoneYears.toFixed(1)}a) que comiendo (${data.eatingYears.toFixed(1)}a)`
+        },
+        {
+            condition: () => data.earthCircumferences >= 1,
+            en: `You've walked far enough to circle the Earth ${data.earthCircumferences.toFixed(1)} times`,
+            ko: `걸은 거리로 지구를 ${data.earthCircumferences.toFixed(1)}바퀴 돌 수 있습니다`,
+            ja: `歩いた距離で地球を${data.earthCircumferences.toFixed(1)}周できます`,
+            cn: `走过的路可以绕地球${data.earthCircumferences.toFixed(1)}圈`,
+            es: `Has caminado lo suficiente para dar ${data.earthCircumferences.toFixed(1)} vueltas a la Tierra`
+        },
+        {
+            condition: () => data.bathtubs >= 50,
+            en: `The water you drank could fill ${formatNumber(data.bathtubs)} bathtubs`,
+            ko: `마신 물을 모으면 욕조 ${formatNumber(data.bathtubs)}개를 채울 수 있습니다`,
+            ja: `飲んだ水で浴槽${formatNumber(data.bathtubs)}杯分になります`,
+            cn: `喝过的水可以装满${formatNumber(data.bathtubs)}个浴缸`,
+            es: `El agua que bebiste llenaría ${formatNumber(data.bathtubs)} bañeras`
+        },
+        {
+            condition: () => data.snsYears >= 0.5,
+            en: `You spent ${data.snsYears.toFixed(1)} years scrolling SNS & YouTube`,
+            ko: `SNS와 유튜브를 스크롤하며 ${data.snsYears.toFixed(1)}년을 보냈습니다`,
+            ja: `SNSとYouTubeのスクロールに${data.snsYears.toFixed(1)}年を費やしました`,
+            cn: `刷社交媒体和YouTube花了${data.snsYears.toFixed(1)}年`,
+            es: `Pasaste ${data.snsYears.toFixed(1)} años navegando redes sociales y YouTube`
+        },
+        {
+            condition: () => data.totalCoffee >= 1000,
+            en: `You've drunk ${formatNumber(data.totalCoffee)} cups of coffee — enough to fill a small pool`,
+            ko: `커피 ${formatNumber(data.totalCoffee)}잔을 마셨습니다 — 작은 수영장을 채울 수 있는 양`,
+            ja: `コーヒーを${formatNumber(data.totalCoffee)}杯飲みました — 小さなプールが埋まる量`,
+            cn: `喝了${formatNumber(data.totalCoffee)}杯咖啡 — 足以填满一个小泳池`,
+            es: `Bebiste ${formatNumber(data.totalCoffee)} tazas de café — suficiente para llenar una piscina pequeña`
+        },
+        {
+            condition: () => data.sleepYears >= 5,
+            en: `You've slept for ${data.sleepYears.toFixed(1)} years — that's ${Math.round(data.sleepYears / data.age.years * 100)}% of your life`,
+            ko: `${data.sleepYears.toFixed(1)}년을 잠으로 보냈습니다 — 인생의 ${Math.round(data.sleepYears / data.age.years * 100)}%`,
+            ja: `${data.sleepYears.toFixed(1)}年を睡眠に費やしました — 人生の${Math.round(data.sleepYears / data.age.years * 100)}%`,
+            cn: `睡了${data.sleepYears.toFixed(1)}年 — 占人生的${Math.round(data.sleepYears / data.age.years * 100)}%`,
+            es: `Dormiste ${data.sleepYears.toFixed(1)} años — eso es el ${Math.round(data.sleepYears / data.age.years * 100)}% de tu vida`
+        }
+    ];
+
+    const fact = facts.find(f => f.condition());
+    if (!fact) return '';
+
+    const text = fact[currentLang] || fact.en;
+    return `
+        <div style="border: 2px dashed #9ca3af; border-radius: 8px; padding: 12px 16px; text-align: center; margin: 4px 0;">
+            <div style="font-size: 11px; font-weight: 700; line-height: 1.5; color: #374151;">
+                ${text}
+            </div>
+        </div>
+    `;
+}
+
+function renderTimePieGrid(data) {
+    const categories = [
+        { key: 'sleep', hours: data.sleepHours, color: '#64748b', en: 'Sleep', ko: '수면', ja: '睡眠', cn: '睡眠', es: 'Sueño' },
+        { key: 'work', hours: data.workHours, color: '#6b7280', en: 'Work', ko: '일', ja: '仕事', cn: '工作', es: 'Trabajo' },
+        { key: 'phone', hours: data.phoneHours, color: '#ef4444', en: 'Phone', ko: '폰', ja: 'スマホ', cn: '手机', es: 'Celular' },
+        { key: 'eating', hours: data.eatingHours, color: '#f97316', en: 'Eating', ko: '식사', ja: '食事', cn: '用餐', es: 'Comida' },
+        { key: 'commute', hours: data.commuteHours, color: '#22c55e', en: 'Commute', ko: '이동', ja: '通勤', cn: '通勤', es: 'Viaje' },
+        { key: 'other', hours: data.toiletHours + data.showerHours + data.waitingHours, color: '#06b6d4', en: 'Other', ko: '기타', ja: 'その他', cn: '其他', es: 'Otro' },
+        { key: 'free', hours: data.freeHours, color: '#eab308', en: 'Free', ko: '자유', ja: '自由', cn: '自由', es: 'Libre' }
+    ];
+
+    const total = data.totalHours;
+    let cells = [];
+    let usedCells = 0;
+
+    for (let i = 0; i < categories.length - 1; i++) {
+        const count = Math.round((categories[i].hours / total) * 100);
+        categories[i].percent = count;
+        for (let j = 0; j < count && usedCells < 100; j++) {
+            cells.push(categories[i].color);
+            usedCells++;
+        }
+    }
+    // Fill remaining with free time
+    const freeCount = 100 - usedCells;
+    categories[categories.length - 1].percent = freeCount;
+    for (let j = 0; j < freeCount; j++) {
+        cells.push(categories[categories.length - 1].color);
+    }
+
+    const gridHTML = cells.map(color =>
+        `<div style="width: 10%; aspect-ratio: 1; background: ${color}; border-radius: 2px;"></div>`
+    ).join('');
+
+    const legendHTML = categories.filter(c => (c.percent || 0) > 0).map(c => {
+        const label = c[currentLang] || c.en;
+        return `<span style="display: inline-flex; align-items: center; gap: 3px; font-size: 9px; color: #6b7280; margin-right: 6px;">
+            <span style="width: 8px; height: 8px; background: ${c.color}; border-radius: 1px; display: inline-block;"></span>
+            ${label} ${c.percent || 0}%
+        </span>`;
+    }).join('');
+
+    return `
+        <div style="text-align: center; margin: 4px 0;">
+            <div style="font-size: 10px; font-weight: 700; margin-bottom: 8px; color: #374151; letter-spacing: 0.1em;">
+                ${currentLang === 'ko' ? '【 나의 시간 비율 】' : currentLang === 'ja' ? '【 時間の割合 】' : currentLang === 'cn' ? '【 时间比例 】' : currentLang === 'es' ? '【 TU TIEMPO 】' : '【 YOUR TIME 】'}
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 2px; max-width: 260px; margin: 0 auto;">
+                ${gridHTML}
+            </div>
+            <div style="margin-top: 8px; line-height: 1.8; max-width: 260px; margin-left: auto; margin-right: auto;">
+                ${legendHTML}
+            </div>
+        </div>
+    `;
+}
+
 // Share and save functions
 function saveImage() {
     saveAsImage('receipt-container', 'my-life-receipt.png', '#ffffff');
 }
 
 function getReceiptShareText() {
+    if (lastReceiptData) {
+        const d = lastReceiptData;
+        const texts = {
+            en: `I drank ${formatNumber(d.totalCoffee)} cups of coffee and spent ${d.phoneYears.toFixed(1)} years on my phone! Get your Life Receipt`,
+            ko: `커피 ${formatNumber(d.totalCoffee)}잔을 마셨고 스마트폰에 ${d.phoneYears.toFixed(1)}년을 썼대! 나의 인생 영수증`,
+            ja: `コーヒー${formatNumber(d.totalCoffee)}杯飲んで、スマホに${d.phoneYears.toFixed(1)}年費やしてた！人生レシート`,
+            cn: `喝了${formatNumber(d.totalCoffee)}杯咖啡，花了${d.phoneYears.toFixed(1)}年刷手机！人生收据`,
+            es: `¡Bebí ${formatNumber(d.totalCoffee)} cafés y pasé ${d.phoneYears.toFixed(1)} años en el celular! Mi Recibo de Vida`
+        };
+        return texts[currentLang] || texts.en;
+    }
     const texts = {
         en: 'I just created my Life Receipt! Check yours',
         ko: '나의 인생 영수증을 만들어봤어요! 여기서 만들어보세요',

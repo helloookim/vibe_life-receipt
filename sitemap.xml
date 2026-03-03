@@ -53,4 +53,22 @@
     <priority>0.3</priority>
   </url>
 
+  <url>
+    <loc>https://lifereceipt.uk/blog/how-life-receipt-works.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lifereceipt.uk/blog/how-lifespan-calculator-works.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lifereceipt.uk/blog/how-wealth-percentile-works.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
