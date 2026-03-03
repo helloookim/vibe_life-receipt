@@ -14,9 +14,13 @@
     <meta property="og:site_name" content="Life in Numbers">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="ko_KR">
+    <meta property="og:locale:alternate" content="ja_JP">
+    <meta property="og:locale:alternate" content="zh_CN">
+    <meta property="og:locale:alternate" content="es_ES">
     <meta property="og:image" content="https://lifereceipt.uk/og-image-wealth.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Global Wealth Rank - Find where you stand among 8 billion people">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -31,6 +35,9 @@
     <!-- hreflang -->
     <link rel="alternate" hreflang="en" href="https://lifereceipt.uk/wealth.html">
     <link rel="alternate" hreflang="ko" href="https://lifereceipt.uk/ko/wealth.html">
+    <link rel="alternate" hreflang="ja" href="https://lifereceipt.uk/wealth.html?lang=ja">
+    <link rel="alternate" hreflang="zh" href="https://lifereceipt.uk/wealth.html?lang=cn">
+    <link rel="alternate" hreflang="es" href="https://lifereceipt.uk/wealth.html?lang=es">
     <link rel="alternate" hreflang="x-default" href="https://lifereceipt.uk/wealth.html">
     <link rel="canonical" href="https://lifereceipt.uk/wealth.html">
 
@@ -469,35 +476,35 @@
                                 <span class="lang-es hidden">Ocupación</span>
                             </label>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="occupation-buttons">
-                                <button onclick="selectOccupation('office')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                <button onclick="selectOccupation('office', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Office</span>
                                     <span class="lang-ko hidden">사무직</span>
                                     <span class="lang-ja hidden">会社員</span>
                                     <span class="lang-cn hidden">上班族</span>
                                     <span class="lang-es hidden">Oficinista</span>
                                 </button>
-                                <button onclick="selectOccupation('professional')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                <button onclick="selectOccupation('professional', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Professional</span>
                                     <span class="lang-ko hidden">전문직</span>
                                     <span class="lang-ja hidden">専門職</span>
                                     <span class="lang-cn hidden">专业人士</span>
                                     <span class="lang-es hidden">Profesional</span>
                                 </button>
-                                <button onclick="selectOccupation('self_employed')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                <button onclick="selectOccupation('self_employed', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Self-employed</span>
                                     <span class="lang-ko hidden">자영업</span>
                                     <span class="lang-ja hidden">自営業</span>
                                     <span class="lang-cn hidden">个体经营</span>
                                     <span class="lang-es hidden">Autónomo</span>
                                 </button>
-                                <button onclick="selectOccupation('freelancer')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                <button onclick="selectOccupation('freelancer', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Freelancer</span>
                                     <span class="lang-ko hidden">프리랜서</span>
                                     <span class="lang-ja hidden">フリーランス</span>
                                     <span class="lang-cn hidden">自由职业</span>
                                     <span class="lang-es hidden">Freelancer</span>
                                 </button>
-                                <button onclick="selectOccupation('student')" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
+                                <button onclick="selectOccupation('student', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Student/Other</span>
                                     <span class="lang-ko hidden">학생/기타</span>
                                     <span class="lang-ja hidden">学生/その他</span>
@@ -569,14 +576,50 @@
                 <span class="lang-cn hidden">基于世界银行、OECD、UBS数据（2023）的统计估算。可能与实际收入分布存在差异。</span>
                 <span class="lang-es hidden">Basado en datos del Banco Mundial, OCDE y UBS (2023). Esta es una estimación estadística y puede diferir de las distribuciones reales.</span>
             </p>
-            <div class="flex justify-center gap-4">
-                <a href="about.html" class="hover:text-gray-300 transition">About</a>
-                <a href="privacy.html" class="hover:text-gray-300 transition">Privacy</a>
-                <a href="terms.html" class="hover:text-gray-300 transition">Terms</a>
-                <a href="contact.html" class="hover:text-gray-300 transition">Contact</a>
-                <a href="blog/how-wealth-percentile-works.html" class="hover:text-gray-300 transition">How It Works</a>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="about.html" class="hover:text-gray-300 transition">
+                    <span class="lang-en">About</span>
+                    <span class="lang-ko hidden">소개</span>
+                    <span class="lang-ja hidden">について</span>
+                    <span class="lang-cn hidden">关于</span>
+                    <span class="lang-es hidden">Acerca de</span>
+                </a>
+                <a href="privacy.html" class="hover:text-gray-300 transition">
+                    <span class="lang-en">Privacy</span>
+                    <span class="lang-ko hidden">개인정보처리방침</span>
+                    <span class="lang-ja hidden">プライバシー</span>
+                    <span class="lang-cn hidden">隐私政策</span>
+                    <span class="lang-es hidden">Privacidad</span>
+                </a>
+                <a href="terms.html" class="hover:text-gray-300 transition">
+                    <span class="lang-en">Terms</span>
+                    <span class="lang-ko hidden">이용약관</span>
+                    <span class="lang-ja hidden">利用規約</span>
+                    <span class="lang-cn hidden">服务条款</span>
+                    <span class="lang-es hidden">Términos</span>
+                </a>
+                <a href="contact.html" class="hover:text-gray-300 transition">
+                    <span class="lang-en">Contact</span>
+                    <span class="lang-ko hidden">문의</span>
+                    <span class="lang-ja hidden">お問い合わせ</span>
+                    <span class="lang-cn hidden">联系我们</span>
+                    <span class="lang-es hidden">Contacto</span>
+                </a>
+                <a href="blog/how-wealth-percentile-works.html" class="hover:text-gray-300 transition">
+                    <span class="lang-en">How It Works</span>
+                    <span class="lang-ko hidden">작동 원리</span>
+                    <span class="lang-ja hidden">仕組み</span>
+                    <span class="lang-cn hidden">工作原理</span>
+                    <span class="lang-es hidden">Cómo Funciona</span>
+                </a>
             </div>
-            <p>&copy; 2026 Life Receipt. All rights reserved.</p>
+            <p>&copy; 2026 Life in Numbers.
+                <span class="lang-en">All rights reserved.</span>
+                <span class="lang-ko hidden">모든 권리 보유.</span>
+                <span class="lang-ja hidden">全著作権所有</span>
+                <span class="lang-cn hidden">保留所有权利。</span>
+                <span class="lang-es hidden">Todos los derechos reservados.</span>
+            </p>
         </div>
     </footer>
 

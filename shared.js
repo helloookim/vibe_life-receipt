@@ -11,9 +11,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 12000,
         avgWalkingSteps: 7000,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'soju bottles', ko: '소주병' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'soju bottles', ko: '소주병', ja: '焼酎瓶', cn: '烧酒瓶', es: 'botellas de soju' }
         }
     },
     US: {
@@ -23,9 +23,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 15,
         avgWalkingSteps: 5000,
         comparisons: {
-            water: { en: 'Olympic pools', ko: '올림픽 수영장' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'Starbucks cups', ko: '스타벅스 컵' }
+            water: { en: 'Olympic pools', ko: '올림픽 수영장', ja: 'オリンピックプール', cn: '奥运泳池', es: 'piscinas olímpicas' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'Starbucks cups', ko: '스타벅스 컵', ja: 'スターバックスカップ', cn: '星巴克杯', es: 'tazas de Starbucks' }
         }
     },
     JP: {
@@ -35,9 +35,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 1000,
         avgWalkingSteps: 7500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'coffee cans', ko: '커피캔' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'coffee cans', ko: '커피캔', ja: '缶コーヒー', cn: '咖啡罐', es: 'latas de café' }
         }
     },
     CN: {
@@ -47,9 +47,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 30,
         avgWalkingSteps: 6000,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'cups', ko: '컵' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'cups', ko: '컵', ja: 'カップ', cn: '杯', es: 'tazas' }
         }
     },
     UK: {
@@ -59,9 +59,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 12,
         avgWalkingSteps: 5500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'tea cups', ko: '차 컵' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'tea cups', ko: '차 컵', ja: 'ティーカップ', cn: '茶杯', es: 'tazas de té' }
         }
     },
     DE: {
@@ -71,9 +71,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 11,
         avgWalkingSteps: 5800,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'cups', ko: '컵' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'cups', ko: '컵', ja: 'カップ', cn: '杯', es: 'tazas' }
         }
     },
     FR: {
@@ -83,9 +83,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 13,
         avgWalkingSteps: 5200,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'espresso cups', ko: '에스프레소 잔' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'espresso cups', ko: '에스프레소 잔', ja: 'エスプレッソカップ', cn: '浓缩咖啡杯', es: 'tazas de espresso' }
         }
     },
     ES: {
@@ -95,9 +95,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 10,
         avgWalkingSteps: 5500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'café con leche', ko: '카페 라떼' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'café con leche', ko: '카페 라떼', ja: 'カフェラテ', cn: '拿铁', es: 'café con leche' }
         }
     },
     BR: {
@@ -107,9 +107,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 20,
         avgWalkingSteps: 4800,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'cafezinho', ko: '카페지뉴' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'cafezinho', ko: '카페지뉴', ja: 'カフェジーニョ', cn: '小咖啡', es: 'cafezinhos' }
         }
     },
     IN: {
@@ -119,9 +119,9 @@ const COUNTRY_DATA = {
         avgMealPrice: 200,
         avgWalkingSteps: 6500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조' },
-            food: { en: 'elephants', ko: '코끼리' },
-            coffee: { en: 'chai cups', ko: '차이 컵' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
+            coffee: { en: 'chai cups', ko: '차이 컵', ja: 'チャイカップ', cn: '奶茶杯', es: 'tazas de chai' }
         }
     }
 };
@@ -193,7 +193,7 @@ function switchLang(lang) {
     if (esBtn) esBtn.classList.toggle('lang-switch-active', lang === 'es');
 
     // Toggle Asian-only share buttons
-    const isAsianLang = ['ko', 'ja'].includes(lang);
+    const isAsianLang = ASIAN_LANGS.includes(lang);
     document.querySelectorAll('.share-ko-only').forEach(el => el.classList.toggle('hidden', lang !== 'ko'));
     document.querySelectorAll('.share-asian').forEach(el => el.classList.toggle('hidden', !isAsianLang));
 
@@ -353,7 +353,7 @@ function setBirthdate(dateStr) {
  * @returns {string|null} - ISO country code or null
  */
 function detectUserCountry() {
-    const locale = navigator.language || navigator.userLanguage || '';
+    const locale = navigator.language || '';
     const mapping = {
         'ko': 'KR', 'ko-KR': 'KR',
         'ja': 'JP', 'ja-JP': 'JP',
@@ -402,7 +402,14 @@ function getInitialLang() {
         }
     } catch (e) {}
 
-    // 4. Default to English
+    // 4. Detect from browser locale
+    const browserLang = (navigator.language || '').split('-')[0];
+    const langMap = { en: 'en', ko: 'ko', ja: 'ja', zh: 'cn', es: 'es' };
+    if (langMap[browserLang] && supported.includes(langMap[browserLang])) {
+        return langMap[browserLang];
+    }
+
+    // 5. Default to English
     return 'en';
 }
 
@@ -456,6 +463,18 @@ function shareToKakao(title, description, url) {
     }
 }
 
+function showToast(message) {
+    const existing = document.getElementById('toast-notification');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'toast-notification';
+    toast.textContent = message;
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1f2937;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;z-index:9999;opacity:0;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);pointer-events:none;';
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(20px)'; setTimeout(() => toast.remove(), 300); }, 2000);
+}
+
 function copyLinkShared() {
     navigator.clipboard.writeText(window.location.href).then(() => {
         const msgs = {
@@ -465,7 +484,7 @@ function copyLinkShared() {
             cn: '链接已复制到剪贴板！',
             es: '¡Enlace copiado al portapapeles!'
         };
-        alert(msgs[currentLang] || msgs.en);
+        showToast(msgs[currentLang] || msgs.en);
     });
 }
 
@@ -473,7 +492,10 @@ function saveAsImage(elementId, filename, bgColor) {
     if (typeof html2canvas === 'undefined') {
         const msgs = {
             en: 'Take a screenshot to save your result!\n\niPhone: Power + Volume Up\nAndroid: Power + Volume Down\nPC: Print Screen or Win+Shift+S',
-            ko: '스크린샷을 찍어 결과를 저장하세요!\n\niPhone: 전원 + 볼륨업\nAndroid: 전원 + 볼륨다운\nPC: Print Screen 또는 Win+Shift+S'
+            ko: '스크린샷을 찍어 결과를 저장하세요!\n\niPhone: 전원 + 볼륨업\nAndroid: 전원 + 볼륨다운\nPC: Print Screen 또는 Win+Shift+S',
+            ja: 'スクリーンショットを撮って結果を保存してください！\n\niPhone: 電源 + 音量アップ\nAndroid: 電源 + 音量ダウン\nPC: Print Screen または Win+Shift+S',
+            cn: '截屏保存您的结果！\n\niPhone: 电源 + 音量增大\nAndroid: 电源 + 音量减小\nPC: Print Screen 或 Win+Shift+S',
+            es: '¡Toma una captura de pantalla para guardar tu resultado!\n\niPhone: Encendido + Subir Volumen\nAndroid: Encendido + Bajar Volumen\nPC: Print Screen o Win+Shift+S'
         };
         alert(msgs[currentLang] || msgs.en);
         return;
@@ -491,14 +513,6 @@ function saveAsImage(elementId, filename, bgColor) {
         link.click();
     });
 }
-
-// SVG icons for share buttons
-const SHARE_ICONS = {
-    x: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
-    facebook: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
-    threads: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.086.718 5.496 2.057 7.164 1.432 1.781 3.632 2.695 6.54 2.717 1.955-.013 3.822-.477 5.081-1.46.987-.77 1.714-1.86 1.714-3.421 0-1.477-.664-2.625-1.912-3.324-.78-.437-1.7-.655-2.453-.793a28.5 28.5 0 0 0-.454-.073c.263 1.712.069 3.03-.588 3.958-.606.855-1.533 1.309-2.682 1.34l-.064.001c-.944 0-1.79-.332-2.448-.96-.668-.637-1.037-1.519-1.037-2.469 0-1.786 1.167-3.33 3.181-4.196 1.154-.496 2.489-.739 3.965-.72.45.006.893.032 1.326.08a8.143 8.143 0 0 0-.265-1.387c-.18-.574-.442-1.062-.811-1.454-.714-.759-1.8-1.153-3.227-1.173-1.477.024-2.596.392-3.326 1.093-.765.736-1.167 1.838-1.191 3.272l-2.118-.028c.032-1.957.622-3.498 1.749-4.58 1.068-1.027 2.58-1.558 4.494-1.583h.082c1.922.025 3.41.605 4.422 1.727.537.595.913 1.318 1.146 2.14.224.793.33 1.66.316 2.587l.001.08c.99.281 1.863.696 2.57 1.238 1.253.959 1.914 2.415 1.914 4.215 0 2.178-1.024 3.792-2.497 4.943-1.575 1.231-3.779 1.776-6.023 1.792z"/></svg>',
-    copy: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'
-};
 
 // Initialize on DOM load
 if (typeof document !== 'undefined') {

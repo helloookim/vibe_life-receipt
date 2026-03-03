@@ -8,15 +8,16 @@ let lastReceiptData = null;
 function startForm() {
     document.getElementById('landing').classList.add('hidden');
     document.getElementById('form').classList.remove('hidden');
-    // Hide language switcher
-    document.querySelector('.lang-switcher').classList.add('hidden');
+}
+
+function goBackToLanding() {
+    document.getElementById('form').classList.add('hidden');
+    document.getElementById('landing').classList.remove('hidden');
 }
 
 function startOver() {
     document.getElementById('result').classList.add('hidden');
     document.getElementById('landing').classList.remove('hidden');
-    // Show language switcher
-    document.querySelector('.lang-switcher').classList.remove('hidden');
 }
 
 // Form interactions
@@ -35,6 +36,9 @@ function selectGender(gender) {
     const selectedBtn = gender === 'M' ? mBtn : fBtn;
     selectedBtn.classList.remove('bg-gray-50', 'text-gray-800', 'border-gray-200');
     selectedBtn.classList.add('bg-gray-900', 'text-white', 'border-gray-900');
+
+    mBtn.setAttribute('aria-pressed', gender === 'M' ? 'true' : 'false');
+    fBtn.setAttribute('aria-pressed', gender === 'F' ? 'true' : 'false');
 }
 
 function selectMeal(meal) {
@@ -43,6 +47,7 @@ function selectMeal(meal) {
         const btn = document.getElementById(`meal-${type}`);
         btn.classList.remove('btn-gradient', 'border-purple-500');
         btn.classList.add('border-gray-700', 'bg-gray-800');
+        btn.setAttribute('aria-pressed', type === meal ? 'true' : 'false');
 
         if (type === meal) {
             btn.classList.add('btn-gradient', 'border-purple-500');
@@ -83,7 +88,14 @@ function generateReceipt() {
     const country = document.getElementById('country').value;
 
     if (!birthdate || !selectedGender) {
-        alert(currentLang === 'en' ? 'Please fill in all required fields' : '필수 항목을 모두 입력해주세요');
+        const msg = {
+            en: 'Please fill in all required fields',
+            ko: '필수 항목을 모두 입력해주세요',
+            ja: 'すべての必須フィールドに入力してください',
+            cn: '请填写所有必填字段',
+            es: 'Por favor complete todos los campos requeridos'
+        };
+        alert(msg[currentLang] || msg.en);
         return;
     }
 
@@ -109,6 +121,15 @@ function generateReceipt() {
         const receipt = calculateReceiptData(userData);
         lastReceiptData = receipt;
         renderReceipt(receipt);
+
+        // Save data for cross-service integration
+        try {
+            localStorage.setItem('lifeReceiptData', JSON.stringify({
+                birthdate: userData.birthdate,
+                country: userData.country,
+                gender: userData.gender
+            }));
+        } catch (e) {}
 
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('result').classList.remove('hidden');
@@ -267,7 +288,7 @@ function renderReceipt(data) {
             subtitle: 'Your Life Receipt',
             customer: 'Customer',
             issued: 'Issued',
-            days: 'days lived',
+            daysLived: 'days lived',
             timeCategory: '【 TIME CONSUMPTION 】',
             totalLife: 'Total Life',
             sleep: 'Sleep',
@@ -309,7 +330,7 @@ function renderReceipt(data) {
             subtitle: '당신의 인생 영수증',
             customer: '고객명',
             issued: '발행일',
-            days: '일째',
+            daysLived: '일째',
             timeCategory: '【 시간 소비 】',
             totalLife: '총 생존 시간',
             sleep: '수면',
@@ -351,7 +372,7 @@ function renderReceipt(data) {
             subtitle: 'あなたの人生レシート',
             customer: '顧客名',
             issued: '発行日',
-            days: '日目',
+            daysLived: '日目',
             timeCategory: '【 時間消費 】',
             totalLife: '総生存時間',
             sleep: '睡眠',
@@ -393,7 +414,7 @@ function renderReceipt(data) {
             subtitle: '你的人生收据',
             customer: '客户姓名',
             issued: '发行日期',
-            days: '天数',
+            daysLived: '天数',
             timeCategory: '【 时间消费 】',
             totalLife: '总生存时间',
             sleep: '睡眠',
@@ -435,7 +456,7 @@ function renderReceipt(data) {
             subtitle: 'Tu Recibo de Vida',
             customer: 'Cliente',
             issued: 'Fecha de emisión',
-            days: 'días',
+            daysLived: 'días vividos',
             timeCategory: '【 CONSUMO DE TIEMPO 】',
             totalLife: 'Tiempo total de vida',
             sleep: 'Sueño',
@@ -479,7 +500,7 @@ function renderReceipt(data) {
     const receiptHTML = `
         <div class="text-center mb-6">
             <div class="text-4xl font-bold mb-2 tracking-wide">${t.title}</div>
-            <div class="text-sm opacity-70">${currentLang === 'en' ? 'Your Life Receipt' : currentLang === 'ko' ? '당신의 인생 영수증' : currentLang === 'ja' ? 'あなたの人生レシート' : currentLang === 'cn' ? '你的人生收据' : 'Tu Recibo de Vida'}</div>
+            <div class="text-sm opacity-70">${t.subtitle}</div>
             <div class="mt-3 text-xs opacity-40 tracking-widest">━━━━━━━━━━━━━━━━━━━━</div>
         </div>
 
@@ -495,8 +516,8 @@ function renderReceipt(data) {
                 <span>${today}</span>
             </div>
             <div class="flex justify-between">
-                <span>${t.days}:</span>
-                <span>${formatNumber(data.age.days)} ${currentLang === 'en' ? 'days' : currentLang === 'ko' ? '일' : currentLang === 'ja' ? '日' : currentLang === 'cn' ? '天' : 'días'}</span>
+                <span>${t.daysLived}:</span>
+                <span>${formatNumber(data.age.days)} ${t.days}</span>
             </div>
         </div>
 
@@ -615,11 +636,11 @@ function renderReceipt(data) {
         <div class="text-xs space-y-2 mb-5 leading-relaxed">
             <div class="flex justify-between opacity-80">
                 <span>${t.subtotal}:</span>
-                <span>${currentLang === 'en' ? 'Your life' : currentLang === 'ko' ? '당신의 인생' : currentLang === 'ja' ? 'あなたの人生' : currentLang === 'cn' ? '您的人生' : 'Tu vida'}</span>
+                <span>${{en: 'Your life', ko: '당신의 인생', ja: 'あなたの人生', cn: '您的人生', es: 'Tu vida'}[currentLang]}</span>
             </div>
             <div class="flex justify-between opacity-80">
                 <span>${t.tax}:</span>
-                <span>${currentLang === 'en' ? 'Experiences & Memories' : currentLang === 'ko' ? '경험과 추억' : currentLang === 'ja' ? '経験と思い出' : currentLang === 'cn' ? '经验与回忆' : 'Experiencias y Recuerdos'}</span>
+                <span>${{en: 'Experiences & Memories', ko: '경험과 추억', ja: '経験と思い出', cn: '经验与回忆', es: 'Experiencias y Recuerdos'}[currentLang]}</span>
             </div>
             <div class="border-t border-gray-400 my-3"></div>
             <div class="flex justify-between font-bold text-lg tracking-wider">
@@ -772,7 +793,7 @@ function renderTimePieGrid(data) {
     return `
         <div style="text-align: center; margin: 4px 0;">
             <div style="font-size: 10px; font-weight: 700; margin-bottom: 8px; color: #374151; letter-spacing: 0.1em;">
-                ${currentLang === 'ko' ? '【 나의 시간 비율 】' : currentLang === 'ja' ? '【 時間の割合 】' : currentLang === 'cn' ? '【 时间比例 】' : currentLang === 'es' ? '【 TU TIEMPO 】' : '【 YOUR TIME 】'}
+                ${{en: '【 YOUR TIME 】', ko: '【 나의 시간 비율 】', ja: '【 時間の割合 】', cn: '【 时间比例 】', es: '【 TU TIEMPO 】'}[currentLang]}
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 2px; max-width: 260px; margin: 0 auto;">
                 ${gridHTML}

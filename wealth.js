@@ -127,14 +127,17 @@ function toggleOptional() {
     arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
 }
 
-function selectOccupation(value) {
+function selectOccupation(value, evt) {
     selectedOccupation = value;
     document.querySelectorAll('.occupation-btn').forEach(btn => {
         btn.classList.remove('border-yellow-400', 'bg-yellow-900', 'bg-opacity-30');
         btn.classList.add('border-gray-600');
     });
-    event.currentTarget.classList.remove('border-gray-600');
-    event.currentTarget.classList.add('border-yellow-400', 'bg-yellow-900', 'bg-opacity-30');
+    const target = evt ? evt.currentTarget : document.querySelector(`[onclick*="selectOccupation('${value}'"]`);
+    if (target) {
+        target.classList.remove('border-gray-600');
+        target.classList.add('border-yellow-400', 'bg-yellow-900', 'bg-opacity-30');
+    }
 }
 
 function detectCountry() {

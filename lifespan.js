@@ -707,7 +707,7 @@ function calculateParentTime(userData, yearsRemaining) {
         const yearsWithMother = Math.min(yearsRemaining, motherYearsRemaining);
         result.mother = {
             yearsRemaining: Math.round(yearsWithMother * 10) / 10,
-            daysRemaining: Math.floor(yearsWithMother * 24),
+            daysRemaining: Math.floor(yearsWithMother * 365),
             meetingsRemaining: Math.floor(yearsWithMother * 24)
         };
     }
@@ -719,7 +719,7 @@ function calculateParentTime(userData, yearsRemaining) {
         const yearsWithFather = Math.min(yearsRemaining, fatherYearsRemaining);
         result.father = {
             yearsRemaining: Math.round(yearsWithFather * 10) / 10,
-            daysRemaining: Math.floor(yearsWithFather * 24),
+            daysRemaining: Math.floor(yearsWithFather * 365),
             meetingsRemaining: Math.floor(yearsWithFather * 24)
         };
     }
@@ -747,10 +747,10 @@ function getFactorConfig() {
                 obese: { en: `${bmi} — Obese`, ko: `${bmi} — 비만`, ja: `${bmi} — 肥満`, cn: `${bmi} — 肥胖`, es: `${bmi} — Obeso` }
             }[bmiCategory],
             explanation: {
-                underweight: { en: 'Being underweight can weaken your immune system and increase risk of osteoporosis and infections.', ko: '저체중은 면역 체계를 약화시키고 골다공증 및 감염 위험을 높일 수 있습니다.' },
-                normal: { en: 'Your BMI is in the healthy range. Maintaining a normal weight reduces risks of heart disease and diabetes.', ko: 'BMI가 건강한 범위에 있습니다. 정상 체중 유지는 심장병과 당뇨병 위험을 줄여줍니다.' },
-                overweight: { en: 'Being overweight increases risk of cardiovascular disease. Moderate weight loss can add years to your life.', ko: '과체중은 심혈관 질환 위험을 높입니다. 적당한 체중 감량이 수명을 연장할 수 있습니다.' },
-                obese: { en: 'Obesity significantly increases risks of heart disease, stroke, diabetes, and certain cancers.', ko: '비만은 심장병, 뇌졸중, 당뇨병 및 특정 암의 위험을 크게 높입니다.' }
+                underweight: { en: 'Being underweight can weaken your immune system and increase risk of osteoporosis and infections.', ko: '저체중은 면역 체계를 약화시키고 골다공증 및 감염 위험을 높일 수 있습니다.', ja: '低体重は免疫力を弱め、骨粗鬆症や感染症のリスクを高めます。', cn: '体重过轻会削弱免疫系统，增加骨质疏松和感染的风险。', es: 'El bajo peso puede debilitar el sistema inmunológico y aumentar el riesgo de osteoporosis e infecciones.' },
+                normal: { en: 'Your BMI is in the healthy range. Maintaining a normal weight reduces risks of heart disease and diabetes.', ko: 'BMI가 건강한 범위에 있습니다. 정상 체중 유지는 심장병과 당뇨병 위험을 줄여줍니다.', ja: 'BMIは健康的な範囲です。正常体重の維持は心臓病や糖尿病のリスクを低減します。', cn: '您的BMI在健康范围内。保持正常体重可降低心脏病和糖尿病的风险。', es: 'Tu IMC está en el rango saludable. Mantener un peso normal reduce riesgos de enfermedades cardíacas y diabetes.' },
+                overweight: { en: 'Being overweight increases risk of cardiovascular disease. Moderate weight loss can add years to your life.', ko: '과체중은 심혈관 질환 위험을 높입니다. 적당한 체중 감량이 수명을 연장할 수 있습니다.', ja: '過体重は心血管疾患のリスクを高めます。適度な減量で寿命が延びる可能性があります。', cn: '超重会增加心血管疾病的风险。适度减重可以延长寿命。', es: 'El sobrepeso aumenta el riesgo de enfermedad cardiovascular. Perder peso moderadamente puede añadir años a tu vida.' },
+                obese: { en: 'Obesity significantly increases risks of heart disease, stroke, diabetes, and certain cancers.', ko: '비만은 심장병, 뇌졸중, 당뇨병 및 특정 암의 위험을 크게 높입니다.', ja: '肥満は心臓病、脳卒中、糖尿病、特定のがんのリスクを大幅に高めます。', cn: '肥胖显著增加心脏病、中风、糖尿病和某些癌症的风险。', es: 'La obesidad aumenta significativamente los riesgos de enfermedades cardíacas, accidentes cerebrovasculares, diabetes y ciertos cánceres.' }
             }[bmiCategory]
         },
         smoking: {
@@ -763,10 +763,10 @@ function getFactorConfig() {
                 daily: { en: 'Daily smoker', ko: '매일 흡연', ja: '毎日喫煙', cn: '每天吸烟', es: 'Fumador diario' }
             }[ud.smoking],
             explanation: {
-                none: { en: 'Non-smoking is the single most impactful lifestyle choice for longevity.', ko: '비흡연은 장수에 가장 큰 영향을 미치는 생활습관입니다.' },
-                past: { en: 'Quitting smoking was a great decision. Your body continues to recover over time.', ko: '금연은 훌륭한 결정이었습니다. 시간이 지나면서 신체가 계속 회복됩니다.' },
-                occasional: { en: 'Even occasional smoking damages lungs and blood vessels. Each cigarette shortens life by ~11 minutes.', ko: '가끔 흡연도 폐와 혈관에 손상을 줍니다. 담배 1개비당 수명이 약 11분 줄어듭니다.' },
-                daily: { en: 'Daily smoking is the #1 preventable cause of death. Quitting at any age provides major benefits.', ko: '매일 흡연은 예방 가능한 사망 원인 1위입니다. 어떤 나이에든 금연은 큰 도움이 됩니다.' }
+                none: { en: 'Non-smoking is the single most impactful lifestyle choice for longevity.', ko: '비흡연은 장수에 가장 큰 영향을 미치는 생활습관입니다.', ja: '非喫煙は長寿に最も影響力のある生活習慣です。', cn: '不吸烟是对长寿影响最大的生活方式选择。', es: 'No fumar es la elección de estilo de vida más impactante para la longevidad.' },
+                past: { en: 'Quitting smoking was a great decision. Your body continues to recover over time.', ko: '금연은 훌륭한 결정이었습니다. 시간이 지나면서 신체가 계속 회복됩니다.', ja: '禁煙は素晴らしい決断でした。体は時間とともに回復し続けます。', cn: '戒烟是个很好的决定。您的身体会随着时间继续恢复。', es: 'Dejar de fumar fue una gran decisión. Tu cuerpo continúa recuperándose con el tiempo.' },
+                occasional: { en: 'Even occasional smoking damages lungs and blood vessels. Each cigarette shortens life by ~11 minutes.', ko: '가끔 흡연도 폐와 혈관에 손상을 줍니다. 담배 1개비당 수명이 약 11분 줄어듭니다.', ja: '時々の喫煙でも肺と血管に損傷を与えます。1本の煙草で寿命が約11分縮まります。', cn: '即使偶尔吸烟也会损害肺和血管。每支烟会缩短约11分钟的寿命。', es: 'Incluso fumar ocasionalmente daña los pulmones y vasos sanguíneos. Cada cigarrillo acorta la vida ~11 minutos.' },
+                daily: { en: 'Daily smoking is the #1 preventable cause of death. Quitting at any age provides major benefits.', ko: '매일 흡연은 예방 가능한 사망 원인 1위입니다. 어떤 나이에든 금연은 큰 도움이 됩니다.', ja: '毎日の喫煙は予防可能な死因の第1位です。何歳でも禁煙は大きな効果があります。', cn: '每天吸烟是第一大可预防的死因。任何年龄戒烟都有重大益处。', es: 'Fumar diario es la causa #1 de muerte prevenible. Dejar de fumar a cualquier edad proporciona grandes beneficios.' }
             }[ud.smoking]
         },
         drinking: {
@@ -779,10 +779,10 @@ function getFactorConfig() {
                 daily: { en: 'Daily drinker', ko: '매일 음주', ja: '毎日飲酒', cn: '每天饮酒', es: 'Bebedor diario' }
             }[ud.drinking],
             explanation: {
-                none: { en: 'Abstaining from alcohol eliminates risks of liver disease and alcohol-related accidents.', ko: '금주는 간 질환 및 음주 관련 사고 위험을 없앱니다.' },
-                occasional: { en: 'Occasional drinking has minimal health impact. Moderation is key.', ko: '가끔 음주는 건강에 미치는 영향이 미미합니다. 절제가 핵심입니다.' },
-                moderate: { en: 'Regular alcohol consumption increases liver disease risk. Consider reducing intake.', ko: '규칙적인 음주는 간 질환 위험을 높입니다. 음주량을 줄이는 것을 고려하세요.' },
-                daily: { en: 'Daily drinking significantly raises risks of liver cirrhosis, cancer, and cardiovascular disease.', ko: '매일 음주는 간경변, 암, 심혈관 질환의 위험을 크게 높입니다.' }
+                none: { en: 'Abstaining from alcohol eliminates risks of liver disease and alcohol-related accidents.', ko: '금주는 간 질환 및 음주 관련 사고 위험을 없앱니다.', ja: '禁酒は肝臓病やアルコール関連事故のリスクを排除します。', cn: '戒酒可消除肝病和酒精相关事故的风险。', es: 'Abstenerse del alcohol elimina riesgos de enfermedad hepática y accidentes relacionados con el alcohol.' },
+                occasional: { en: 'Occasional drinking has minimal health impact. Moderation is key.', ko: '가끔 음주는 건강에 미치는 영향이 미미합니다. 절제가 핵심입니다.', ja: '時々の飲酒は健康への影響は最小限です。節度が重要です。', cn: '偶尔饮酒对健康影响很小。适度是关键。', es: 'Beber ocasionalmente tiene un impacto mínimo en la salud. La moderación es clave.' },
+                moderate: { en: 'Regular alcohol consumption increases liver disease risk. Consider reducing intake.', ko: '규칙적인 음주는 간 질환 위험을 높입니다. 음주량을 줄이는 것을 고려하세요.', ja: '定期的な飲酒は肝臓病のリスクを高めます。摂取量の削減を検討してください。', cn: '经常饮酒会增加肝病风险。考虑减少饮酒量。', es: 'El consumo regular de alcohol aumenta el riesgo de enfermedad hepática. Considera reducir la ingesta.' },
+                daily: { en: 'Daily drinking significantly raises risks of liver cirrhosis, cancer, and cardiovascular disease.', ko: '매일 음주는 간경변, 암, 심혈관 질환의 위험을 크게 높입니다.', ja: '毎日の飲酒は肝硬変、がん、心血管疾患のリスクを大幅に高めます。', cn: '每天饮酒显著增加肝硬化、癌症和心血管疾病的风险。', es: 'Beber diariamente aumenta significativamente los riesgos de cirrosis hepática, cáncer y enfermedad cardiovascular.' }
             }[ud.drinking]
         },
         exercise: {
@@ -794,10 +794,10 @@ function getFactorConfig() {
                 return { en: `${v} times/week`, ko: `주 ${v}회`, ja: `週${v}回`, cn: `每周${v}次`, es: `${v} veces/sem` };
             })(),
             explanation: (() => {
-                if (ud.exercise >= 5) return { en: 'Excellent exercise habit! 5+ sessions/week provides maximum cardiovascular and longevity benefits.', ko: '훌륭한 운동 습관! 주 5회 이상은 심혈관 건강과 장수에 최대의 효과를 줍니다.' };
-                if (ud.exercise >= 3) return { en: 'Good exercise frequency. 3-4 sessions/week significantly reduces chronic disease risk.', ko: '좋은 운동 빈도입니다. 주 3-4회는 만성 질환 위험을 크게 줄여줍니다.' };
-                if (ud.exercise >= 1) return { en: 'Some exercise is better than none. Increasing to 3+ times/week would add more years.', ko: '운동을 안 하는 것보다 낫습니다. 주 3회 이상으로 늘리면 더 많은 수명이 늘어납니다.' };
-                return { en: 'No exercise is equivalent to smoking in health risk. Even 15 min/day of walking helps.', ko: '운동 부족은 흡연만큼 건강에 해롭습니다. 하루 15분 걷기만으로도 도움이 됩니다.' };
+                if (ud.exercise >= 5) return { en: 'Excellent exercise habit! 5+ sessions/week provides maximum cardiovascular and longevity benefits.', ko: '훌륭한 운동 습관! 주 5회 이상은 심혈관 건강과 장수에 최대의 효과를 줍니다.', ja: '素晴らしい運動習慣！週5回以上は心血管と長寿に最大の効果があります。', cn: '优秀的运动习惯！每周5次以上可获得最大的心血管和长寿益处。', es: '¡Excelente hábito de ejercicio! 5+ sesiones/semana proporciona máximos beneficios cardiovasculares y de longevidad.' };
+                if (ud.exercise >= 3) return { en: 'Good exercise frequency. 3-4 sessions/week significantly reduces chronic disease risk.', ko: '좋은 운동 빈도입니다. 주 3-4회는 만성 질환 위험을 크게 줄여줍니다.', ja: '良い運動頻度です。週3-4回で慢性疾患リスクが大幅に減少します。', cn: '良好的运动频率。每周3-4次可显著降低慢性病风险。', es: 'Buena frecuencia de ejercicio. 3-4 sesiones/semana reduce significativamente el riesgo de enfermedades crónicas.' };
+                if (ud.exercise >= 1) return { en: 'Some exercise is better than none. Increasing to 3+ times/week would add more years.', ko: '운동을 안 하는 것보다 낫습니다. 주 3회 이상으로 늘리면 더 많은 수명이 늘어납니다.', ja: '運動しないよりは良いです。週3回以上に増やすとさらに寿命が延びます。', cn: '有运动总比没有好。增加到每周3次以上可以延长更多寿命。', es: 'Algo de ejercicio es mejor que nada. Aumentar a 3+ veces/semana añadiría más años.' };
+                return { en: 'No exercise is equivalent to smoking in health risk. Even 15 min/day of walking helps.', ko: '운동 부족은 흡연만큼 건강에 해롭습니다. 하루 15분 걷기만으로도 도움이 됩니다.', ja: '運動不足は喫煙と同等の健康リスクがあります。1日15分の散歩でも効果があります。', cn: '不运动的健康风险相当于吸烟。即使每天步行15分钟也有帮助。', es: 'No hacer ejercicio equivale a fumar en riesgo para la salud. Incluso 15 min/día de caminata ayuda.' };
             })()
         },
         sleep: {
@@ -805,10 +805,10 @@ function getFactorConfig() {
             name: { en: 'Sleep', ko: '수면', ja: '睡眠', cn: '睡眠', es: 'Sueño' },
             choice: { en: `${ud.sleep}h/day`, ko: `하루 ${ud.sleep}시간`, ja: `${ud.sleep}時間/日`, cn: `${ud.sleep}小时/天`, es: `${ud.sleep}h/día` },
             explanation: (() => {
-                if (ud.sleep >= 7 && ud.sleep <= 8) return { en: 'Optimal sleep duration! 7-8 hours supports immune function, memory, and heart health.', ko: '최적의 수면 시간! 7-8시간은 면역 기능, 기억력, 심장 건강을 돕습니다.' };
-                if (ud.sleep >= 6 && ud.sleep <= 9) return { en: 'Acceptable sleep range. Closer to 7-8 hours would be ideal for long-term health.', ko: '허용 가능한 수면 범위입니다. 7-8시간에 가까울수록 장기 건강에 이상적입니다.' };
-                if (ud.sleep < 6) return { en: 'Sleep deprivation increases risks of obesity, diabetes, heart disease, and cognitive decline.', ko: '수면 부족은 비만, 당뇨, 심장병, 인지 저하의 위험을 높입니다.' };
-                return { en: 'Excessive sleep (9+ hours) is associated with higher mortality risk. Aim for 7-8 hours.', ko: '과도한 수면(9시간 이상)은 사망률 증가와 관련이 있습니다. 7-8시간을 목표로 하세요.' };
+                if (ud.sleep >= 7 && ud.sleep <= 8) return { en: 'Optimal sleep duration! 7-8 hours supports immune function, memory, and heart health.', ko: '최적의 수면 시간! 7-8시간은 면역 기능, 기억력, 심장 건강을 돕습니다.', ja: '最適な睡眠時間！7-8時間は免疫機能、記憶力、心臓の健康を支えます。', cn: '最佳睡眠时长！7-8小时有助于免疫功能、记忆力和心脏健康。', es: '¡Duración óptima de sueño! 7-8 horas apoya la función inmune, memoria y salud cardíaca.' };
+                if (ud.sleep >= 6 && ud.sleep <= 9) return { en: 'Acceptable sleep range. Closer to 7-8 hours would be ideal for long-term health.', ko: '허용 가능한 수면 범위입니다. 7-8시간에 가까울수록 장기 건강에 이상적입니다.', ja: '許容範囲の睡眠時間です。7-8時間に近いほど長期的な健康に理想的です。', cn: '可接受的睡眠范围。接近7-8小时对长期健康最理想。', es: 'Rango de sueño aceptable. Acercarse a 7-8 horas sería ideal para la salud a largo plazo.' };
+                if (ud.sleep < 6) return { en: 'Sleep deprivation increases risks of obesity, diabetes, heart disease, and cognitive decline.', ko: '수면 부족은 비만, 당뇨, 심장병, 인지 저하의 위험을 높입니다.', ja: '睡眠不足は肥満、糖尿病、心臓病、認知機能低下のリスクを高めます。', cn: '睡眠不足会增加肥胖、糖尿病、心脏病和认知衰退的风险。', es: 'La privación de sueño aumenta riesgos de obesidad, diabetes, enfermedad cardíaca y deterioro cognitivo.' };
+                return { en: 'Excessive sleep (9+ hours) is associated with higher mortality risk. Aim for 7-8 hours.', ko: '과도한 수면(9시간 이상)은 사망률 증가와 관련이 있습니다. 7-8시간을 목표로 하세요.', ja: '過度の睡眠（9時間以上）は死亡リスクの上昇と関連しています。7-8時間を目指しましょう。', cn: '过度睡眠（9小时以上）与更高的死亡风险相关。目标是7-8小时。', es: 'El sueño excesivo (9+ horas) se asocia con mayor riesgo de mortalidad. Apunta a 7-8 horas.' };
             })()
         },
         diet: {
@@ -820,9 +820,9 @@ function getFactorConfig() {
                 fast_food: { en: 'Fast food heavy', ko: '패스트푸드 위주', ja: 'ファストフード中心', cn: '快餐为主', es: 'Comida rápida' }
             }[ud.diet],
             explanation: {
-                healthy: { en: 'A nutrient-rich diet with fruits, vegetables, and whole grains is one of the strongest predictors of longevity.', ko: '과일, 채소, 통곡물이 풍부한 식단은 장수의 가장 강력한 예측 인자 중 하나입니다.' },
-                balanced: { en: 'A balanced diet provides adequate nutrition. Adding more fruits and vegetables would further improve outcomes.', ko: '균형 잡힌 식단은 적절한 영양을 제공합니다. 과일과 채소를 더 추가하면 더 좋아집니다.' },
-                fast_food: { en: 'Fast food diets high in sodium, sugar, and trans fats significantly increase cardiovascular disease and cancer risks.', ko: '나트륨, 설탕, 트랜스 지방이 많은 패스트푸드 식단은 심혈관 질환과 암 위험을 크게 높입니다.' }
+                healthy: { en: 'A nutrient-rich diet with fruits, vegetables, and whole grains is one of the strongest predictors of longevity.', ko: '과일, 채소, 통곡물이 풍부한 식단은 장수의 가장 강력한 예측 인자 중 하나입니다.', ja: '果物、野菜、全粒穀物が豊富な食事は長寿の最も強力な予測因子の一つです。', cn: '富含水果、蔬菜和全谷物的饮食是长寿的最强预测因子之一。', es: 'Una dieta rica en nutrientes con frutas, verduras y granos integrales es uno de los predictores más fuertes de longevidad.' },
+                balanced: { en: 'A balanced diet provides adequate nutrition. Adding more fruits and vegetables would further improve outcomes.', ko: '균형 잡힌 식단은 적절한 영양을 제공합니다. 과일과 채소를 더 추가하면 더 좋아집니다.', ja: 'バランスの取れた食事は適切な栄養を提供します。果物や野菜を増やすとさらに良くなります。', cn: '均衡饮食提供充足的营养。增加更多水果和蔬菜会进一步改善效果。', es: 'Una dieta equilibrada proporciona nutrición adecuada. Añadir más frutas y verduras mejoraría aún más los resultados.' },
+                fast_food: { en: 'Fast food diets high in sodium, sugar, and trans fats significantly increase cardiovascular disease and cancer risks.', ko: '나트륨, 설탕, 트랜스 지방이 많은 패스트푸드 식단은 심혈관 질환과 암 위험을 크게 높입니다.', ja: 'ナトリウム、糖分、トランス脂肪が多いファストフード食は心血管疾患やがんのリスクを大幅に高めます。', cn: '高钠、高糖、高反式脂肪的快餐饮食显著增加心血管疾病和癌症风险。', es: 'Las dietas de comida rápida altas en sodio, azúcar y grasas trans aumentan significativamente los riesgos de enfermedad cardiovascular y cáncer.' }
             }[ud.diet]
         },
         sitting: {
@@ -830,9 +830,9 @@ function getFactorConfig() {
             name: { en: 'Sitting Time', ko: '좌식 시간', ja: '座る時間', cn: '久坐时间', es: 'Tiempo Sentado' },
             choice: { en: `${ud.sitting}h/day`, ko: `하루 ${ud.sitting}시간`, ja: `${ud.sitting}時間/日`, cn: `${ud.sitting}小时/天`, es: `${ud.sitting}h/día` },
             explanation: (() => {
-                if (ud.sitting <= 6) return { en: 'Good! Lower sitting time reduces risks of metabolic syndrome and cardiovascular disease.', ko: '좋습니다! 적은 좌식 시간은 대사 증후군과 심혈관 질환 위험을 줄여줍니다.' };
-                if (ud.sitting <= 8) return { en: 'Average sitting time. Try to take breaks every 30-60 minutes to reduce health risks.', ko: '평균적인 좌식 시간입니다. 30-60분마다 휴식을 취하면 건강 위험을 줄일 수 있습니다.' };
-                return { en: 'Prolonged sitting (8+ hours) is called "the new smoking." Stand up regularly to counteract risks.', ko: '장시간 앉기(8시간 이상)는 "새로운 흡연"이라 불립니다. 정기적으로 일어나세요.' };
+                if (ud.sitting <= 6) return { en: 'Good! Lower sitting time reduces risks of metabolic syndrome and cardiovascular disease.', ko: '좋습니다! 적은 좌식 시간은 대사 증후군과 심혈관 질환 위험을 줄여줍니다.', ja: '良いです！座る時間が少ないと代謝症候群や心血管疾患のリスクが減ります。', cn: '很好！较少的久坐时间可降低代谢综合征和心血管疾病的风险。', es: '¡Bien! Menos tiempo sentado reduce riesgos de síndrome metabólico y enfermedad cardiovascular.' };
+                if (ud.sitting <= 8) return { en: 'Average sitting time. Try to take breaks every 30-60 minutes to reduce health risks.', ko: '평균적인 좌식 시간입니다. 30-60분마다 휴식을 취하면 건강 위험을 줄일 수 있습니다.', ja: '平均的な座る時間です。30-60分ごとに休憩を取ると健康リスクが減ります。', cn: '平均久坐时间。每30-60分钟休息一次可以降低健康风险。', es: 'Tiempo sentado promedio. Intenta tomar descansos cada 30-60 minutos para reducir riesgos.' };
+                return { en: 'Prolonged sitting (8+ hours) is called "the new smoking." Stand up regularly to counteract risks.', ko: '장시간 앉기(8시간 이상)는 "새로운 흡연"이라 불립니다. 정기적으로 일어나세요.', ja: '長時間の座り（8時間以上）は「新しい喫煙」と呼ばれています。定期的に立ち上がりましょう。', cn: '长时间久坐（8小时以上）被称为"新型吸烟"。定期站起来以减少风险。', es: 'Estar sentado prolongadamente (8+ horas) se llama "el nuevo fumar". Levántate regularmente para contrarrestar riesgos.' };
             })()
         },
         sun_exposure: {
@@ -844,9 +844,9 @@ function getFactorConfig() {
                 outdoor: { en: 'Outdoor work', ko: '야외 근무', ja: '屋外仕事', cn: '户外工作', es: 'Trabajo exterior' }
             }[ud.sun_exposure],
             explanation: {
-                indoor: { en: 'Indoor work reduces UV damage but consider vitamin D supplementation for bone health.', ko: '실내 근무는 자외선 손상을 줄이지만 뼈 건강을 위해 비타민 D 보충을 고려하세요.' },
-                normal: { en: 'Moderate sun exposure provides vitamin D benefits without excessive skin damage risk.', ko: '적당한 햇빛 노출은 과도한 피부 손상 없이 비타민 D 혜택을 제공합니다.' },
-                outdoor: { en: 'Prolonged UV exposure increases skin cancer risk. Use sunscreen and protective clothing.', ko: '장시간 자외선 노출은 피부암 위험을 높입니다. 자외선 차단제와 보호복을 사용하세요.' }
+                indoor: { en: 'Indoor work reduces UV damage but consider vitamin D supplementation for bone health.', ko: '실내 근무는 자외선 손상을 줄이지만 뼈 건강을 위해 비타민 D 보충을 고려하세요.', ja: '屋内仕事はUVダメージを減らしますが、骨の健康のためにビタミンDの補給を検討してください。', cn: '室内工作减少紫外线损伤，但请考虑补充维生素D以维护骨骼健康。', es: 'El trabajo interior reduce el daño UV pero considera suplementos de vitamina D para la salud ósea.' },
+                normal: { en: 'Moderate sun exposure provides vitamin D benefits without excessive skin damage risk.', ko: '적당한 햇빛 노출은 과도한 피부 손상 없이 비타민 D 혜택을 제공합니다.', ja: '適度な日光浴はビタミンDの恩恵を受けながら過度な皮膚ダメージを避けられます。', cn: '适度的阳光照射可获得维生素D益处，且不会有过度皮肤损伤风险。', es: 'La exposición moderada al sol proporciona beneficios de vitamina D sin riesgo excesivo de daño cutáneo.' },
+                outdoor: { en: 'Prolonged UV exposure increases skin cancer risk. Use sunscreen and protective clothing.', ko: '장시간 자외선 노출은 피부암 위험을 높입니다. 자외선 차단제와 보호복을 사용하세요.', ja: '長時間のUV曝露は皮膚がんのリスクを高めます。日焼け止めと保護服を使用してください。', cn: '长时间紫外线照射会增加皮肤癌风险。请使用防晒霜和防护服。', es: 'La exposición prolongada a UV aumenta el riesgo de cáncer de piel. Usa protector solar y ropa protectora.' }
             }[ud.sun_exposure]
         },
         stress: {
@@ -858,9 +858,9 @@ function getFactorConfig() {
                 return { en: `Level ${ud.stress} — High`, ko: `${ud.stress}단계 — 높음`, ja: `レベル${ud.stress} — 高い`, cn: `${ud.stress}级 — 高`, es: `Nivel ${ud.stress} — Alto` };
             })(),
             explanation: (() => {
-                if (ud.stress <= 3) return { en: 'Low stress levels support immune function and cardiovascular health. Keep it up!', ko: '낮은 스트레스는 면역 기능과 심혈관 건강을 지원합니다. 잘 유지하세요!' };
-                if (ud.stress <= 7) return { en: 'Moderate stress is normal. Mindfulness, exercise, and social connection can help manage it.', ko: '적당한 스트레스는 정상입니다. 명상, 운동, 사회적 교류가 관리에 도움이 됩니다.' };
-                return { en: 'Chronic high stress increases cortisol, raising risks of heart disease, depression, and weakened immunity.', ko: '만성적 고스트레스는 코르티솔을 증가시켜 심장병, 우울증, 면역력 저하 위험을 높입니다.' };
+                if (ud.stress <= 3) return { en: 'Low stress levels support immune function and cardiovascular health. Keep it up!', ko: '낮은 스트레스는 면역 기능과 심혈관 건강을 지원합니다. 잘 유지하세요!', ja: '低ストレスは免疫機能と心血管の健康を支えます。この調子を維持しましょう！', cn: '低压力水平有助于免疫功能和心血管健康。继续保持！', es: 'Los niveles bajos de estrés apoyan la función inmune y la salud cardiovascular. ¡Sigue así!' };
+                if (ud.stress <= 7) return { en: 'Moderate stress is normal. Mindfulness, exercise, and social connection can help manage it.', ko: '적당한 스트레스는 정상입니다. 명상, 운동, 사회적 교류가 관리에 도움이 됩니다.', ja: '適度なストレスは正常です。マインドフルネス、運動、社会的つながりが管理に役立ちます。', cn: '适度的压力是正常的。冥想、运动和社交联系可以帮助管理压力。', es: 'El estrés moderado es normal. La atención plena, el ejercicio y la conexión social pueden ayudar a manejarlo.' };
+                return { en: 'Chronic high stress increases cortisol, raising risks of heart disease, depression, and weakened immunity.', ko: '만성적 고스트레스는 코르티솔을 증가시켜 심장병, 우울증, 면역력 저하 위험을 높입니다.', ja: '慢性的な高ストレスはコルチゾールを増加させ、心臓病、うつ病、免疫力低下のリスクを高めます。', cn: '长期高压力会增加皮质醇，提高心脏病、抑郁症和免疫力下降的风险。', es: 'El estrés crónico alto aumenta el cortisol, elevando riesgos de enfermedad cardíaca, depresión e inmunidad debilitada.' };
             })()
         },
         social: {
@@ -872,9 +872,9 @@ function getFactorConfig() {
                 isolated: { en: 'Socially isolated', ko: '사회적 고립', ja: '社会的孤立', cn: '社交孤立', es: 'Aislamiento social' }
             }[ud.social],
             explanation: {
-                active: { en: 'Strong social connections are as powerful as exercise in extending lifespan. Loneliness is a major health risk.', ko: '강한 사회적 유대는 운동만큼 수명 연장에 효과적입니다. 외로움은 주요 건강 위험입니다.' },
-                normal: { en: 'Normal social connections provide baseline health benefits. Deepening relationships may add more years.', ko: '보통 수준의 사회적 관계는 기본적인 건강 혜택을 제공합니다. 관계를 깊게 하면 더 도움이 됩니다.' },
-                isolated: { en: 'Social isolation is as harmful as smoking 15 cigarettes/day. Building connections can significantly extend life.', ko: '사회적 고립은 하루 담배 15개비만큼 해롭습니다. 관계를 구축하면 수명이 크게 늘어날 수 있습니다.' }
+                active: { en: 'Strong social connections are as powerful as exercise in extending lifespan. Loneliness is a major health risk.', ko: '강한 사회적 유대는 운동만큼 수명 연장에 효과적입니다. 외로움은 주요 건강 위험입니다.', ja: '強い社会的つながりは運動と同じくらい寿命延長に効果的です。孤独は主要な健康リスクです。', cn: '强大的社交联系在延长寿命方面与运动一样有效。孤独是主要的健康风险。', es: 'Las conexiones sociales fuertes son tan poderosas como el ejercicio para extender la vida. La soledad es un riesgo mayor.' },
+                normal: { en: 'Normal social connections provide baseline health benefits. Deepening relationships may add more years.', ko: '보통 수준의 사회적 관계는 기본적인 건강 혜택을 제공합니다. 관계를 깊게 하면 더 도움이 됩니다.', ja: '通常の社会的つながりは基本的な健康効果を提供します。関係を深めるとさらに寿命が延びます。', cn: '正常的社交联系提供基本的健康益处。深化关系可能会增加更多年。', es: 'Las conexiones sociales normales proporcionan beneficios de salud básicos. Profundizar relaciones puede añadir más años.' },
+                isolated: { en: 'Social isolation is as harmful as smoking 15 cigarettes/day. Building connections can significantly extend life.', ko: '사회적 고립은 하루 담배 15개비만큼 해롭습니다. 관계를 구축하면 수명이 크게 늘어날 수 있습니다.', ja: '社会的孤立は1日15本の喫煙と同じくらい有害です。つながりを築くと寿命が大幅に延びます。', cn: '社交孤立的危害等同于每天吸15支烟。建立联系可以显著延长寿命。', es: 'El aislamiento social es tan dañino como fumar 15 cigarrillos/día. Construir conexiones puede extender significativamente la vida.' }
             }[ud.social]
         },
         partner: {
@@ -884,8 +884,8 @@ function getFactorConfig() {
                 ? { en: 'Has partner', ko: '배우자 있음', ja: 'パートナーあり', cn: '有伴侣', es: 'Con pareja' }
                 : { en: 'No partner', ko: '배우자 없음', ja: 'パートナーなし', cn: '无伴侣', es: 'Sin pareja' },
             explanation: ud.partner
-                ? { en: 'Marriage/partnership provides emotional support, healthier habits, and better stress management.', ko: '결혼/배우자 관계는 정서적 지지, 건강한 습관, 더 나은 스트레스 관리를 제공합니다.' }
-                : { en: 'Being single has no inherent health penalty. Strong friendships and social networks provide similar benefits.', ko: '미혼이 건강에 불리한 것은 아닙니다. 강한 우정과 사회적 네트워크가 비슷한 효과를 줍니다.' }
+                ? { en: 'Marriage/partnership provides emotional support, healthier habits, and better stress management.', ko: '결혼/배우자 관계는 정서적 지지, 건강한 습관, 더 나은 스트레스 관리를 제공합니다.', ja: '結婚/パートナーシップは精神的支え、健康的な習慣、より良いストレス管理を提供します。', cn: '婚姻/伴侣关系提供情感支持、更健康的习惯和更好的压力管理。', es: 'El matrimonio/pareja proporciona apoyo emocional, hábitos más saludables y mejor manejo del estrés.' }
+                : { en: 'Being single has no inherent health penalty. Strong friendships and social networks provide similar benefits.', ko: '미혼이 건강에 불리한 것은 아닙니다. 강한 우정과 사회적 네트워크가 비슷한 효과를 줍니다.', ja: '独身であること自体は健康に不利ではありません。強い友情と社会的ネットワークが同様の効果を提供します。', cn: '单身本身不会对健康不利。强大的友谊和社交网络可以提供类似的益处。', es: 'Ser soltero no tiene penalización de salud inherente. Amistades fuertes y redes sociales proporcionan beneficios similares.' }
         }
     };
 }
@@ -1532,7 +1532,7 @@ function loadDataFromLifeReceipt() {
             if (data.sleep && sleepEl) sleepEl.value = data.sleep;
         }
     } catch (e) {
-        console.log('No Life Receipt data found');
+        // silently ignore
     }
 }
 
@@ -1546,7 +1546,7 @@ function saveDataForLifeReceipt() {
         };
         localStorage.setItem('lifespanData', JSON.stringify(data));
     } catch (e) {
-        console.log('Could not save data');
+        // silently ignore
     }
 }
 
