@@ -23,7 +23,6 @@ function initializeLandingCountdown() {
         en: (s) => `47y 3m 12d 07:23:${s}`,
         ko: (s) => `47년 3개월 12일 07:23:${s}`,
         ja: (s) => `47年 3ヶ月 12日 07:23:${s}`,
-        cn: (s) => `47年 3个月 12天 07:23:${s}`,
         es: (s) => `47a 3m 12d 07:23:${s}`
     };
 
@@ -89,7 +88,6 @@ function updateStepIndicators() {
     document.getElementById('current-step').textContent = currentStep;
     document.getElementById('current-step-ko').textContent = currentStep;
     document.getElementById('current-step-ja').textContent = currentStep;
-    document.getElementById('current-step-cn').textContent = currentStep;
     document.getElementById('current-step-es').textContent = currentStep;
 }
 
@@ -108,7 +106,6 @@ function renderStep2() {
                     <span class="lang-en">Smoking</span>
                     <span class="lang-ko hidden">흡연</span>
                     <span class="lang-ja hidden">喫煙</span>
-                    <span class="lang-cn hidden">吸烟</span>
                     <span class="lang-es hidden">Fumar</span>
                 </label>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -116,28 +113,24 @@ function renderStep2() {
                         <div class="lang-en">Never</div>
                         <div class="lang-ko hidden">안 함</div>
                         <div class="lang-ja hidden">しない</div>
-                        <div class="lang-cn hidden">从不</div>
                         <div class="lang-es hidden">Nunca</div>
                     </button>
                     <button type="button" onclick="selectOption('smoking', 'past')" id="smoking-past" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Former</div>
                         <div class="lang-ko hidden">과거</div>
                         <div class="lang-ja hidden">過去</div>
-                        <div class="lang-cn hidden">过去</div>
                         <div class="lang-es hidden">Anterior</div>
                     </button>
                     <button type="button" onclick="selectOption('smoking', 'occasional')" id="smoking-occasional" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Occasional</div>
                         <div class="lang-ko hidden">가끔</div>
                         <div class="lang-ja hidden">時々</div>
-                        <div class="lang-cn hidden">偶尔</div>
                         <div class="lang-es hidden">Ocasional</div>
                     </button>
                     <button type="button" onclick="selectOption('smoking', 'daily')" id="smoking-daily" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Daily</div>
                         <div class="lang-ko hidden">매일</div>
                         <div class="lang-ja hidden">毎日</div>
-                        <div class="lang-cn hidden">每天</div>
                         <div class="lang-es hidden">Diario</div>
                     </button>
                 </div>
@@ -150,7 +143,6 @@ function renderStep2() {
                     <span class="lang-en">Alcohol Consumption</span>
                     <span class="lang-ko hidden">음주</span>
                     <span class="lang-ja hidden">飲酒</span>
-                    <span class="lang-cn hidden">饮酒</span>
                     <span class="lang-es hidden">Consumo de Alcohol</span>
                 </label>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -158,28 +150,24 @@ function renderStep2() {
                         <div class="lang-en">Never</div>
                         <div class="lang-ko hidden">안 함</div>
                         <div class="lang-ja hidden">しない</div>
-                        <div class="lang-cn hidden">从不</div>
                         <div class="lang-es hidden">Nunca</div>
                     </button>
                     <button type="button" onclick="selectOption('drinking', 'occasional')" id="drinking-occasional" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Occasional</div>
                         <div class="lang-ko hidden">가끔</div>
                         <div class="lang-ja hidden">時々</div>
-                        <div class="lang-cn hidden">偶尔</div>
                         <div class="lang-es hidden">Ocasional</div>
                     </button>
                     <button type="button" onclick="selectOption('drinking', 'moderate')" id="drinking-moderate" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">2-3/week</div>
                         <div class="lang-ko hidden">주2-3</div>
                         <div class="lang-ja hidden">週2-3</div>
-                        <div class="lang-cn hidden">周2-3</div>
                         <div class="lang-es hidden">2-3/sem</div>
                     </button>
                     <button type="button" onclick="selectOption('drinking', 'daily')" id="drinking-daily" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Daily</div>
                         <div class="lang-ko hidden">매일</div>
                         <div class="lang-ja hidden">毎日</div>
-                        <div class="lang-cn hidden">每天</div>
                         <div class="lang-es hidden">Diario</div>
                     </button>
                 </div>
@@ -193,7 +181,6 @@ function renderStep2() {
                         <span class="lang-en">Exercise (times/week)</span>
                         <span class="lang-ko hidden">운동 (주당 횟수)</span>
                         <span class="lang-ja hidden">運動 (週回数)</span>
-                        <span class="lang-cn hidden">运动 (每周次数)</span>
                         <span class="lang-es hidden">Ejercicio (veces/sem)</span>
                     </span>
                     <span id="exercise-value" class="text-gray-400 font-bold">3</span>
@@ -213,7 +200,6 @@ function renderStep2() {
                         <span class="lang-en">Sleep (hours/day)</span>
                         <span class="lang-ko hidden">수면 (시간/일)</span>
                         <span class="lang-ja hidden">睡眠 (時間/日)</span>
-                        <span class="lang-cn hidden">睡眠 (小时/天)</span>
                         <span class="lang-es hidden">Sueño (horas/día)</span>
                     </span>
                     <span id="sleep-value" class="text-gray-400 font-bold">7h</span>
@@ -232,7 +218,6 @@ function renderStep2() {
                     <span class="lang-en">Diet Quality</span>
                     <span class="lang-ko hidden">식습관</span>
                     <span class="lang-ja hidden">食習慣</span>
-                    <span class="lang-cn hidden">饮食质量</span>
                     <span class="lang-es hidden">Calidad de Dieta</span>
                 </label>
                 <div class="grid grid-cols-3 gap-3">
@@ -241,7 +226,6 @@ function renderStep2() {
                         <div class="lang-en">Healthy</div>
                         <div class="lang-ko hidden">건강식</div>
                         <div class="lang-ja hidden">健康的</div>
-                        <div class="lang-cn hidden">健康</div>
                         <div class="lang-es hidden">Saludable</div>
                     </button>
                     <button type="button" onclick="selectOption('diet', 'balanced')" id="diet-balanced" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
@@ -249,7 +233,6 @@ function renderStep2() {
                         <div class="lang-en">Balanced</div>
                         <div class="lang-ko hidden">보통</div>
                         <div class="lang-ja hidden">普通</div>
-                        <div class="lang-cn hidden">均衡</div>
                         <div class="lang-es hidden">Equilibrado</div>
                     </button>
                     <button type="button" onclick="selectOption('diet', 'fast_food')" id="diet-fast_food" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
@@ -257,7 +240,6 @@ function renderStep2() {
                         <div class="lang-en">Fast Food</div>
                         <div class="lang-ko hidden">패스트푸드</div>
                         <div class="lang-ja hidden">ファストフード</div>
-                        <div class="lang-cn hidden">快餐</div>
                         <div class="lang-es hidden">Comida Rápida</div>
                     </button>
                 </div>
@@ -271,7 +253,6 @@ function renderStep2() {
                         <span class="lang-en">Sitting Time (hours/day)</span>
                         <span class="lang-ko hidden">좌식 시간 (시간/일)</span>
                         <span class="lang-ja hidden">座る時間 (時間/日)</span>
-                        <span class="lang-cn hidden">坐着时间 (小时/天)</span>
                         <span class="lang-es hidden">Tiempo Sentado (horas/día)</span>
                     </span>
                     <span id="sitting-value" class="text-gray-400 font-bold">8h</span>
@@ -290,7 +271,6 @@ function renderStep2() {
                     <span class="lang-en">Sun Exposure</span>
                     <span class="lang-ko hidden">자외선 노출</span>
                     <span class="lang-ja hidden">日光への露出</span>
-                    <span class="lang-cn hidden">阳光照射</span>
                     <span class="lang-es hidden">Exposición al Sol</span>
                 </label>
                 <div class="grid grid-cols-3 gap-3">
@@ -298,21 +278,18 @@ function renderStep2() {
                         <div class="lang-en">Indoor Job</div>
                         <div class="lang-ko hidden">실내직</div>
                         <div class="lang-ja hidden">屋内仕事</div>
-                        <div class="lang-cn hidden">室内工作</div>
                         <div class="lang-es hidden">Trabajo Interior</div>
                     </button>
                     <button type="button" onclick="selectOption('sun_exposure', 'normal')" id="sun_exposure-normal" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Normal</div>
                         <div class="lang-ko hidden">보통</div>
                         <div class="lang-ja hidden">普通</div>
-                        <div class="lang-cn hidden">正常</div>
                         <div class="lang-es hidden">Normal</div>
                     </button>
                     <button type="button" onclick="selectOption('sun_exposure', 'outdoor')" id="sun_exposure-outdoor" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Outdoor Job</div>
                         <div class="lang-ko hidden">야외직</div>
                         <div class="lang-ja hidden">屋外仕事</div>
-                        <div class="lang-cn hidden">户外工作</div>
                         <div class="lang-es hidden">Trabajo Exterior</div>
                     </button>
                 </div>
@@ -340,15 +317,12 @@ function renderStep3() {
                         <span class="lang-en">Stress Level (1-10)</span>
                         <span class="lang-ko hidden">스트레스 수준 (1-10)</span>
                         <span class="lang-ja hidden">ストレスレベル (1-10)</span>
-                        <span class="lang-cn hidden">压力水平 (1-10)</span>
                         <span class="lang-es hidden">Nivel de Estrés (1-10)</span>
                     </span>
                     <span id="stress-value" class="text-gray-400 font-bold">5</span>
                 </label>
                 <input type="range" id="stress" min="1" max="10" step="1" value="5" class="w-full" oninput="updateSliderValue('stress', this.value)">
                 <div class="flex justify-between text-xs text-gray-400 mt-1">
-                    <span class="lang-en">Low</span><span class="lang-ko hidden">낮음</span><span class="lang-ja hidden">低い</span><span class="lang-cn hidden">低</span><span class="lang-es hidden">Bajo</span>
-                    <span class="lang-en">High</span><span class="lang-ko hidden">높음</span><span class="lang-ja hidden">高い</span><span class="lang-cn hidden">高</span><span class="lang-es hidden">Alto</span>
                 </div>
             </div>
 
@@ -359,7 +333,6 @@ function renderStep3() {
                     <span class="lang-en">Social Relationships</span>
                     <span class="lang-ko hidden">사회적 관계</span>
                     <span class="lang-ja hidden">社会的関係</span>
-                    <span class="lang-cn hidden">社交关系</span>
                     <span class="lang-es hidden">Relaciones Sociales</span>
                 </label>
                 <div class="grid grid-cols-3 gap-3">
@@ -367,21 +340,18 @@ function renderStep3() {
                         <div class="lang-en">Active</div>
                         <div class="lang-ko hidden">활발</div>
                         <div class="lang-ja hidden">活発</div>
-                        <div class="lang-cn hidden">活跃</div>
                         <div class="lang-es hidden">Activo</div>
                     </button>
                     <button type="button" onclick="selectOption('social', 'normal')" id="social-normal" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Normal</div>
                         <div class="lang-ko hidden">보통</div>
                         <div class="lang-ja hidden">普通</div>
-                        <div class="lang-cn hidden">正常</div>
                         <div class="lang-es hidden">Normal</div>
                     </button>
                     <button type="button" onclick="selectOption('social', 'isolated')" id="social-isolated" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">Isolated</div>
                         <div class="lang-ko hidden">고립</div>
                         <div class="lang-ja hidden">孤立</div>
-                        <div class="lang-cn hidden">孤立</div>
                         <div class="lang-es hidden">Aislado</div>
                     </button>
                 </div>
@@ -394,7 +364,6 @@ function renderStep3() {
                     <span class="lang-en">Partner/Married</span>
                     <span class="lang-ko hidden">배우자 유무</span>
                     <span class="lang-ja hidden">パートナー/既婚</span>
-                    <span class="lang-cn hidden">伴侣/已婚</span>
                     <span class="lang-es hidden">Pareja/Casado</span>
                 </label>
                 <div class="grid grid-cols-2 gap-3">
@@ -402,14 +371,12 @@ function renderStep3() {
                         <div class="lang-en">Yes</div>
                         <div class="lang-ko hidden">예</div>
                         <div class="lang-ja hidden">はい</div>
-                        <div class="lang-cn hidden">是</div>
                         <div class="lang-es hidden">Sí</div>
                     </button>
                     <button type="button" onclick="selectOption('partner', 'false')" id="partner-false" class="option-button py-3 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-all border-2 border-gray-600">
                         <div class="lang-en">No</div>
                         <div class="lang-ko hidden">아니오</div>
                         <div class="lang-ja hidden">いいえ</div>
-                        <div class="lang-cn hidden">否</div>
                         <div class="lang-es hidden">No</div>
                     </button>
                 </div>
@@ -423,7 +390,6 @@ function renderStep3() {
                         <span class="lang-en">Family History (optional)</span>
                         <span class="lang-ko hidden">가족력 (선택사항)</span>
                         <span class="lang-ja hidden">家族歴 (オプション)</span>
-                        <span class="lang-cn hidden">家族史 (可选)</span>
                         <span class="lang-es hidden">Historial Familiar (opcional)</span>
                     </span>
                     <span id="family-arrow" class="transform transition-transform text-gray-400 text-xl">▼</span>
@@ -435,7 +401,6 @@ function renderStep3() {
                             <span class="lang-en">This helps calculate "time remaining with parents"</span>
                             <span class="lang-ko hidden">부모님과의 남은 시간 계산에 도움이 됩니다</span>
                             <span class="lang-ja hidden">両親との残り時間を計算するのに役立ちます</span>
-                            <span class="lang-cn hidden">这有助于计算"与父母剩余的时间"</span>
                             <span class="lang-es hidden">Esto ayuda a calcular el "tiempo restante con los padres"</span>
                         </p>
                         <div class="grid grid-cols-2 gap-4">
@@ -444,7 +409,6 @@ function renderStep3() {
                                     <span class="lang-en">Mother's Current Age</span>
                                     <span class="lang-ko hidden">어머니 현재 나이</span>
                                     <span class="lang-ja hidden">母の現在の年齢</span>
-                                    <span class="lang-cn hidden">母亲当前年龄</span>
                                     <span class="lang-es hidden">Edad Actual de Madre</span>
                                 </label>
                                 <input type="number" id="parent_age_mother" min="40" max="120" placeholder="-" class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg border-2 border-gray-600">
@@ -454,7 +418,6 @@ function renderStep3() {
                                     <span class="lang-en">Father's Current Age</span>
                                     <span class="lang-ko hidden">아버지 현재 나이</span>
                                     <span class="lang-ja hidden">父の現在の年齢</span>
-                                    <span class="lang-cn hidden">父亲当前年龄</span>
                                     <span class="lang-es hidden">Edad Actual de Padre</span>
                                 </label>
                                 <input type="number" id="parent_age_father" min="40" max="120" placeholder="-" class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg border-2 border-gray-600">
@@ -526,7 +489,6 @@ function validateCurrentStep() {
                 en: 'Please fill in all required fields',
                 ko: '필수 항목을 모두 입력해주세요',
                 ja: 'すべての必須フィールドに入力してください',
-                cn: '请填写所有必填字段',
                 es: 'Por favor complete todos los campos requeridos'
             };
             alert(msg[currentLang] || msg.en);
@@ -539,7 +501,6 @@ function validateCurrentStep() {
                 en: 'You must be at least 13 years old to use this service',
                 ko: '이 서비스를 이용하려면 13세 이상이어야 합니다',
                 ja: 'このサービスを利用するには13歳以上である必要があります',
-                cn: '您必须年满 13 岁才能使用此服务',
                 es: 'Debes tener al menos 13 años para usar este servicio'
             };
             alert(msg[currentLang] || msg.en);
@@ -739,153 +700,153 @@ function getFactorConfig() {
     return {
         bmi: {
             icon: '⚖️',
-            name: { en: 'Body Mass Index', ko: '체질량지수(BMI)', ja: 'BMI', cn: '体重指数', es: 'IMC' },
+            name: { en: 'Body Mass Index', ko: '체질량지수(BMI)', ja: 'BMI', es: 'IMC' },
             choice: {
-                underweight: { en: `${bmi} — Underweight`, ko: `${bmi} — 저체중`, ja: `${bmi} — 低体重`, cn: `${bmi} — 偏瘦`, es: `${bmi} — Bajo peso` },
-                normal: { en: `${bmi} — Normal`, ko: `${bmi} — 정상`, ja: `${bmi} — 標準`, cn: `${bmi} — 正常`, es: `${bmi} — Normal` },
-                overweight: { en: `${bmi} — Overweight`, ko: `${bmi} — 과체중`, ja: `${bmi} — 過体重`, cn: `${bmi} — 超重`, es: `${bmi} — Sobrepeso` },
-                obese: { en: `${bmi} — Obese`, ko: `${bmi} — 비만`, ja: `${bmi} — 肥満`, cn: `${bmi} — 肥胖`, es: `${bmi} — Obeso` }
+                underweight: { en: `${bmi} — Underweight`, ko: `${bmi} — 저체중`, ja: `${bmi} — 低体重`, es: `${bmi} — Bajo peso` },
+                normal: { en: `${bmi} — Normal`, ko: `${bmi} — 정상`, ja: `${bmi} — 標準`, es: `${bmi} — Normal` },
+                overweight: { en: `${bmi} — Overweight`, ko: `${bmi} — 과체중`, ja: `${bmi} — 過体重`, es: `${bmi} — Sobrepeso` },
+                obese: { en: `${bmi} — Obese`, ko: `${bmi} — 비만`, ja: `${bmi} — 肥満`, es: `${bmi} — Obeso` }
             }[bmiCategory],
             explanation: {
-                underweight: { en: 'Being underweight can weaken your immune system and increase risk of osteoporosis and infections.', ko: '저체중은 면역 체계를 약화시키고 골다공증 및 감염 위험을 높일 수 있습니다.', ja: '低体重は免疫力を弱め、骨粗鬆症や感染症のリスクを高めます。', cn: '体重过轻会削弱免疫系统，增加骨质疏松和感染的风险。', es: 'El bajo peso puede debilitar el sistema inmunológico y aumentar el riesgo de osteoporosis e infecciones.' },
-                normal: { en: 'Your BMI is in the healthy range. Maintaining a normal weight reduces risks of heart disease and diabetes.', ko: 'BMI가 건강한 범위에 있습니다. 정상 체중 유지는 심장병과 당뇨병 위험을 줄여줍니다.', ja: 'BMIは健康的な範囲です。正常体重の維持は心臓病や糖尿病のリスクを低減します。', cn: '您的BMI在健康范围内。保持正常体重可降低心脏病和糖尿病的风险。', es: 'Tu IMC está en el rango saludable. Mantener un peso normal reduce riesgos de enfermedades cardíacas y diabetes.' },
-                overweight: { en: 'Being overweight increases risk of cardiovascular disease. Moderate weight loss can add years to your life.', ko: '과체중은 심혈관 질환 위험을 높입니다. 적당한 체중 감량이 수명을 연장할 수 있습니다.', ja: '過体重は心血管疾患のリスクを高めます。適度な減量で寿命が延びる可能性があります。', cn: '超重会增加心血管疾病的风险。适度减重可以延长寿命。', es: 'El sobrepeso aumenta el riesgo de enfermedad cardiovascular. Perder peso moderadamente puede añadir años a tu vida.' },
-                obese: { en: 'Obesity significantly increases risks of heart disease, stroke, diabetes, and certain cancers.', ko: '비만은 심장병, 뇌졸중, 당뇨병 및 특정 암의 위험을 크게 높입니다.', ja: '肥満は心臓病、脳卒中、糖尿病、特定のがんのリスクを大幅に高めます。', cn: '肥胖显著增加心脏病、中风、糖尿病和某些癌症的风险。', es: 'La obesidad aumenta significativamente los riesgos de enfermedades cardíacas, accidentes cerebrovasculares, diabetes y ciertos cánceres.' }
+                underweight: { en: 'Being underweight can weaken your immune system and increase risk of osteoporosis and infections.', ko: '저체중은 면역 체계를 약화시키고 골다공증 및 감염 위험을 높일 수 있습니다.', ja: '低体重は免疫力を弱め、骨粗鬆症や感染症のリスクを高めます。', es: 'El bajo peso puede debilitar el sistema inmunológico y aumentar el riesgo de osteoporosis e infecciones.' },
+                normal: { en: 'Your BMI is in the healthy range. Maintaining a normal weight reduces risks of heart disease and diabetes.', ko: 'BMI가 건강한 범위에 있습니다. 정상 체중 유지는 심장병과 당뇨병 위험을 줄여줍니다.', ja: 'BMIは健康的な範囲です。正常体重の維持は心臓病や糖尿病のリスクを低減します。', es: 'Tu IMC está en el rango saludable. Mantener un peso normal reduce riesgos de enfermedades cardíacas y diabetes.' },
+                overweight: { en: 'Being overweight increases risk of cardiovascular disease. Moderate weight loss can add years to your life.', ko: '과체중은 심혈관 질환 위험을 높입니다. 적당한 체중 감량이 수명을 연장할 수 있습니다.', ja: '過体重は心血管疾患のリスクを高めます。適度な減量で寿命が延びる可能性があります。', es: 'El sobrepeso aumenta el riesgo de enfermedad cardiovascular. Perder peso moderadamente puede añadir años a tu vida.' },
+                obese: { en: 'Obesity significantly increases risks of heart disease, stroke, diabetes, and certain cancers.', ko: '비만은 심장병, 뇌졸중, 당뇨병 및 특정 암의 위험을 크게 높입니다.', ja: '肥満は心臓病、脳卒中、糖尿病、特定のがんのリスクを大幅に高めます。', es: 'La obesidad aumenta significativamente los riesgos de enfermedades cardíacas, accidentes cerebrovasculares, diabetes y ciertos cánceres.' }
             }[bmiCategory]
         },
         smoking: {
             icon: '🚬',
-            name: { en: 'Smoking', ko: '흡연', ja: '喫煙', cn: '吸烟', es: 'Tabaquismo' },
+            name: { en: 'Smoking', ko: '흡연', ja: '喫煙', es: 'Tabaquismo' },
             choice: {
-                none: { en: 'Never smoked', ko: '비흡연', ja: '喫煙しない', cn: '从不吸烟', es: 'No fumador' },
-                past: { en: 'Former smoker', ko: '과거 흡연자', ja: '元喫煙者', cn: '曾经吸烟', es: 'Ex fumador' },
-                occasional: { en: 'Occasional smoker', ko: '가끔 흡연', ja: '時々喫煙', cn: '偶尔吸烟', es: 'Fumador ocasional' },
-                daily: { en: 'Daily smoker', ko: '매일 흡연', ja: '毎日喫煙', cn: '每天吸烟', es: 'Fumador diario' }
+                none: { en: 'Never smoked', ko: '비흡연', ja: '喫煙しない', es: 'No fumador' },
+                past: { en: 'Former smoker', ko: '과거 흡연자', ja: '元喫煙者', es: 'Ex fumador' },
+                occasional: { en: 'Occasional smoker', ko: '가끔 흡연', ja: '時々喫煙', es: 'Fumador ocasional' },
+                daily: { en: 'Daily smoker', ko: '매일 흡연', ja: '毎日喫煙', es: 'Fumador diario' }
             }[ud.smoking],
             explanation: {
-                none: { en: 'Non-smoking is the single most impactful lifestyle choice for longevity.', ko: '비흡연은 장수에 가장 큰 영향을 미치는 생활습관입니다.', ja: '非喫煙は長寿に最も影響力のある生活習慣です。', cn: '不吸烟是对长寿影响最大的生活方式选择。', es: 'No fumar es la elección de estilo de vida más impactante para la longevidad.' },
-                past: { en: 'Quitting smoking was a great decision. Your body continues to recover over time.', ko: '금연은 훌륭한 결정이었습니다. 시간이 지나면서 신체가 계속 회복됩니다.', ja: '禁煙は素晴らしい決断でした。体は時間とともに回復し続けます。', cn: '戒烟是个很好的决定。您的身体会随着时间继续恢复。', es: 'Dejar de fumar fue una gran decisión. Tu cuerpo continúa recuperándose con el tiempo.' },
-                occasional: { en: 'Even occasional smoking damages lungs and blood vessels. Each cigarette shortens life by ~11 minutes.', ko: '가끔 흡연도 폐와 혈관에 손상을 줍니다. 담배 1개비당 수명이 약 11분 줄어듭니다.', ja: '時々の喫煙でも肺と血管に損傷を与えます。1本の煙草で寿命が約11分縮まります。', cn: '即使偶尔吸烟也会损害肺和血管。每支烟会缩短约11分钟的寿命。', es: 'Incluso fumar ocasionalmente daña los pulmones y vasos sanguíneos. Cada cigarrillo acorta la vida ~11 minutos.' },
-                daily: { en: 'Daily smoking is the #1 preventable cause of death. Quitting at any age provides major benefits.', ko: '매일 흡연은 예방 가능한 사망 원인 1위입니다. 어떤 나이에든 금연은 큰 도움이 됩니다.', ja: '毎日の喫煙は予防可能な死因の第1位です。何歳でも禁煙は大きな効果があります。', cn: '每天吸烟是第一大可预防的死因。任何年龄戒烟都有重大益处。', es: 'Fumar diario es la causa #1 de muerte prevenible. Dejar de fumar a cualquier edad proporciona grandes beneficios.' }
+                none: { en: 'Non-smoking is the single most impactful lifestyle choice for longevity.', ko: '비흡연은 장수에 가장 큰 영향을 미치는 생활습관입니다.', ja: '非喫煙は長寿に最も影響力のある生活習慣です。', es: 'No fumar es la elección de estilo de vida más impactante para la longevidad.' },
+                past: { en: 'Quitting smoking was a great decision. Your body continues to recover over time.', ko: '금연은 훌륭한 결정이었습니다. 시간이 지나면서 신체가 계속 회복됩니다.', ja: '禁煙は素晴らしい決断でした。体は時間とともに回復し続けます。', es: 'Dejar de fumar fue una gran decisión. Tu cuerpo continúa recuperándose con el tiempo.' },
+                occasional: { en: 'Even occasional smoking damages lungs and blood vessels. Each cigarette shortens life by ~11 minutes.', ko: '가끔 흡연도 폐와 혈관에 손상을 줍니다. 담배 1개비당 수명이 약 11분 줄어듭니다.', ja: '時々の喫煙でも肺と血管に損傷を与えます。1本の煙草で寿命が約11分縮まります。', es: 'Incluso fumar ocasionalmente daña los pulmones y vasos sanguíneos. Cada cigarrillo acorta la vida ~11 minutos.' },
+                daily: { en: 'Daily smoking is the #1 preventable cause of death. Quitting at any age provides major benefits.', ko: '매일 흡연은 예방 가능한 사망 원인 1위입니다. 어떤 나이에든 금연은 큰 도움이 됩니다.', ja: '毎日の喫煙は予防可能な死因の第1位です。何歳でも禁煙は大きな効果があります。', es: 'Fumar diario es la causa #1 de muerte prevenible. Dejar de fumar a cualquier edad proporciona grandes beneficios.' }
             }[ud.smoking]
         },
         drinking: {
             icon: '🍺',
-            name: { en: 'Alcohol', ko: '음주', ja: '飲酒', cn: '饮酒', es: 'Alcohol' },
+            name: { en: 'Alcohol', ko: '음주', ja: '飲酒', es: 'Alcohol' },
             choice: {
-                none: { en: 'Non-drinker', ko: '비음주', ja: '飲酒しない', cn: '不饮酒', es: 'No bebedor' },
-                occasional: { en: 'Occasional', ko: '가끔', ja: '時々', cn: '偶尔', es: 'Ocasional' },
-                moderate: { en: '2-3 times/week', ko: '주 2-3회', ja: '週2-3回', cn: '每周2-3次', es: '2-3 veces/sem' },
-                daily: { en: 'Daily drinker', ko: '매일 음주', ja: '毎日飲酒', cn: '每天饮酒', es: 'Bebedor diario' }
+                none: { en: 'Non-drinker', ko: '비음주', ja: '飲酒しない', es: 'No bebedor' },
+                occasional: { en: 'Occasional', ko: '가끔', ja: '時々', es: 'Ocasional' },
+                moderate: { en: '2-3 times/week', ko: '주 2-3회', ja: '週2-3回', es: '2-3 veces/sem' },
+                daily: { en: 'Daily drinker', ko: '매일 음주', ja: '毎日飲酒', es: 'Bebedor diario' }
             }[ud.drinking],
             explanation: {
-                none: { en: 'Abstaining from alcohol eliminates risks of liver disease and alcohol-related accidents.', ko: '금주는 간 질환 및 음주 관련 사고 위험을 없앱니다.', ja: '禁酒は肝臓病やアルコール関連事故のリスクを排除します。', cn: '戒酒可消除肝病和酒精相关事故的风险。', es: 'Abstenerse del alcohol elimina riesgos de enfermedad hepática y accidentes relacionados con el alcohol.' },
-                occasional: { en: 'Occasional drinking has minimal health impact. Moderation is key.', ko: '가끔 음주는 건강에 미치는 영향이 미미합니다. 절제가 핵심입니다.', ja: '時々の飲酒は健康への影響は最小限です。節度が重要です。', cn: '偶尔饮酒对健康影响很小。适度是关键。', es: 'Beber ocasionalmente tiene un impacto mínimo en la salud. La moderación es clave.' },
-                moderate: { en: 'Regular alcohol consumption increases liver disease risk. Consider reducing intake.', ko: '규칙적인 음주는 간 질환 위험을 높입니다. 음주량을 줄이는 것을 고려하세요.', ja: '定期的な飲酒は肝臓病のリスクを高めます。摂取量の削減を検討してください。', cn: '经常饮酒会增加肝病风险。考虑减少饮酒量。', es: 'El consumo regular de alcohol aumenta el riesgo de enfermedad hepática. Considera reducir la ingesta.' },
-                daily: { en: 'Daily drinking significantly raises risks of liver cirrhosis, cancer, and cardiovascular disease.', ko: '매일 음주는 간경변, 암, 심혈관 질환의 위험을 크게 높입니다.', ja: '毎日の飲酒は肝硬変、がん、心血管疾患のリスクを大幅に高めます。', cn: '每天饮酒显著增加肝硬化、癌症和心血管疾病的风险。', es: 'Beber diariamente aumenta significativamente los riesgos de cirrosis hepática, cáncer y enfermedad cardiovascular.' }
+                none: { en: 'Abstaining from alcohol eliminates risks of liver disease and alcohol-related accidents.', ko: '금주는 간 질환 및 음주 관련 사고 위험을 없앱니다.', ja: '禁酒は肝臓病やアルコール関連事故のリスクを排除します。', es: 'Abstenerse del alcohol elimina riesgos de enfermedad hepática y accidentes relacionados con el alcohol.' },
+                occasional: { en: 'Occasional drinking has minimal health impact. Moderation is key.', ko: '가끔 음주는 건강에 미치는 영향이 미미합니다. 절제가 핵심입니다.', ja: '時々の飲酒は健康への影響は最小限です。節度が重要です。', es: 'Beber ocasionalmente tiene un impacto mínimo en la salud. La moderación es clave.' },
+                moderate: { en: 'Regular alcohol consumption increases liver disease risk. Consider reducing intake.', ko: '규칙적인 음주는 간 질환 위험을 높입니다. 음주량을 줄이는 것을 고려하세요.', ja: '定期的な飲酒は肝臓病のリスクを高めます。摂取量の削減を検討してください。', es: 'El consumo regular de alcohol aumenta el riesgo de enfermedad hepática. Considera reducir la ingesta.' },
+                daily: { en: 'Daily drinking significantly raises risks of liver cirrhosis, cancer, and cardiovascular disease.', ko: '매일 음주는 간경변, 암, 심혈관 질환의 위험을 크게 높입니다.', ja: '毎日の飲酒は肝硬変、がん、心血管疾患のリスクを大幅に高めます。', es: 'Beber diariamente aumenta significativamente los riesgos de cirrosis hepática, cáncer y enfermedad cardiovascular.' }
             }[ud.drinking]
         },
         exercise: {
             icon: '🏃',
-            name: { en: 'Exercise', ko: '운동', ja: '運動', cn: '运动', es: 'Ejercicio' },
+            name: { en: 'Exercise', ko: '운동', ja: '運動', es: 'Ejercicio' },
             choice: (() => {
                 const v = ud.exercise;
-                if (v === 0) return { en: 'No exercise', ko: '운동 안 함', ja: '運動なし', cn: '不运动', es: 'Sin ejercicio' };
-                return { en: `${v} times/week`, ko: `주 ${v}회`, ja: `週${v}回`, cn: `每周${v}次`, es: `${v} veces/sem` };
+                if (v === 0) return { en: 'No exercise', ko: '운동 안 함', ja: '運動なし', es: 'Sin ejercicio' };
+                return { en: `${v} times/week`, ko: `주 ${v}회`, ja: `週${v}回`, es: `${v} veces/sem` };
             })(),
             explanation: (() => {
-                if (ud.exercise >= 5) return { en: 'Excellent exercise habit! 5+ sessions/week provides maximum cardiovascular and longevity benefits.', ko: '훌륭한 운동 습관! 주 5회 이상은 심혈관 건강과 장수에 최대의 효과를 줍니다.', ja: '素晴らしい運動習慣！週5回以上は心血管と長寿に最大の効果があります。', cn: '优秀的运动习惯！每周5次以上可获得最大的心血管和长寿益处。', es: '¡Excelente hábito de ejercicio! 5+ sesiones/semana proporciona máximos beneficios cardiovasculares y de longevidad.' };
-                if (ud.exercise >= 3) return { en: 'Good exercise frequency. 3-4 sessions/week significantly reduces chronic disease risk.', ko: '좋은 운동 빈도입니다. 주 3-4회는 만성 질환 위험을 크게 줄여줍니다.', ja: '良い運動頻度です。週3-4回で慢性疾患リスクが大幅に減少します。', cn: '良好的运动频率。每周3-4次可显著降低慢性病风险。', es: 'Buena frecuencia de ejercicio. 3-4 sesiones/semana reduce significativamente el riesgo de enfermedades crónicas.' };
-                if (ud.exercise >= 1) return { en: 'Some exercise is better than none. Increasing to 3+ times/week would add more years.', ko: '운동을 안 하는 것보다 낫습니다. 주 3회 이상으로 늘리면 더 많은 수명이 늘어납니다.', ja: '運動しないよりは良いです。週3回以上に増やすとさらに寿命が延びます。', cn: '有运动总比没有好。增加到每周3次以上可以延长更多寿命。', es: 'Algo de ejercicio es mejor que nada. Aumentar a 3+ veces/semana añadiría más años.' };
-                return { en: 'No exercise is equivalent to smoking in health risk. Even 15 min/day of walking helps.', ko: '운동 부족은 흡연만큼 건강에 해롭습니다. 하루 15분 걷기만으로도 도움이 됩니다.', ja: '運動不足は喫煙と同等の健康リスクがあります。1日15分の散歩でも効果があります。', cn: '不运动的健康风险相当于吸烟。即使每天步行15分钟也有帮助。', es: 'No hacer ejercicio equivale a fumar en riesgo para la salud. Incluso 15 min/día de caminata ayuda.' };
+                if (ud.exercise >= 5) return { en: 'Excellent exercise habit! 5+ sessions/week provides maximum cardiovascular and longevity benefits.', ko: '훌륭한 운동 습관! 주 5회 이상은 심혈관 건강과 장수에 최대의 효과를 줍니다.', ja: '素晴らしい運動習慣！週5回以上は心血管と長寿に最大の効果があります。', es: '¡Excelente hábito de ejercicio! 5+ sesiones/semana proporciona máximos beneficios cardiovasculares y de longevidad.' };
+                if (ud.exercise >= 3) return { en: 'Good exercise frequency. 3-4 sessions/week significantly reduces chronic disease risk.', ko: '좋은 운동 빈도입니다. 주 3-4회는 만성 질환 위험을 크게 줄여줍니다.', ja: '良い運動頻度です。週3-4回で慢性疾患リスクが大幅に減少します。', es: 'Buena frecuencia de ejercicio. 3-4 sesiones/semana reduce significativamente el riesgo de enfermedades crónicas.' };
+                if (ud.exercise >= 1) return { en: 'Some exercise is better than none. Increasing to 3+ times/week would add more years.', ko: '운동을 안 하는 것보다 낫습니다. 주 3회 이상으로 늘리면 더 많은 수명이 늘어납니다.', ja: '運動しないよりは良いです。週3回以上に増やすとさらに寿命が延びます。', es: 'Algo de ejercicio es mejor que nada. Aumentar a 3+ veces/semana añadiría más años.' };
+                return { en: 'No exercise is equivalent to smoking in health risk. Even 15 min/day of walking helps.', ko: '운동 부족은 흡연만큼 건강에 해롭습니다. 하루 15분 걷기만으로도 도움이 됩니다.', ja: '運動不足は喫煙と同等の健康リスクがあります。1日15分の散歩でも効果があります。', es: 'No hacer ejercicio equivale a fumar en riesgo para la salud. Incluso 15 min/día de caminata ayuda.' };
             })()
         },
         sleep: {
             icon: '😴',
-            name: { en: 'Sleep', ko: '수면', ja: '睡眠', cn: '睡眠', es: 'Sueño' },
-            choice: { en: `${ud.sleep}h/day`, ko: `하루 ${ud.sleep}시간`, ja: `${ud.sleep}時間/日`, cn: `${ud.sleep}小时/天`, es: `${ud.sleep}h/día` },
+            name: { en: 'Sleep', ko: '수면', ja: '睡眠', es: 'Sueño' },
+            choice: { en: `${ud.sleep}h/day`, ko: `하루 ${ud.sleep}시간`, ja: `${ud.sleep}時間/日`, es: `${ud.sleep}h/día` },
             explanation: (() => {
-                if (ud.sleep >= 7 && ud.sleep <= 8) return { en: 'Optimal sleep duration! 7-8 hours supports immune function, memory, and heart health.', ko: '최적의 수면 시간! 7-8시간은 면역 기능, 기억력, 심장 건강을 돕습니다.', ja: '最適な睡眠時間！7-8時間は免疫機能、記憶力、心臓の健康を支えます。', cn: '最佳睡眠时长！7-8小时有助于免疫功能、记忆力和心脏健康。', es: '¡Duración óptima de sueño! 7-8 horas apoya la función inmune, memoria y salud cardíaca.' };
-                if (ud.sleep >= 6 && ud.sleep <= 9) return { en: 'Acceptable sleep range. Closer to 7-8 hours would be ideal for long-term health.', ko: '허용 가능한 수면 범위입니다. 7-8시간에 가까울수록 장기 건강에 이상적입니다.', ja: '許容範囲の睡眠時間です。7-8時間に近いほど長期的な健康に理想的です。', cn: '可接受的睡眠范围。接近7-8小时对长期健康最理想。', es: 'Rango de sueño aceptable. Acercarse a 7-8 horas sería ideal para la salud a largo plazo.' };
-                if (ud.sleep < 6) return { en: 'Sleep deprivation increases risks of obesity, diabetes, heart disease, and cognitive decline.', ko: '수면 부족은 비만, 당뇨, 심장병, 인지 저하의 위험을 높입니다.', ja: '睡眠不足は肥満、糖尿病、心臓病、認知機能低下のリスクを高めます。', cn: '睡眠不足会增加肥胖、糖尿病、心脏病和认知衰退的风险。', es: 'La privación de sueño aumenta riesgos de obesidad, diabetes, enfermedad cardíaca y deterioro cognitivo.' };
-                return { en: 'Excessive sleep (9+ hours) is associated with higher mortality risk. Aim for 7-8 hours.', ko: '과도한 수면(9시간 이상)은 사망률 증가와 관련이 있습니다. 7-8시간을 목표로 하세요.', ja: '過度の睡眠（9時間以上）は死亡リスクの上昇と関連しています。7-8時間を目指しましょう。', cn: '过度睡眠（9小时以上）与更高的死亡风险相关。目标是7-8小时。', es: 'El sueño excesivo (9+ horas) se asocia con mayor riesgo de mortalidad. Apunta a 7-8 horas.' };
+                if (ud.sleep >= 7 && ud.sleep <= 8) return { en: 'Optimal sleep duration! 7-8 hours supports immune function, memory, and heart health.', ko: '최적의 수면 시간! 7-8시간은 면역 기능, 기억력, 심장 건강을 돕습니다.', ja: '最適な睡眠時間！7-8時間は免疫機能、記憶力、心臓の健康を支えます。', es: '¡Duración óptima de sueño! 7-8 horas apoya la función inmune, memoria y salud cardíaca.' };
+                if (ud.sleep >= 6 && ud.sleep <= 9) return { en: 'Acceptable sleep range. Closer to 7-8 hours would be ideal for long-term health.', ko: '허용 가능한 수면 범위입니다. 7-8시간에 가까울수록 장기 건강에 이상적입니다.', ja: '許容範囲の睡眠時間です。7-8時間に近いほど長期的な健康に理想的です。', es: 'Rango de sueño aceptable. Acercarse a 7-8 horas sería ideal para la salud a largo plazo.' };
+                if (ud.sleep < 6) return { en: 'Sleep deprivation increases risks of obesity, diabetes, heart disease, and cognitive decline.', ko: '수면 부족은 비만, 당뇨, 심장병, 인지 저하의 위험을 높입니다.', ja: '睡眠不足は肥満、糖尿病、心臓病、認知機能低下のリスクを高めます。', es: 'La privación de sueño aumenta riesgos de obesidad, diabetes, enfermedad cardíaca y deterioro cognitivo.' };
+                return { en: 'Excessive sleep (9+ hours) is associated with higher mortality risk. Aim for 7-8 hours.', ko: '과도한 수면(9시간 이상)은 사망률 증가와 관련이 있습니다. 7-8시간을 목표로 하세요.', ja: '過度の睡眠（9時間以上）は死亡リスクの上昇と関連しています。7-8時間を目指しましょう。', es: 'El sueño excesivo (9+ horas) se asocia con mayor riesgo de mortalidad. Apunta a 7-8 horas.' };
             })()
         },
         diet: {
             icon: '🥗',
-            name: { en: 'Diet', ko: '식습관', ja: '食習慣', cn: '饮食', es: 'Dieta' },
+            name: { en: 'Diet', ko: '식습관', ja: '食習慣', es: 'Dieta' },
             choice: {
-                healthy: { en: 'Healthy diet', ko: '건강식', ja: '健康的', cn: '健康饮食', es: 'Dieta saludable' },
-                balanced: { en: 'Balanced diet', ko: '균형 잡힌 식사', ja: '普通', cn: '均衡饮食', es: 'Dieta equilibrada' },
-                fast_food: { en: 'Fast food heavy', ko: '패스트푸드 위주', ja: 'ファストフード中心', cn: '快餐为主', es: 'Comida rápida' }
+                healthy: { en: 'Healthy diet', ko: '건강식', ja: '健康的', es: 'Dieta saludable' },
+                balanced: { en: 'Balanced diet', ko: '균형 잡힌 식사', ja: '普通', es: 'Dieta equilibrada' },
+                fast_food: { en: 'Fast food heavy', ko: '패스트푸드 위주', ja: 'ファストフード中心', es: 'Comida rápida' }
             }[ud.diet],
             explanation: {
-                healthy: { en: 'A nutrient-rich diet with fruits, vegetables, and whole grains is one of the strongest predictors of longevity.', ko: '과일, 채소, 통곡물이 풍부한 식단은 장수의 가장 강력한 예측 인자 중 하나입니다.', ja: '果物、野菜、全粒穀物が豊富な食事は長寿の最も強力な予測因子の一つです。', cn: '富含水果、蔬菜和全谷物的饮食是长寿的最强预测因子之一。', es: 'Una dieta rica en nutrientes con frutas, verduras y granos integrales es uno de los predictores más fuertes de longevidad.' },
-                balanced: { en: 'A balanced diet provides adequate nutrition. Adding more fruits and vegetables would further improve outcomes.', ko: '균형 잡힌 식단은 적절한 영양을 제공합니다. 과일과 채소를 더 추가하면 더 좋아집니다.', ja: 'バランスの取れた食事は適切な栄養を提供します。果物や野菜を増やすとさらに良くなります。', cn: '均衡饮食提供充足的营养。增加更多水果和蔬菜会进一步改善效果。', es: 'Una dieta equilibrada proporciona nutrición adecuada. Añadir más frutas y verduras mejoraría aún más los resultados.' },
-                fast_food: { en: 'Fast food diets high in sodium, sugar, and trans fats significantly increase cardiovascular disease and cancer risks.', ko: '나트륨, 설탕, 트랜스 지방이 많은 패스트푸드 식단은 심혈관 질환과 암 위험을 크게 높입니다.', ja: 'ナトリウム、糖分、トランス脂肪が多いファストフード食は心血管疾患やがんのリスクを大幅に高めます。', cn: '高钠、高糖、高反式脂肪的快餐饮食显著增加心血管疾病和癌症风险。', es: 'Las dietas de comida rápida altas en sodio, azúcar y grasas trans aumentan significativamente los riesgos de enfermedad cardiovascular y cáncer.' }
+                healthy: { en: 'A nutrient-rich diet with fruits, vegetables, and whole grains is one of the strongest predictors of longevity.', ko: '과일, 채소, 통곡물이 풍부한 식단은 장수의 가장 강력한 예측 인자 중 하나입니다.', ja: '果物、野菜、全粒穀物が豊富な食事は長寿の最も強力な予測因子の一つです。', es: 'Una dieta rica en nutrientes con frutas, verduras y granos integrales es uno de los predictores más fuertes de longevidad.' },
+                balanced: { en: 'A balanced diet provides adequate nutrition. Adding more fruits and vegetables would further improve outcomes.', ko: '균형 잡힌 식단은 적절한 영양을 제공합니다. 과일과 채소를 더 추가하면 더 좋아집니다.', ja: 'バランスの取れた食事は適切な栄養を提供します。果物や野菜を増やすとさらに良くなります。', es: 'Una dieta equilibrada proporciona nutrición adecuada. Añadir más frutas y verduras mejoraría aún más los resultados.' },
+                fast_food: { en: 'Fast food diets high in sodium, sugar, and trans fats significantly increase cardiovascular disease and cancer risks.', ko: '나트륨, 설탕, 트랜스 지방이 많은 패스트푸드 식단은 심혈관 질환과 암 위험을 크게 높입니다.', ja: 'ナトリウム、糖分、トランス脂肪が多いファストフード食は心血管疾患やがんのリスクを大幅に高めます。', es: 'Las dietas de comida rápida altas en sodio, azúcar y grasas trans aumentan significativamente los riesgos de enfermedad cardiovascular y cáncer.' }
             }[ud.diet]
         },
         sitting: {
             icon: '💺',
-            name: { en: 'Sitting Time', ko: '좌식 시간', ja: '座る時間', cn: '久坐时间', es: 'Tiempo Sentado' },
-            choice: { en: `${ud.sitting}h/day`, ko: `하루 ${ud.sitting}시간`, ja: `${ud.sitting}時間/日`, cn: `${ud.sitting}小时/天`, es: `${ud.sitting}h/día` },
+            name: { en: 'Sitting Time', ko: '좌식 시간', ja: '座る時間', es: 'Tiempo Sentado' },
+            choice: { en: `${ud.sitting}h/day`, ko: `하루 ${ud.sitting}시간`, ja: `${ud.sitting}時間/日`, es: `${ud.sitting}h/día` },
             explanation: (() => {
-                if (ud.sitting <= 6) return { en: 'Good! Lower sitting time reduces risks of metabolic syndrome and cardiovascular disease.', ko: '좋습니다! 적은 좌식 시간은 대사 증후군과 심혈관 질환 위험을 줄여줍니다.', ja: '良いです！座る時間が少ないと代謝症候群や心血管疾患のリスクが減ります。', cn: '很好！较少的久坐时间可降低代谢综合征和心血管疾病的风险。', es: '¡Bien! Menos tiempo sentado reduce riesgos de síndrome metabólico y enfermedad cardiovascular.' };
-                if (ud.sitting <= 8) return { en: 'Average sitting time. Try to take breaks every 30-60 minutes to reduce health risks.', ko: '평균적인 좌식 시간입니다. 30-60분마다 휴식을 취하면 건강 위험을 줄일 수 있습니다.', ja: '平均的な座る時間です。30-60分ごとに休憩を取ると健康リスクが減ります。', cn: '平均久坐时间。每30-60分钟休息一次可以降低健康风险。', es: 'Tiempo sentado promedio. Intenta tomar descansos cada 30-60 minutos para reducir riesgos.' };
-                return { en: 'Prolonged sitting (8+ hours) is called "the new smoking." Stand up regularly to counteract risks.', ko: '장시간 앉기(8시간 이상)는 "새로운 흡연"이라 불립니다. 정기적으로 일어나세요.', ja: '長時間の座り（8時間以上）は「新しい喫煙」と呼ばれています。定期的に立ち上がりましょう。', cn: '长时间久坐（8小时以上）被称为"新型吸烟"。定期站起来以减少风险。', es: 'Estar sentado prolongadamente (8+ horas) se llama "el nuevo fumar". Levántate regularmente para contrarrestar riesgos.' };
+                if (ud.sitting <= 6) return { en: 'Good! Lower sitting time reduces risks of metabolic syndrome and cardiovascular disease.', ko: '좋습니다! 적은 좌식 시간은 대사 증후군과 심혈관 질환 위험을 줄여줍니다.', ja: '良いです！座る時間が少ないと代謝症候群や心血管疾患のリスクが減ります。', es: '¡Bien! Menos tiempo sentado reduce riesgos de síndrome metabólico y enfermedad cardiovascular.' };
+                if (ud.sitting <= 8) return { en: 'Average sitting time. Try to take breaks every 30-60 minutes to reduce health risks.', ko: '평균적인 좌식 시간입니다. 30-60분마다 휴식을 취하면 건강 위험을 줄일 수 있습니다.', ja: '平均的な座る時間です。30-60分ごとに休憩を取ると健康リスクが減ります。', es: 'Tiempo sentado promedio. Intenta tomar descansos cada 30-60 minutos para reducir riesgos.' };
+                return { en: 'Prolonged sitting (8+ hours) is called "the new smoking." Stand up regularly to counteract risks.', ko: '장시간 앉기(8시간 이상)는 "새로운 흡연"이라 불립니다. 정기적으로 일어나세요.', ja: '長時間の座り（8時間以上）は「新しい喫煙」と呼ばれています。定期的に立ち上がりましょう。', es: 'Estar sentado prolongadamente (8+ horas) se llama "el nuevo fumar". Levántate regularmente para contrarrestar riesgos.' };
             })()
         },
         sun_exposure: {
             icon: '☀️',
-            name: { en: 'Sun Exposure', ko: '자외선 노출', ja: '日光', cn: '阳光照射', es: 'Exposición Solar' },
+            name: { en: 'Sun Exposure', ko: '자외선 노출', ja: '日光', es: 'Exposición Solar' },
             choice: {
-                indoor: { en: 'Indoor work', ko: '실내 근무', ja: '屋内仕事', cn: '室内工作', es: 'Trabajo interior' },
-                normal: { en: 'Normal exposure', ko: '보통', ja: '普通', cn: '正常', es: 'Normal' },
-                outdoor: { en: 'Outdoor work', ko: '야외 근무', ja: '屋外仕事', cn: '户外工作', es: 'Trabajo exterior' }
+                indoor: { en: 'Indoor work', ko: '실내 근무', ja: '屋内仕事', es: 'Trabajo interior' },
+                normal: { en: 'Normal exposure', ko: '보통', ja: '普通', es: 'Normal' },
+                outdoor: { en: 'Outdoor work', ko: '야외 근무', ja: '屋外仕事', es: 'Trabajo exterior' }
             }[ud.sun_exposure],
             explanation: {
-                indoor: { en: 'Indoor work reduces UV damage but consider vitamin D supplementation for bone health.', ko: '실내 근무는 자외선 손상을 줄이지만 뼈 건강을 위해 비타민 D 보충을 고려하세요.', ja: '屋内仕事はUVダメージを減らしますが、骨の健康のためにビタミンDの補給を検討してください。', cn: '室内工作减少紫外线损伤，但请考虑补充维生素D以维护骨骼健康。', es: 'El trabajo interior reduce el daño UV pero considera suplementos de vitamina D para la salud ósea.' },
-                normal: { en: 'Moderate sun exposure provides vitamin D benefits without excessive skin damage risk.', ko: '적당한 햇빛 노출은 과도한 피부 손상 없이 비타민 D 혜택을 제공합니다.', ja: '適度な日光浴はビタミンDの恩恵を受けながら過度な皮膚ダメージを避けられます。', cn: '适度的阳光照射可获得维生素D益处，且不会有过度皮肤损伤风险。', es: 'La exposición moderada al sol proporciona beneficios de vitamina D sin riesgo excesivo de daño cutáneo.' },
-                outdoor: { en: 'Prolonged UV exposure increases skin cancer risk. Use sunscreen and protective clothing.', ko: '장시간 자외선 노출은 피부암 위험을 높입니다. 자외선 차단제와 보호복을 사용하세요.', ja: '長時間のUV曝露は皮膚がんのリスクを高めます。日焼け止めと保護服を使用してください。', cn: '长时间紫外线照射会增加皮肤癌风险。请使用防晒霜和防护服。', es: 'La exposición prolongada a UV aumenta el riesgo de cáncer de piel. Usa protector solar y ropa protectora.' }
+                indoor: { en: 'Indoor work reduces UV damage but consider vitamin D supplementation for bone health.', ko: '실내 근무는 자외선 손상을 줄이지만 뼈 건강을 위해 비타민 D 보충을 고려하세요.', ja: '屋内仕事はUVダメージを減らしますが、骨の健康のためにビタミンDの補給を検討してください。', es: 'El trabajo interior reduce el daño UV pero considera suplementos de vitamina D para la salud ósea.' },
+                normal: { en: 'Moderate sun exposure provides vitamin D benefits without excessive skin damage risk.', ko: '적당한 햇빛 노출은 과도한 피부 손상 없이 비타민 D 혜택을 제공합니다.', ja: '適度な日光浴はビタミンDの恩恵を受けながら過度な皮膚ダメージを避けられます。', es: 'La exposición moderada al sol proporciona beneficios de vitamina D sin riesgo excesivo de daño cutáneo.' },
+                outdoor: { en: 'Prolonged UV exposure increases skin cancer risk. Use sunscreen and protective clothing.', ko: '장시간 자외선 노출은 피부암 위험을 높입니다. 자외선 차단제와 보호복을 사용하세요.', ja: '長時間のUV曝露は皮膚がんのリスクを高めます。日焼け止めと保護服を使用してください。', es: 'La exposición prolongada a UV aumenta el riesgo de cáncer de piel. Usa protector solar y ropa protectora.' }
             }[ud.sun_exposure]
         },
         stress: {
             icon: '😰',
-            name: { en: 'Stress', ko: '스트레스', ja: 'ストレス', cn: '压力', es: 'Estrés' },
+            name: { en: 'Stress', ko: '스트레스', ja: 'ストレス', es: 'Estrés' },
             choice: (() => {
-                if (ud.stress <= 3) return { en: `Level ${ud.stress} — Low`, ko: `${ud.stress}단계 — 낮음`, ja: `レベル${ud.stress} — 低い`, cn: `${ud.stress}级 — 低`, es: `Nivel ${ud.stress} — Bajo` };
-                if (ud.stress <= 7) return { en: `Level ${ud.stress} — Moderate`, ko: `${ud.stress}단계 — 보통`, ja: `レベル${ud.stress} — 中`, cn: `${ud.stress}级 — 中`, es: `Nivel ${ud.stress} — Moderado` };
-                return { en: `Level ${ud.stress} — High`, ko: `${ud.stress}단계 — 높음`, ja: `レベル${ud.stress} — 高い`, cn: `${ud.stress}级 — 高`, es: `Nivel ${ud.stress} — Alto` };
+                if (ud.stress <= 3) return { en: `Level ${ud.stress} — Low`, ko: `${ud.stress}단계 — 낮음`, ja: `レベル${ud.stress} — 低い`, es: `Nivel ${ud.stress} — Bajo` };
+                if (ud.stress <= 7) return { en: `Level ${ud.stress} — Moderate`, ko: `${ud.stress}단계 — 보통`, ja: `レベル${ud.stress} — 中`, es: `Nivel ${ud.stress} — Moderado` };
+                return { en: `Level ${ud.stress} — High`, ko: `${ud.stress}단계 — 높음`, ja: `レベル${ud.stress} — 高い`, es: `Nivel ${ud.stress} — Alto` };
             })(),
             explanation: (() => {
-                if (ud.stress <= 3) return { en: 'Low stress levels support immune function and cardiovascular health. Keep it up!', ko: '낮은 스트레스는 면역 기능과 심혈관 건강을 지원합니다. 잘 유지하세요!', ja: '低ストレスは免疫機能と心血管の健康を支えます。この調子を維持しましょう！', cn: '低压力水平有助于免疫功能和心血管健康。继续保持！', es: 'Los niveles bajos de estrés apoyan la función inmune y la salud cardiovascular. ¡Sigue así!' };
-                if (ud.stress <= 7) return { en: 'Moderate stress is normal. Mindfulness, exercise, and social connection can help manage it.', ko: '적당한 스트레스는 정상입니다. 명상, 운동, 사회적 교류가 관리에 도움이 됩니다.', ja: '適度なストレスは正常です。マインドフルネス、運動、社会的つながりが管理に役立ちます。', cn: '适度的压力是正常的。冥想、运动和社交联系可以帮助管理压力。', es: 'El estrés moderado es normal. La atención plena, el ejercicio y la conexión social pueden ayudar a manejarlo.' };
-                return { en: 'Chronic high stress increases cortisol, raising risks of heart disease, depression, and weakened immunity.', ko: '만성적 고스트레스는 코르티솔을 증가시켜 심장병, 우울증, 면역력 저하 위험을 높입니다.', ja: '慢性的な高ストレスはコルチゾールを増加させ、心臓病、うつ病、免疫力低下のリスクを高めます。', cn: '长期高压力会增加皮质醇，提高心脏病、抑郁症和免疫力下降的风险。', es: 'El estrés crónico alto aumenta el cortisol, elevando riesgos de enfermedad cardíaca, depresión e inmunidad debilitada.' };
+                if (ud.stress <= 3) return { en: 'Low stress levels support immune function and cardiovascular health. Keep it up!', ko: '낮은 스트레스는 면역 기능과 심혈관 건강을 지원합니다. 잘 유지하세요!', ja: '低ストレスは免疫機能と心血管の健康を支えます。この調子を維持しましょう！', es: 'Los niveles bajos de estrés apoyan la función inmune y la salud cardiovascular. ¡Sigue así!' };
+                if (ud.stress <= 7) return { en: 'Moderate stress is normal. Mindfulness, exercise, and social connection can help manage it.', ko: '적당한 스트레스는 정상입니다. 명상, 운동, 사회적 교류가 관리에 도움이 됩니다.', ja: '適度なストレスは正常です。マインドフルネス、運動、社会的つながりが管理に役立ちます。', es: 'El estrés moderado es normal. La atención plena, el ejercicio y la conexión social pueden ayudar a manejarlo.' };
+                return { en: 'Chronic high stress increases cortisol, raising risks of heart disease, depression, and weakened immunity.', ko: '만성적 고스트레스는 코르티솔을 증가시켜 심장병, 우울증, 면역력 저하 위험을 높입니다.', ja: '慢性的な高ストレスはコルチゾールを増加させ、心臓病、うつ病、免疫力低下のリスクを高めます。', es: 'El estrés crónico alto aumenta el cortisol, elevando riesgos de enfermedad cardíaca, depresión e inmunidad debilitada.' };
             })()
         },
         social: {
             icon: '👥',
-            name: { en: 'Social Life', ko: '사회적 관계', ja: '社会生活', cn: '社交生活', es: 'Vida Social' },
+            name: { en: 'Social Life', ko: '사회적 관계', ja: '社会生活', es: 'Vida Social' },
             choice: {
-                active: { en: 'Active social life', ko: '활발한 사회생활', ja: '活発な社会生活', cn: '活跃的社交', es: 'Vida social activa' },
-                normal: { en: 'Normal social life', ko: '보통 사회생활', ja: '普通の社会生活', cn: '正常社交', es: 'Vida social normal' },
-                isolated: { en: 'Socially isolated', ko: '사회적 고립', ja: '社会的孤立', cn: '社交孤立', es: 'Aislamiento social' }
+                active: { en: 'Active social life', ko: '활발한 사회생활', ja: '活発な社会生活', es: 'Vida social activa' },
+                normal: { en: 'Normal social life', ko: '보통 사회생활', ja: '普通の社会生活', es: 'Vida social normal' },
+                isolated: { en: 'Socially isolated', ko: '사회적 고립', ja: '社会的孤立', es: 'Aislamiento social' }
             }[ud.social],
             explanation: {
-                active: { en: 'Strong social connections are as powerful as exercise in extending lifespan. Loneliness is a major health risk.', ko: '강한 사회적 유대는 운동만큼 수명 연장에 효과적입니다. 외로움은 주요 건강 위험입니다.', ja: '強い社会的つながりは運動と同じくらい寿命延長に効果的です。孤独は主要な健康リスクです。', cn: '强大的社交联系在延长寿命方面与运动一样有效。孤独是主要的健康风险。', es: 'Las conexiones sociales fuertes son tan poderosas como el ejercicio para extender la vida. La soledad es un riesgo mayor.' },
-                normal: { en: 'Normal social connections provide baseline health benefits. Deepening relationships may add more years.', ko: '보통 수준의 사회적 관계는 기본적인 건강 혜택을 제공합니다. 관계를 깊게 하면 더 도움이 됩니다.', ja: '通常の社会的つながりは基本的な健康効果を提供します。関係を深めるとさらに寿命が延びます。', cn: '正常的社交联系提供基本的健康益处。深化关系可能会增加更多年。', es: 'Las conexiones sociales normales proporcionan beneficios de salud básicos. Profundizar relaciones puede añadir más años.' },
-                isolated: { en: 'Social isolation is as harmful as smoking 15 cigarettes/day. Building connections can significantly extend life.', ko: '사회적 고립은 하루 담배 15개비만큼 해롭습니다. 관계를 구축하면 수명이 크게 늘어날 수 있습니다.', ja: '社会的孤立は1日15本の喫煙と同じくらい有害です。つながりを築くと寿命が大幅に延びます。', cn: '社交孤立的危害等同于每天吸15支烟。建立联系可以显著延长寿命。', es: 'El aislamiento social es tan dañino como fumar 15 cigarrillos/día. Construir conexiones puede extender significativamente la vida.' }
+                active: { en: 'Strong social connections are as powerful as exercise in extending lifespan. Loneliness is a major health risk.', ko: '강한 사회적 유대는 운동만큼 수명 연장에 효과적입니다. 외로움은 주요 건강 위험입니다.', ja: '強い社会的つながりは運動と同じくらい寿命延長に効果的です。孤独は主要な健康リスクです。', es: 'Las conexiones sociales fuertes son tan poderosas como el ejercicio para extender la vida. La soledad es un riesgo mayor.' },
+                normal: { en: 'Normal social connections provide baseline health benefits. Deepening relationships may add more years.', ko: '보통 수준의 사회적 관계는 기본적인 건강 혜택을 제공합니다. 관계를 깊게 하면 더 도움이 됩니다.', ja: '通常の社会的つながりは基本的な健康効果を提供します。関係を深めるとさらに寿命が延びます。', es: 'Las conexiones sociales normales proporcionan beneficios de salud básicos. Profundizar relaciones puede añadir más años.' },
+                isolated: { en: 'Social isolation is as harmful as smoking 15 cigarettes/day. Building connections can significantly extend life.', ko: '사회적 고립은 하루 담배 15개비만큼 해롭습니다. 관계를 구축하면 수명이 크게 늘어날 수 있습니다.', ja: '社会的孤立は1日15本の喫煙と同じくらい有害です。つながりを築くと寿命が大幅に延びます。', es: 'El aislamiento social es tan dañino como fumar 15 cigarrillos/día. Construir conexiones puede extender significativamente la vida.' }
             }[ud.social]
         },
         partner: {
             icon: '💑',
-            name: { en: 'Partnership', ko: '배우자 유무', ja: 'パートナー', cn: '伴侣', es: 'Pareja' },
+            name: { en: 'Partnership', ko: '배우자 유무', ja: 'パートナー', es: 'Pareja' },
             choice: ud.partner
-                ? { en: 'Has partner', ko: '배우자 있음', ja: 'パートナーあり', cn: '有伴侣', es: 'Con pareja' }
-                : { en: 'No partner', ko: '배우자 없음', ja: 'パートナーなし', cn: '无伴侣', es: 'Sin pareja' },
+                ? { en: 'Has partner', ko: '배우자 있음', ja: 'パートナーあり', es: 'Con pareja' }
+                : { en: 'No partner', ko: '배우자 없음', ja: 'パートナーなし', es: 'Sin pareja' },
             explanation: ud.partner
-                ? { en: 'Marriage/partnership provides emotional support, healthier habits, and better stress management.', ko: '결혼/배우자 관계는 정서적 지지, 건강한 습관, 더 나은 스트레스 관리를 제공합니다.', ja: '結婚/パートナーシップは精神的支え、健康的な習慣、より良いストレス管理を提供します。', cn: '婚姻/伴侣关系提供情感支持、更健康的习惯和更好的压力管理。', es: 'El matrimonio/pareja proporciona apoyo emocional, hábitos más saludables y mejor manejo del estrés.' }
-                : { en: 'Being single has no inherent health penalty. Strong friendships and social networks provide similar benefits.', ko: '미혼이 건강에 불리한 것은 아닙니다. 강한 우정과 사회적 네트워크가 비슷한 효과를 줍니다.', ja: '独身であること自体は健康に不利ではありません。強い友情と社会的ネットワークが同様の効果を提供します。', cn: '单身本身不会对健康不利。强大的友谊和社交网络可以提供类似的益处。', es: 'Ser soltero no tiene penalización de salud inherente. Amistades fuertes y redes sociales proporcionan beneficios similares.' }
+                ? { en: 'Marriage/partnership provides emotional support, healthier habits, and better stress management.', ko: '결혼/배우자 관계는 정서적 지지, 건강한 습관, 더 나은 스트레스 관리를 제공합니다.', ja: '結婚/パートナーシップは精神的支え、健康的な習慣、より良いストレス管理を提供します。', es: 'El matrimonio/pareja proporciona apoyo emocional, hábitos más saludables y mejor manejo del estrés.' }
+                : { en: 'Being single has no inherent health penalty. Strong friendships and social networks provide similar benefits.', ko: '미혼이 건강에 불리한 것은 아닙니다. 강한 우정과 사회적 네트워크가 비슷한 효과를 줍니다.', ja: '独身であること自体は健康に不利ではありません。強い友情と社会的ネットワークが同様の効果を提供します。', es: 'Ser soltero no tiene penalización de salud inherente. Amistades fuertes y redes sociales proporcionan beneficios similares.' }
         }
     };
 }
@@ -906,7 +867,6 @@ function renderResults() {
                 <span class="lang-en">YOUR LIFE CLOCK</span>
                 <span class="lang-ko hidden">나의 생명 시계</span>
                 <span class="lang-ja hidden">あなたの生命時計</span>
-                <span class="lang-cn hidden">你的生命时钟</span>
                 <span class="lang-es hidden">TU RELOJ DE VIDA</span>
             </h1>
 
@@ -915,7 +875,6 @@ function renderResults() {
                     <span class="lang-en">Expected Lifespan</span>
                     <span class="lang-ko hidden">예상 수명</span>
                     <span class="lang-ja hidden">予想寿命</span>
-                    <span class="lang-cn hidden">预期寿命</span>
                     <span class="lang-es hidden">Esperanza de Vida</span>
                 </p>
                 <p class="text-7xl md:text-9xl font-black text-white tracking-tight">
@@ -925,7 +884,6 @@ function renderResults() {
                     <span class="lang-en">years old</span>
                     <span class="lang-ko hidden">세</span>
                     <span class="lang-ja hidden">歳</span>
-                    <span class="lang-cn hidden">岁</span>
                     <span class="lang-es hidden">años</span>
                 </p>
             </div>
@@ -936,7 +894,6 @@ function renderResults() {
                     <span class="lang-en">Time Remaining</span>
                     <span class="lang-ko hidden">남은 시간</span>
                     <span class="lang-ja hidden">残り時間</span>
-                    <span class="lang-cn hidden">剩余时间</span>
                     <span class="lang-es hidden">Tiempo Restante</span>
                 </p>
                 <div id="countdown-display" class="mono-font text-3xl md:text-5xl text-gray-300 font-bold"></div>
@@ -950,7 +907,6 @@ function renderResults() {
                         <span class="lang-en">years old</span>
                         <span class="lang-ko hidden">세 (현재)</span>
                         <span class="lang-ja hidden">歳</span>
-                        <span class="lang-cn hidden">岁</span>
                         <span class="lang-es hidden">años</span>
                     </span>
                     <span>${result.adjustedLifeExpectancy}</span>
@@ -965,7 +921,6 @@ function renderResults() {
                     <span class="lang-en">of your life has passed</span>
                     <span class="lang-ko hidden">의 인생이 지나갔습니다</span>
                     <span class="lang-ja hidden">が過ぎました</span>
-                    <span class="lang-cn hidden">的人生已经过去</span>
                     <span class="lang-es hidden">de tu vida ha pasado</span>
                 </p>
             </div>
@@ -977,7 +932,6 @@ function renderResults() {
                 <span class="lang-en">Your Life in Years</span>
                 <span class="lang-ko hidden">나의 인생 (1칸 = 1년)</span>
                 <span class="lang-ja hidden">あなたの人生（1マス＝1年）</span>
-                <span class="lang-cn hidden">你的人生（1格=1年）</span>
                 <span class="lang-es hidden">Tu Vida en Años</span>
             </p>
             <div style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 420px; margin: 0 auto;">
@@ -989,7 +943,6 @@ function renderResults() {
                     <span class="lang-en">Lived</span>
                     <span class="lang-ko hidden">지나간 해</span>
                     <span class="lang-ja hidden">過ぎた年</span>
-                    <span class="lang-cn hidden">已过</span>
                     <span class="lang-es hidden">Vivido</span>
                 </span>
                 <span style="display: flex; align-items: center; gap: 4px; font-size: 11px; color: #9ca3af;">
@@ -997,7 +950,6 @@ function renderResults() {
                     <span class="lang-en">Remaining</span>
                     <span class="lang-ko hidden">남은 해</span>
                     <span class="lang-ja hidden">残りの年</span>
-                    <span class="lang-cn hidden">剩余</span>
                     <span class="lang-es hidden">Restante</span>
                 </span>
             </div>
@@ -1009,7 +961,6 @@ function renderResults() {
                 <span class="lang-en">Net Lifestyle Impact</span>
                 <span class="lang-ko hidden">생활습관 순 영향</span>
                 <span class="lang-ja hidden">ライフスタイルの影響</span>
-                <span class="lang-cn hidden">生活方式净影响</span>
                 <span class="lang-es hidden">Impacto Neto</span>
             </p>
             <p class="text-4xl font-black ${isPositiveNet ? 'text-emerald-400' : 'text-red-400'}">
@@ -1018,7 +969,6 @@ function renderResults() {
                     <span class="lang-en">years</span>
                     <span class="lang-ko hidden">년</span>
                     <span class="lang-ja hidden">年</span>
-                    <span class="lang-cn hidden">年</span>
                     <span class="lang-es hidden">años</span>
                 </span>
             </p>
@@ -1026,7 +976,6 @@ function renderResults() {
                 <span class="lang-en">vs. ${result.baseLifeExpectancy}yr national average</span>
                 <span class="lang-ko hidden">${result.baseLifeExpectancy}세 국가 평균 대비</span>
                 <span class="lang-ja hidden">${result.baseLifeExpectancy}歳の国内平均との比較</span>
-                <span class="lang-cn hidden">与${result.baseLifeExpectancy}岁国家平均相比</span>
                 <span class="lang-es hidden">vs. promedio nacional de ${result.baseLifeExpectancy} años</span>
             </p>
         </div>
@@ -1037,7 +986,6 @@ function renderResults() {
                 <span class="lang-en">Your Lifestyle Analysis</span>
                 <span class="lang-ko hidden">나의 생활습관 분석</span>
                 <span class="lang-ja hidden">あなたのライフスタイル分析</span>
-                <span class="lang-cn hidden">你的生活方式分析</span>
                 <span class="lang-es hidden">Análisis de Tu Estilo de Vida</span>
             </h2>
             <div id="lifestyle-analysis" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -1049,7 +997,6 @@ function renderResults() {
                 <span class="lang-en">Moments Remaining</span>
                 <span class="lang-ko hidden">남은 순간들</span>
                 <span class="lang-ja hidden">残りの瞬間</span>
-                <span class="lang-cn hidden">剩余的时刻</span>
                 <span class="lang-es hidden">Momentos Restantes</span>
             </h2>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -1060,7 +1007,6 @@ function renderResults() {
                         <span class="lang-en">seasons each</span>
                         <span class="lang-ko hidden">번의 계절</span>
                         <span class="lang-ja hidden">回の季節</span>
-                        <span class="lang-cn hidden">个季节</span>
                         <span class="lang-es hidden">temporadas</span>
                     </p>
                 </div>
@@ -1071,7 +1017,6 @@ function renderResults() {
                         <span class="lang-en">weekends</span>
                         <span class="lang-ko hidden">번의 주말</span>
                         <span class="lang-ja hidden">回の週末</span>
-                        <span class="lang-cn hidden">个周末</span>
                         <span class="lang-es hidden">fines de semana</span>
                     </p>
                 </div>
@@ -1082,7 +1027,6 @@ function renderResults() {
                         <span class="lang-en">${result.primaryHoliday.name.en}</span>
                         <span class="lang-ko hidden">${result.primaryHoliday.name.ko}</span>
                         <span class="lang-ja hidden">${result.primaryHoliday.name.ja}</span>
-                        <span class="lang-cn hidden">${result.primaryHoliday.name.cn}</span>
                         <span class="lang-es hidden">${result.primaryHoliday.name.es}</span>
                     </p>
                 </div>
@@ -1093,7 +1037,6 @@ function renderResults() {
                         <span class="lang-en">birthdays</span>
                         <span class="lang-ko hidden">번의 생일</span>
                         <span class="lang-ja hidden">回の誕生日</span>
-                        <span class="lang-cn hidden">个生日</span>
                         <span class="lang-es hidden">cumpleaños</span>
                     </p>
                 </div>
@@ -1104,7 +1047,6 @@ function renderResults() {
                         <span class="lang-en">meals</span>
                         <span class="lang-ko hidden">끼의 식사</span>
                         <span class="lang-ja hidden">回の食事</span>
-                        <span class="lang-cn hidden">顿饭</span>
                         <span class="lang-es hidden">comidas</span>
                     </p>
                 </div>
@@ -1118,7 +1060,6 @@ function renderResults() {
                 <span class="lang-en">"You have <span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span> weekends left.<br>If each were a marble in a jar,<br>how many would you waste?"</span>
                 <span class="lang-ko hidden">"남은 주말은 <span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span>번.<br>구슬 한 알씩 담긴 유리병이라면,<br>몇 개를 낭비하시겠습니까?"</span>
                 <span class="lang-ja hidden">"残りの週末は<span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span>回。<br>ビー玉が入った瓶だとしたら、<br>いくつ無駄にしますか？"</span>
-                <span class="lang-cn hidden">"你还剩<span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span>个周末。<br>如果每个都是罐子里的一颗弹珠，<br>你会浪费多少颗？"</span>
                 <span class="lang-es hidden">"Te quedan <span class="text-white font-bold not-italic">${formatNumber(result.remainingWeekends)}</span> fines de semana.<br>Si cada uno fuera una canica en un frasco,<br>¿cuántas desperdiciarías?"</span>
             </p>
         </div>
@@ -1130,7 +1071,6 @@ function renderResults() {
                 <span class="lang-en">Save as Image</span>
                 <span class="lang-ko hidden">이미지로 저장</span>
                 <span class="lang-ja hidden">画像として保存</span>
-                <span class="lang-cn hidden">保存为图片</span>
                 <span class="lang-es hidden">Guardar como Imagen</span>
             </button>
 
@@ -1157,7 +1097,6 @@ function renderResults() {
                     <span class="lang-en">Copy</span>
                     <span class="lang-ko hidden">복사</span>
                     <span class="lang-ja hidden">コピー</span>
-                    <span class="lang-cn hidden">复制</span>
                     <span class="lang-es hidden">Copiar</span>
                 </button>
             </div>
@@ -1167,7 +1106,6 @@ function renderResults() {
                 <span class="lang-en">See My Life Receipt</span>
                 <span class="lang-ko hidden">인생 영수증 보기</span>
                 <span class="lang-ja hidden">人生レシートを見る</span>
-                <span class="lang-cn hidden">查看人生收据</span>
                 <span class="lang-es hidden">Ver Mi Recibo de Vida</span>
             </button>
 
@@ -1176,7 +1114,6 @@ function renderResults() {
                 <span class="lang-en">Calculate Again</span>
                 <span class="lang-ko hidden">다시 계산하기</span>
                 <span class="lang-ja hidden">再計算</span>
-                <span class="lang-cn hidden">重新计算</span>
                 <span class="lang-es hidden">Calcular de Nuevo</span>
             </button>
         </div>
@@ -1187,13 +1124,11 @@ function renderResults() {
                 <span class="lang-en">Important Disclaimer</span>
                 <span class="lang-ko hidden">중요 안내</span>
                 <span class="lang-ja hidden">重要な免責事項</span>
-                <span class="lang-cn hidden">重要声明</span>
                 <span class="lang-es hidden">Aviso Importante</span>
             </p>
             <p class="lang-en">This is a statistical estimate based on WHO data and research. It is NOT medical advice. Your actual lifespan depends on countless factors. For health concerns, please consult a healthcare professional.</p>
             <p class="lang-ko hidden">이것은 WHO 데이터와 연구를 기반으로 한 통계적 추정입니다. 의학적 조언이 아닙니다. 실제 수명은 무수히 많은 요인에 따라 결정됩니다. 건강 문제는 의료 전문가와 상담하세요.</p>
             <p class="lang-ja hidden">これはWHOデータと研究に基づく統計的推定です。医学的アドバイスではありません。健康上の懸念については医療専門家に相談してください。</p>
-            <p class="lang-cn hidden">这是基于世卫组织数据和研究的统计估计。不是医疗建议。健康问题请咨询医疗专业人员。</p>
             <p class="lang-es hidden">Esta es una estimación estadística basada en datos de la OMS. NO es consejo médico. Para problemas de salud, consulta a un profesional.</p>
         </div>
     `;
@@ -1214,14 +1149,12 @@ function renderParentTimeCards(timeWithParents) {
                     <span class="lang-en">days with mother</span>
                     <span class="lang-ko hidden">일 — 어머니와</span>
                     <span class="lang-ja hidden">日 — 母と</span>
-                    <span class="lang-cn hidden">天与母亲</span>
                     <span class="lang-es hidden">días con madre</span>
                 </p>
                 <p class="text-xs text-gray-500 mt-0.5">~ ${m.meetingsRemaining}
                     <span class="lang-en">meetings</span>
                     <span class="lang-ko hidden">번 만남</span>
                     <span class="lang-ja hidden">回</span>
-                    <span class="lang-cn hidden">次见面</span>
                     <span class="lang-es hidden">encuentros</span>
                 </p>
             </div>
@@ -1238,14 +1171,12 @@ function renderParentTimeCards(timeWithParents) {
                     <span class="lang-en">days with father</span>
                     <span class="lang-ko hidden">일 — 아버지와</span>
                     <span class="lang-ja hidden">日 — 父と</span>
-                    <span class="lang-cn hidden">天与父亲</span>
                     <span class="lang-es hidden">días con padre</span>
                 </p>
                 <p class="text-xs text-gray-500 mt-0.5">~ ${f.meetingsRemaining}
                     <span class="lang-en">meetings</span>
                     <span class="lang-ko hidden">번 만남</span>
                     <span class="lang-ja hidden">回</span>
-                    <span class="lang-cn hidden">次见面</span>
                     <span class="lang-es hidden">encuentros</span>
                 </p>
             </div>
@@ -1257,17 +1188,17 @@ function renderParentTimeCards(timeWithParents) {
 
 // Factor ranges for comparative display (worst vs best case per factor)
 const FACTOR_RANGES = {
-    bmi:          { worst: -5,   best: 0,   worstLabel: { en: 'obese BMI',      ko: '비만',            ja: '肥満',            cn: '肥胖',          es: 'IMC obeso' } },
-    smoking:      { worst: -10,  best: 0,   worstLabel: { en: 'daily smoker',   ko: '매일 흡연',       ja: '毎日喫煙',        cn: '每天吸烟',      es: 'fumador diario' } },
-    drinking:     { worst: -5,   best: 0,   worstLabel: { en: 'daily drinker',  ko: '매일 음주',       ja: '毎日飲酒',        cn: '每天饮酒',      es: 'bebedor diario' } },
-    exercise:     { worst: -3,   best: 4.5, worstLabel: { en: 'no exercise',    ko: '운동 안 함',      ja: '運動なし',        cn: '不运动',        es: 'sin ejercicio' } },
-    sleep:        { worst: -3,   best: 1,   worstLabel: { en: 'poor sleep',     ko: '수면 부족',       ja: '睡眠不足',        cn: '睡眠不足',      es: 'mal sueño' } },
-    diet:         { worst: -3,   best: 4,   worstLabel: { en: 'fast food diet', ko: '패스트푸드 식단', ja: 'ファストフード',   cn: '快餐饮食',      es: 'comida rápida' } },
-    sitting:      { worst: -2,   best: 1,   worstLabel: { en: '9h+ sitting',    ko: '9시간+ 좌식',    ja: '9時間+座位',      cn: '9小时+久坐',    es: '9h+ sentado' } },
-    sun_exposure: { worst: -0.5, best: 0,   worstLabel: { en: 'excess UV',      ko: '과도한 자외선',   ja: '過度なUV',        cn: '过度紫外线',    es: 'exceso UV' } },
-    stress:       { worst: -3,   best: 1,   worstLabel: { en: 'high stress',    ko: '높은 스트레스',   ja: '高ストレス',      cn: '高压力',        es: 'alto estrés' } },
-    social:       { worst: -5,   best: 2,   worstLabel: { en: 'isolation',      ko: '사회적 고립',     ja: '社会的孤立',      cn: '社交孤立',      es: 'aislamiento' } },
-    partner:      { worst: 0,    best: 3,   worstLabel: { en: 'no partner',     ko: '배우자 없음',     ja: 'パートナーなし',   cn: '无伴侣',        es: 'sin pareja' } }
+    bmi:          { worst: -5,   best: 0,   worstLabel: { en: 'obese BMI',      ko: '비만',            ja: '肥満',          es: 'IMC obeso' } },
+    smoking:      { worst: -10,  best: 0,   worstLabel: { en: 'daily smoker',   ko: '매일 흡연',       ja: '毎日喫煙',      es: 'fumador diario' } },
+    drinking:     { worst: -5,   best: 0,   worstLabel: { en: 'daily drinker',  ko: '매일 음주',       ja: '毎日飲酒',      es: 'bebedor diario' } },
+    exercise:     { worst: -3,   best: 4.5, worstLabel: { en: 'no exercise',    ko: '운동 안 함',      ja: '運動なし',        es: 'sin ejercicio' } },
+    sleep:        { worst: -3,   best: 1,   worstLabel: { en: 'poor sleep',     ko: '수면 부족',       ja: '睡眠不足',      es: 'mal sueño' } },
+    diet:         { worst: -3,   best: 4,   worstLabel: { en: 'fast food diet', ko: '패스트푸드 식단', ja: 'ファストフード',      es: 'comida rápida' } },
+    sitting:      { worst: -2,   best: 1,   worstLabel: { en: '9h+ sitting',    ko: '9시간+ 좌식',    ja: '9時間+座位',    es: '9h+ sentado' } },
+    sun_exposure: { worst: -0.5, best: 0,   worstLabel: { en: 'excess UV',      ko: '과도한 자외선',   ja: '過度なUV',    es: 'exceso UV' } },
+    stress:       { worst: -3,   best: 1,   worstLabel: { en: 'high stress',    ko: '높은 스트레스',   ja: '高ストレス',        es: 'alto estrés' } },
+    social:       { worst: -5,   best: 2,   worstLabel: { en: 'isolation',      ko: '사회적 고립',     ja: '社会的孤立',      es: 'aislamiento' } },
+    partner:      { worst: 0,    best: 3,   worstLabel: { en: 'no partner',     ko: '배우자 없음',     ja: 'パートナーなし',        es: 'sin pareja' } }
 };
 
 function renderLifestyleAnalysis() {
@@ -1338,14 +1269,12 @@ function renderLifestyleAnalysis() {
                                 <span class="lang-en">${nameText.en || key}</span>
                                 <span class="lang-ko hidden">${nameText.ko || key}</span>
                                 <span class="lang-ja hidden">${nameText.ja || key}</span>
-                                <span class="lang-cn hidden">${nameText.cn || key}</span>
                                 <span class="lang-es hidden">${nameText.es || key}</span>
                             </div>
                             <div class="text-xs text-gray-400 mt-0.5">
                                 <span class="lang-en">${choiceText.en || ''}</span>
                                 <span class="lang-ko hidden">${choiceText.ko || ''}</span>
                                 <span class="lang-ja hidden">${choiceText.ja || ''}</span>
-                                <span class="lang-cn hidden">${choiceText.cn || ''}</span>
                                 <span class="lang-es hidden">${choiceText.es || ''}</span>
                             </div>
                         </div>
@@ -1357,12 +1286,10 @@ function renderLifestyleAnalysis() {
                                 <span class="lang-en">yr</span>
                                 <span class="lang-ko hidden">년</span>
                                 <span class="lang-ja hidden">年</span>
-                                <span class="lang-cn hidden">年</span>
                                 <span class="lang-es hidden">a</span>
                             </span>
                         </div>
                         <div class="text-[10px] text-gray-500 mt-1">
-                            vs <span class="lang-en">${worstLabel.en || ''}</span><span class="lang-ko hidden">${worstLabel.ko || ''}</span><span class="lang-ja hidden">${worstLabel.ja || ''}</span><span class="lang-cn hidden">${worstLabel.cn || ''}</span><span class="lang-es hidden">${worstLabel.es || ''}</span>
                         </div>
                     </div>
                 </div>
@@ -1370,7 +1297,6 @@ function renderLifestyleAnalysis() {
                     <span class="lang-en">${explanationText.en || ''}</span>
                     <span class="lang-ko hidden">${explanationText.ko || ''}</span>
                     <span class="lang-ja hidden">${explanationText.ja || ''}</span>
-                    <span class="lang-cn hidden">${explanationText.cn || ''}</span>
                     <span class="lang-es hidden">${explanationText.es || ''}</span>
                 </p>
                 <div class="w-full bg-gray-700/40 rounded-full h-1.5">
@@ -1402,7 +1328,6 @@ function startCountdownTimer() {
         en: (y, mo, d, h, mi, s) => `${y}y ${mo}m ${d}d ${h}:${mi}:${s}`,
         ko: (y, mo, d, h, mi, s) => `${y}년 ${mo}개월 ${d}일 ${h}:${mi}:${s}`,
         ja: (y, mo, d, h, mi, s) => `${y}年 ${mo}ヶ月 ${d}日 ${h}:${mi}:${s}`,
-        cn: (y, mo, d, h, mi, s) => `${y}年 ${mo}个月 ${d}天 ${h}:${mi}:${s}`,
         es: (y, mo, d, h, mi, s) => `${y}a ${mo}m ${d}d ${h}:${mi}:${s}`
     };
 
@@ -1478,7 +1403,6 @@ function getLifespanShareText() {
             en: `I only have ${formatNumber(days)} days left with my mother. How many do you have?`,
             ko: `어머니와 보낼 수 있는 날이 ${formatNumber(days)}일밖에 안 남았대. 당신은?`,
             ja: `母と過ごせる日はあと${formatNumber(days)}日だけ。あなたは？`,
-            cn: `和母亲在一起的日子只剩${formatNumber(days)}天了。你呢？`,
             es: `Solo me quedan ${formatNumber(days)} días con mi madre. ¿Y tú?`
         };
         return texts[currentLang] || texts.en;
@@ -1488,7 +1412,6 @@ function getLifespanShareText() {
             en: `I only have ${formatNumber(result.remainingWeekends)} weekends left in my life. How about you?`,
             ko: `남은 주말이 ${formatNumber(result.remainingWeekends)}번밖에 없대. 너는?`,
             ja: `残りの週末はたった${formatNumber(result.remainingWeekends)}回。あなたは？`,
-            cn: `我的人生只剩${formatNumber(result.remainingWeekends)}个周末了。你呢？`,
             es: `¡Solo me quedan ${formatNumber(result.remainingWeekends)} fines de semana! ¿Y tú?`
         };
         return texts[currentLang] || texts.en;
@@ -1497,7 +1420,6 @@ function getLifespanShareText() {
         en: `I have ${result.yearsRemaining} years remaining! Check your time`,
         ko: `나에게 ${result.yearsRemaining}년이 남았대! 당신의 시간도 확인해보세요`,
         ja: `私には${result.yearsRemaining}年残っています！あなたの時間も確認してください`,
-        cn: `我还剩${result.yearsRemaining}年！检查你的时间`,
         es: `¡Me quedan ${result.yearsRemaining} años! Verifica tu tiempo`
     };
     return texts[currentLang] || texts.en;
@@ -1512,7 +1434,7 @@ function shareLifespanToFacebook() { shareToFacebook(getShareUrl('/lifespan.html
 function shareLifespanToThreads() { shareToThreads(getLifespanShareText(), getShareUrl('/lifespan.html')); }
 function shareLifespanToLine() { shareToLine(getLifespanShareText(), getShareUrl('/lifespan.html')); }
 function shareLifespanToKakao() {
-    const titles = {en:'How Long Will I Live?', ko:'나의 남은 수명은?', ja:'あと何年生きられる？', cn:'我还能活多久？', es:'¿Cuánto me queda de vida?'};
+    const titles = {en:'How Long Will I Live?', ko:'나의 남은 수명은?', ja:'あと何年生きられる？', es:'¿Cuánto me queda de vida?'};
     const title = titles[currentLang] || titles.en;
     shareToKakao(title, getLifespanShareText(), getShareUrl('/lifespan.html'));
 }

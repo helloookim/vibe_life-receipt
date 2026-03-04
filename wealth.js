@@ -69,7 +69,6 @@ function onCountryChange() {
         en: data.incomeUnit > 1 ? `Enter amount in ${unitLabel}` : `Enter annual income in ${data.currencyCode}`,
         ko: data.incomeUnit > 1 ? `${unitLabel} 단위로 입력하세요` : `${data.currencyCode} 연소득을 입력하세요`,
         ja: data.incomeUnit > 1 ? `${unitLabel}単位で入力してください` : `${data.currencyCode}の年収を入力してください`,
-        cn: data.incomeUnit > 1 ? `请以${unitLabel}为单位输入` : `请输入${data.currencyCode}年收入`,
         es: data.incomeUnit > 1 ? `Ingrese la cantidad en ${unitLabel}` : `Ingrese el ingreso anual en ${data.currencyCode}`
     };
     document.getElementById('income-unit-label').textContent = unitText[lang] || unitText.en;
@@ -107,7 +106,6 @@ function setPreset(type) {
             en: 'Data not available for this country.',
             ko: '이 국가에는 해당 데이터가 없습니다.',
             ja: 'この国のデータはありません。',
-            cn: '该国家没有相关数据。',
             es: 'Datos no disponibles para este país.'
         };
         const msg = msgs[lang] || msgs.en;
@@ -159,7 +157,6 @@ function showAlert() {
         en: 'Please select a country first.',
         ko: '먼저 국가를 선택해주세요.',
         ja: 'まず国を選択してください。',
-        cn: '请先选择一个国家。',
         es: 'Por favor, selecciona un país primero.'
     };
     alert(msgs[lang] || msgs.en);
@@ -175,7 +172,6 @@ function validateForm() {
             en: 'Please select a country.',
             ko: '국가를 선택해주세요.',
             ja: '国を選択してください。',
-            cn: '请选择一个国家。',
             es: 'Por favor, selecciona un país.'
         };
         const msg = countryMsgs[lang] || countryMsgs.en;
@@ -188,7 +184,6 @@ function validateForm() {
             en: 'Please enter your income.',
             ko: '소득을 입력해주세요.',
             ja: '収入を入力してください。',
-            cn: '请输入您的收入。',
             es: 'Por favor, ingresa tu ingreso.'
         };
         const msg = incomeMsgs[lang] || incomeMsgs.en;
@@ -499,36 +494,6 @@ function getTexts() {
             disclaimer: '世界銀行2023年データに基づく統計的推定値です。',
             householdNote: 'OECD等価尺度に基づき世帯人数を調整しています。'
         },
-        cn: {
-            youAreRicherThan: '你比',
-            ofPeopleWorldwide: '的人更富有',
-            outOf: '在全球80亿人中，你比',
-            people: '人',
-            andRicherThanYou: '人比你更富有',
-            globalRank: '全球排名',
-            nationalRank: '国内排名',
-            topGlobal: '前',
-            globally: '（全球）',
-            inCountry: '',
-            yourIncome: '你的收入',
-            timesGlobalMedian: '全球中位数收入的倍',
-            equivUSD: 'USD等值',
-            positionBarTitle: '你在世界中的位置',
-            positionYou: '你',
-            positionPoorest: '低收入',
-            positionRichest: '高收入',
-            positionBelowYou: '收入低于你',
-            positionAboveYou: '收入高于你',
-            comparisonTitle: '排名比较',
-            insightTitle: '一个视角',
-            shareTitle: '分享我的排名',
-            saveImage: '保存为图片',
-            lifeClockLink: '我还能活多久？',
-            lifeReceiptLink: '查看人生收据',
-            startOver: '重新计算',
-            disclaimer: '基于世界银行2023年数据的统计估算。',
-            householdNote: '已根据OECD等价尺度调整家庭人数。'
-        },
         es: {
             youAreRicherThan: 'ERES MÁS RICO QUE',
             ofPeopleWorldwide: 'de las personas en el mundo',
@@ -621,7 +586,6 @@ function renderResults() {
                 <span class="lang-en">What Your Income Could Buy</span>
                 <span class="lang-ko hidden">당신의 연소득으로 살 수 있는 것</span>
                 <span class="lang-ja hidden">あなたの年収で買えるもの</span>
-                <span class="lang-cn hidden">你的年收入能买什么</span>
                 <span class="lang-es hidden">Lo Que Tu Ingreso Podría Comprar</span>
             </h3>
             ${renderIncomeBuysGrid(r.incomeInUSD, lang)}
@@ -762,7 +726,7 @@ function renderComparisonBars(result, countryName, t, lang) {
     <div class="space-y-6 max-w-xl mx-auto">
         <div>
             <div class="flex justify-between text-sm mb-2">
-                <span class="text-gray-300">🌍 ${{en:'Global',ko:'전 세계',ja:'世界',cn:'全球',es:'Global'}[lang] || 'Global'}</span>
+                <span class="text-gray-300">🌍 ${{en:'Global',ko:'전 세계',ja:'世界',es:'Global'}[lang] || 'Global'}</span>
                 <span class="text-yellow-400 font-bold">${t.topGlobal} ${topG}%</span>
             </div>
             <div class="w-full bg-gray-700 rounded-full h-7 overflow-hidden">
@@ -815,12 +779,12 @@ function animatePercentile(target) {
 
 function renderIncomeBuysGrid(incomeUSD, lang) {
     const items = [
-        { emoji: '🍔', costUSD: 5.15, en: 'Big Macs', ko: '빅맥', ja: 'ビッグマック', cn: '巨无霸', es: 'Big Macs' },
-        { emoji: '📱', costUSD: 1199, en: 'iPhones', ko: '아이폰', ja: 'iPhone', cn: 'iPhone', es: 'iPhones' },
-        { emoji: '✈️', costUSD: 3000, en: 'Round-the-world flights', ko: '세계일주 항공권', ja: '世界一周航空券', cn: '环球机票', es: 'Vuelos al mundo' },
-        { emoji: '🚗', costUSD: 35000, en: 'Tesla Model 3s', ko: '테슬라 Model 3', ja: 'テスラ Model 3', cn: '特斯拉 Model 3', es: 'Tesla Model 3' },
-        { emoji: '🎓', costUSD: 200, en: 'Years of education (developing countries)', ko: '개도국 교육 1년분', ja: '途上国の教育年数', cn: '发展中国家教育年', es: 'Años de educación' },
-        { emoji: '🎬', costUSD: 180, en: 'Years of Netflix', ko: '넷플릭스 구독 연수', ja: 'Netflix年数', cn: 'Netflix年数', es: 'Años de Netflix' }
+        { emoji: '🍔', costUSD: 5.15, en: 'Big Macs', ko: '빅맥', ja: 'ビッグマック', es: 'Big Macs' },
+        { emoji: '📱', costUSD: 1199, en: 'iPhones', ko: '아이폰', ja: 'iPhone', es: 'iPhones' },
+        { emoji: '✈️', costUSD: 3000, en: 'Round-the-world flights', ko: '세계일주 항공권', ja: '世界一周航空券', es: 'Vuelos al mundo' },
+        { emoji: '🚗', costUSD: 35000, en: 'Tesla Model 3s', ko: '테슬라 Model 3', ja: 'テスラ Model 3', es: 'Tesla Model 3' },
+        { emoji: '🎓', costUSD: 200, en: 'Years of education (developing countries)', ko: '개도국 교육 1년분', ja: '途上国の教育年数', es: 'Años de educación' },
+        { emoji: '🎬', costUSD: 180, en: 'Years of Netflix', ko: '넷플릭스 구독 연수', ja: 'Netflix年数', es: 'Años de Netflix' }
     ];
 
     const cards = items.map(item => {
@@ -845,25 +809,21 @@ function renderHistoricalComparison(incomeUSD, lang) {
             en: 'You earn more than 99% of all humans who have ever lived.',
             ko: '역사상 존재한 인류의 99%보다 많이 벌고 있습니다.',
             ja: '歴史上存在した人類の99%より多く稼いでいます。',
-            cn: '你的收入超过了历史上99%的人类。',
             es: 'Ganas más que el 99% de todos los humanos que han existido.' },
         { minUSD: 30000,
             en: 'You have more purchasing power than a medieval European king.',
             ko: '중세 유럽 왕의 구매력보다 당신이 더 높습니다.',
             ja: '中世ヨーロッパの王より購買力が高いです。',
-            cn: '你的购买力超过了中世纪欧洲国王。',
             es: 'Tienes más poder adquisitivo que un rey medieval europeo.' },
         { minUSD: 5000,
             en: 'Your daily income exceeds what a Roman citizen earned in a week.',
             ko: '당신의 하루 소득은 로마 시민의 일주일 소득을 넘습니다.',
             ja: 'あなたの日収はローマ市民の週収を超えています。',
-            cn: '你的日收入超过了罗马公民一周的收入。',
             es: 'Tu ingreso diario supera lo que un romano ganaba en una semana.' },
         { minUSD: 500,
             en: 'You earn more per year than 90% of humans who ever lived.',
             ko: '역사상 90%의 인류보다 연소득이 높습니다.',
             ja: '歴史上90%の人類より年収が高いです。',
-            cn: '你的年收入超过了历史上90%的人类。',
             es: 'Ganas más al año que el 90% de los humanos que han existido.' }
     ];
 
@@ -887,7 +847,6 @@ function getWealthShareText() {
         en: `I'm richer than ${richerFormatted} people on Earth (top ${topP}%). How about you?`,
         ko: `지구에서 ${richerFormatted}보다 부유하대 (상위 ${topP}%). 너는?`,
         ja: `地球上の${richerFormatted}人より裕福だって（上位${topP}%）。あなたは？`,
-        cn: `我比地球上${richerFormatted}人更富有（前${topP}%）。你呢？`,
         es: `Soy más rico que ${richerFormatted} personas en la Tierra (top ${topP}%). ¿Y tú?`
     };
     return texts[currentLang] || texts.en;
@@ -898,7 +857,7 @@ function shareWealthToFacebook() { shareToFacebook(getShareUrl('/wealth.html'));
 function shareWealthToThreads() { shareToThreads(getWealthShareText(), getShareUrl('/wealth.html')); }
 function shareWealthToLine() { shareToLine(getWealthShareText(), getShareUrl('/wealth.html')); }
 function shareWealthToKakao() {
-    const titles = {en:'Global Wealth Rank', ko:'글로벌 부 순위', ja:'グローバル資産ランキング', cn:'全球财富排名', es:'Ranking de Riqueza Global'};
+    const titles = {en:'Global Wealth Rank', ko:'글로벌 부 순위', ja:'グローバル資産ランキング', es:'Ranking de Riqueza Global'};
     const title = titles[currentLang] || titles.en;
     shareToKakao(title, getWealthShareText(), getShareUrl('/wealth.html'));
 }
@@ -991,15 +950,6 @@ function formatLargeNumber(num, lang) {
     if (lang === 'ja') {
         if (num >= 100000000) {
             return (num / 100000000).toFixed(1) + '億';
-        } else if (num >= 10000) {
-            return Math.round(num / 10000).toLocaleString() + '万';
-        }
-        return num.toLocaleString();
-    }
-
-    if (lang === 'cn') {
-        if (num >= 100000000) {
-            return (num / 100000000).toFixed(1) + '亿';
         } else if (num >= 10000) {
             return Math.round(num / 10000).toLocaleString() + '万';
         }

@@ -72,12 +72,10 @@ function updateSliderValue(id, value) {
         const dailyElem = document.getElementById('coffee-daily');
         const dailyElemKo = document.getElementById('coffee-daily-ko');
         const dailyElemJa = document.getElementById('coffee-daily-ja');
-        const dailyElemCn = document.getElementById('coffee-daily-cn');
         const dailyElemEs = document.getElementById('coffee-daily-es');
         if (dailyElem) dailyElem.textContent = daily;
         if (dailyElemKo) dailyElemKo.textContent = daily;
         if (dailyElemJa) dailyElemJa.textContent = daily;
-        if (dailyElemCn) dailyElemCn.textContent = daily;
         if (dailyElemEs) dailyElemEs.textContent = daily;
     }
 }
@@ -92,7 +90,6 @@ function generateReceipt() {
             en: 'Please fill in all required fields',
             ko: '필수 항목을 모두 입력해주세요',
             ja: 'すべての必須フィールドに入力してください',
-            cn: '请填写所有必填字段',
             es: 'Por favor complete todos los campos requeridos'
         };
         alert(msg[currentLang] || msg.en);
@@ -409,48 +406,6 @@ function renderReceipt(data) {
             items: '回',
             you: 'あなた'
         },
-        cn: {
-            title: 'LIFE RECEIPT',
-            subtitle: '你的人生收据',
-            customer: '客户姓名',
-            issued: '发行日期',
-            daysLived: '天数',
-            timeCategory: '【 时间消费 】',
-            totalLife: '总生存时间',
-            sleep: '睡眠',
-            work: '工作/学习',
-            smartphone: '智能手机',
-            toilet: '厕所',
-            eating: '用餐',
-            commute: '通勤/移动',
-            shower: '淋浴/洗澡',
-            waiting: '等待/排队',
-            sns: 'SNS/YouTube',
-            freeTime: '★ 自由时间',
-            consumptionCategory: '【 消费量 】',
-            coffee: '咖啡',
-            meals: '用餐次数',
-            water: '水',
-            food: '食物重量',
-            steps: '步数',
-            hair: '头发生长长度',
-            heartbeats: '心跳次数',
-            blinks: '眨眼次数',
-            moneyCategory: '【 金钱 】',
-            coffeeSpent: '咖啡支出',
-            foodSpent: '餐饮总支出',
-            subtotal: '小计',
-            tax: '税',
-            total: '总计',
-            thanks: '谢谢。祝您有美好的一天。',
-            continues: '您的人生今天继续。',
-            hours: '小时',
-            years: '年',
-            days: '天',
-            cups: '杯',
-            items: '次',
-            you: '您'
-        },
         es: {
             title: 'LIFE RECEIPT',
             subtitle: 'Tu Recibo de Vida',
@@ -588,15 +543,15 @@ function renderReceipt(data) {
             </div>
             <div class="flex justify-between">
                 <span>${t.water}</span>
-                <span>${formatNumber(data.totalWater)}L (${currentLang === 'en' ? 'bathtubs' : currentLang === 'ko' ? '욕조' : currentLang === 'ja' ? '浴槽' : currentLang === 'cn' ? '浴缸' : 'bañeras'} ${data.bathtubs}${currentLang === 'ko' ? '개' : currentLang === 'ja' ? '杯' : currentLang === 'cn' ? '个' : ''})</span>
+                <span>${formatNumber(data.totalWater)}L (${currentLang === 'en' ? 'bathtubs' : currentLang === 'ko' ? '욕조' : currentLang === 'ja' ? '浴槽' : 'bañeras'} ${data.bathtubs}${currentLang === 'ko' ? '개' : currentLang === 'ja' ? '杯' : ''})</span>
             </div>
             <div class="flex justify-between">
                 <span>${t.food}</span>
-                <span>${formatNumber(data.totalFood)}kg (${currentLang === 'en' ? 'elephants' : currentLang === 'ko' ? '코끼리' : currentLang === 'ja' ? '象' : currentLang === 'cn' ? '大象' : 'elefantes'} ${data.elephants}${currentLang === 'ko' ? '마리' : currentLang === 'ja' ? '頭' : currentLang === 'cn' ? '头' : ''})</span>
+                <span>${formatNumber(data.totalFood)}kg (${currentLang === 'en' ? 'elephants' : currentLang === 'ko' ? '코끼리' : currentLang === 'ja' ? '象' : 'elefantes'} ${data.elephants}${currentLang === 'ko' ? '마리' : currentLang === 'ja' ? '頭' : ''})</span>
             </div>
             <div class="flex justify-between">
                 <span>${t.steps}</span>
-                <span>${formatNumber(data.steps)} (${data.earthCircumferences >= 0.01 ? (currentLang === 'en' ? 'Earth ' + data.earthCircumferences.toFixed(2) + 'x' : currentLang === 'ko' ? '지구 ' + data.earthCircumferences.toFixed(2) + '바퀴' : currentLang === 'ja' ? '地球' + data.earthCircumferences.toFixed(2) + '周' : currentLang === 'cn' ? '地球' + data.earthCircumferences.toFixed(2) + '圈' : 'Tierra ' + data.earthCircumferences.toFixed(2) + 'x') : (currentLang === 'en' ? data.marathons + ' marathons' : currentLang === 'ko' ? '마라톤 ' + data.marathons + '회' : currentLang === 'ja' ? 'マラソン' + data.marathons + '回' : currentLang === 'cn' ? '马拉松' + data.marathons + '次' : data.marathons + ' maratones')})</span>
+                <span>${formatNumber(data.steps)} (${data.earthCircumferences >= 0.01 ? (currentLang === 'en' ? 'Earth ' + data.earthCircumferences.toFixed(2) + 'x' : currentLang === 'ko' ? '지구 ' + data.earthCircumferences.toFixed(2) + '바퀴' : currentLang === 'ja' ? '地球' + data.earthCircumferences.toFixed(2) + '周' : 'Tierra ' + data.earthCircumferences.toFixed(2) + 'x') : (currentLang === 'en' ? data.marathons + ' marathons' : currentLang === 'ko' ? '마라톤 ' + data.marathons + '회' : currentLang === 'ja' ? 'マラソン' + data.marathons + '回' : data.marathons + ' maratones')})</span>
             </div>
             <div class="flex justify-between">
                 <span>${t.hair}</span>
@@ -604,11 +559,11 @@ function renderReceipt(data) {
             </div>
             <div class="flex justify-between">
                 <span>${t.heartbeats}</span>
-                <span>${formatNumber(data.heartbeats)}${currentLang === 'ko' ? '회' : currentLang === 'ja' ? '回' : currentLang === 'cn' ? '次' : ''}</span>
+                <span>${formatNumber(data.heartbeats)}${currentLang === 'ko' ? '회' : currentLang === 'ja' ? '回' : ''}</span>
             </div>
             <div class="flex justify-between">
                 <span>${t.blinks}</span>
-                <span>${formatNumber(data.blinks)}${currentLang === 'ko' ? '회' : currentLang === 'ja' ? '回' : currentLang === 'cn' ? '次' : ''}</span>
+                <span>${formatNumber(data.blinks)}${currentLang === 'ko' ? '회' : currentLang === 'ja' ? '回' : ''}</span>
             </div>
         </div>
 
@@ -636,11 +591,11 @@ function renderReceipt(data) {
         <div class="text-xs space-y-2 mb-5 leading-relaxed">
             <div class="flex justify-between opacity-80">
                 <span>${t.subtotal}:</span>
-                <span>${{en: 'Your life', ko: '당신의 인생', ja: 'あなたの人生', cn: '您的人生', es: 'Tu vida'}[currentLang]}</span>
+                <span>${{en: 'Your life', ko: '당신의 인생', ja: 'あなたの人生', es: 'Tu vida'}[currentLang]}</span>
             </div>
             <div class="flex justify-between opacity-80">
                 <span>${t.tax}:</span>
-                <span>${{en: 'Experiences & Memories', ko: '경험과 추억', ja: '経験と思い出', cn: '经验与回忆', es: 'Experiencias y Recuerdos'}[currentLang]}</span>
+                <span>${{en: 'Experiences & Memories', ko: '경험과 추억', ja: '経験と思い出', es: 'Experiencias y Recuerdos'}[currentLang]}</span>
             </div>
             <div class="border-t border-gray-400 my-3"></div>
             <div class="flex justify-between font-bold text-lg tracking-wider">
@@ -690,7 +645,6 @@ function getShockingFact(data) {
             en: `You spent more time on your phone (${data.phoneYears.toFixed(1)}yr) than eating (${data.eatingYears.toFixed(1)}yr)`,
             ko: `스마트폰 사용시간(${data.phoneYears.toFixed(1)}년)이 식사시간(${data.eatingYears.toFixed(1)}년)보다 많습니다`,
             ja: `スマホ使用時間(${data.phoneYears.toFixed(1)}年)が食事時間(${data.eatingYears.toFixed(1)}年)を上回っています`,
-            cn: `手机使用时间(${data.phoneYears.toFixed(1)}年)超过了吃饭时间(${data.eatingYears.toFixed(1)}年)`,
             es: `Pasaste más tiempo en el celular (${data.phoneYears.toFixed(1)}a) que comiendo (${data.eatingYears.toFixed(1)}a)`
         },
         {
@@ -698,7 +652,6 @@ function getShockingFact(data) {
             en: `You've walked far enough to circle the Earth ${data.earthCircumferences.toFixed(1)} times`,
             ko: `걸은 거리로 지구를 ${data.earthCircumferences.toFixed(1)}바퀴 돌 수 있습니다`,
             ja: `歩いた距離で地球を${data.earthCircumferences.toFixed(1)}周できます`,
-            cn: `走过的路可以绕地球${data.earthCircumferences.toFixed(1)}圈`,
             es: `Has caminado lo suficiente para dar ${data.earthCircumferences.toFixed(1)} vueltas a la Tierra`
         },
         {
@@ -706,7 +659,6 @@ function getShockingFact(data) {
             en: `The water you drank could fill ${formatNumber(data.bathtubs)} bathtubs`,
             ko: `마신 물을 모으면 욕조 ${formatNumber(data.bathtubs)}개를 채울 수 있습니다`,
             ja: `飲んだ水で浴槽${formatNumber(data.bathtubs)}杯分になります`,
-            cn: `喝过的水可以装满${formatNumber(data.bathtubs)}个浴缸`,
             es: `El agua que bebiste llenaría ${formatNumber(data.bathtubs)} bañeras`
         },
         {
@@ -714,7 +666,6 @@ function getShockingFact(data) {
             en: `You spent ${data.snsYears.toFixed(1)} years scrolling SNS & YouTube`,
             ko: `SNS와 유튜브를 스크롤하며 ${data.snsYears.toFixed(1)}년을 보냈습니다`,
             ja: `SNSとYouTubeのスクロールに${data.snsYears.toFixed(1)}年を費やしました`,
-            cn: `刷社交媒体和YouTube花了${data.snsYears.toFixed(1)}年`,
             es: `Pasaste ${data.snsYears.toFixed(1)} años navegando redes sociales y YouTube`
         },
         {
@@ -722,7 +673,6 @@ function getShockingFact(data) {
             en: `You've drunk ${formatNumber(data.totalCoffee)} cups of coffee — enough to fill a small pool`,
             ko: `커피 ${formatNumber(data.totalCoffee)}잔을 마셨습니다 — 작은 수영장을 채울 수 있는 양`,
             ja: `コーヒーを${formatNumber(data.totalCoffee)}杯飲みました — 小さなプールが埋まる量`,
-            cn: `喝了${formatNumber(data.totalCoffee)}杯咖啡 — 足以填满一个小泳池`,
             es: `Bebiste ${formatNumber(data.totalCoffee)} tazas de café — suficiente para llenar una piscina pequeña`
         },
         {
@@ -730,7 +680,6 @@ function getShockingFact(data) {
             en: `You've slept for ${data.sleepYears.toFixed(1)} years — that's ${Math.round(data.sleepYears / data.age.years * 100)}% of your life`,
             ko: `${data.sleepYears.toFixed(1)}년을 잠으로 보냈습니다 — 인생의 ${Math.round(data.sleepYears / data.age.years * 100)}%`,
             ja: `${data.sleepYears.toFixed(1)}年を睡眠に費やしました — 人生の${Math.round(data.sleepYears / data.age.years * 100)}%`,
-            cn: `睡了${data.sleepYears.toFixed(1)}年 — 占人生的${Math.round(data.sleepYears / data.age.years * 100)}%`,
             es: `Dormiste ${data.sleepYears.toFixed(1)} años — eso es el ${Math.round(data.sleepYears / data.age.years * 100)}% de tu vida`
         }
     ];
@@ -750,13 +699,13 @@ function getShockingFact(data) {
 
 function renderTimePieGrid(data) {
     const categories = [
-        { key: 'sleep', hours: data.sleepHours, color: '#64748b', en: 'Sleep', ko: '수면', ja: '睡眠', cn: '睡眠', es: 'Sueño' },
-        { key: 'work', hours: data.workHours, color: '#6b7280', en: 'Work', ko: '일', ja: '仕事', cn: '工作', es: 'Trabajo' },
-        { key: 'phone', hours: data.phoneHours, color: '#ef4444', en: 'Phone', ko: '폰', ja: 'スマホ', cn: '手机', es: 'Celular' },
-        { key: 'eating', hours: data.eatingHours, color: '#f97316', en: 'Eating', ko: '식사', ja: '食事', cn: '用餐', es: 'Comida' },
-        { key: 'commute', hours: data.commuteHours, color: '#22c55e', en: 'Commute', ko: '이동', ja: '通勤', cn: '通勤', es: 'Viaje' },
-        { key: 'other', hours: data.toiletHours + data.showerHours + data.waitingHours, color: '#06b6d4', en: 'Other', ko: '기타', ja: 'その他', cn: '其他', es: 'Otro' },
-        { key: 'free', hours: data.freeHours, color: '#eab308', en: 'Free', ko: '자유', ja: '自由', cn: '自由', es: 'Libre' }
+        { key: 'sleep', hours: data.sleepHours, color: '#64748b', en: 'Sleep', ko: '수면', ja: '睡眠', es: 'Sueño' },
+        { key: 'work', hours: data.workHours, color: '#6b7280', en: 'Work', ko: '일', ja: '仕事', es: 'Trabajo' },
+        { key: 'phone', hours: data.phoneHours, color: '#ef4444', en: 'Phone', ko: '폰', ja: 'スマホ', es: 'Celular' },
+        { key: 'eating', hours: data.eatingHours, color: '#f97316', en: 'Eating', ko: '식사', ja: '食事', es: 'Comida' },
+        { key: 'commute', hours: data.commuteHours, color: '#22c55e', en: 'Commute', ko: '이동', ja: '通勤', es: 'Viaje' },
+        { key: 'other', hours: data.toiletHours + data.showerHours + data.waitingHours, color: '#06b6d4', en: 'Other', ko: '기타', ja: 'その他', es: 'Otro' },
+        { key: 'free', hours: data.freeHours, color: '#eab308', en: 'Free', ko: '자유', ja: '自由', es: 'Libre' }
     ];
 
     const total = data.totalHours;
@@ -793,7 +742,7 @@ function renderTimePieGrid(data) {
     return `
         <div style="text-align: center; margin: 4px 0;">
             <div style="font-size: 10px; font-weight: 700; margin-bottom: 8px; color: #374151; letter-spacing: 0.1em;">
-                ${{en: '【 YOUR TIME 】', ko: '【 나의 시간 비율 】', ja: '【 時間の割合 】', cn: '【 时间比例 】', es: '【 TU TIEMPO 】'}[currentLang]}
+                ${{en: '【 YOUR TIME 】', ko: '【 나의 시간 비율 】', ja: '【 時間の割合 】', es: '【 TU TIEMPO 】'}[currentLang]}
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 2px; max-width: 260px; margin: 0 auto;">
                 ${gridHTML}
@@ -817,7 +766,6 @@ function getReceiptShareText() {
             en: `I drank ${formatNumber(d.totalCoffee)} cups of coffee and spent ${d.phoneYears.toFixed(1)} years on my phone! Get your Life Receipt`,
             ko: `커피 ${formatNumber(d.totalCoffee)}잔을 마셨고 스마트폰에 ${d.phoneYears.toFixed(1)}년을 썼대! 나의 인생 영수증`,
             ja: `コーヒー${formatNumber(d.totalCoffee)}杯飲んで、スマホに${d.phoneYears.toFixed(1)}年費やしてた！人生レシート`,
-            cn: `喝了${formatNumber(d.totalCoffee)}杯咖啡，花了${d.phoneYears.toFixed(1)}年刷手机！人生收据`,
             es: `¡Bebí ${formatNumber(d.totalCoffee)} cafés y pasé ${d.phoneYears.toFixed(1)} años en el celular! Mi Recibo de Vida`
         };
         return texts[currentLang] || texts.en;
@@ -826,7 +774,6 @@ function getReceiptShareText() {
         en: 'I just created my Life Receipt! Check yours',
         ko: '나의 인생 영수증을 만들어봤어요! 여기서 만들어보세요',
         ja: '人生レシートを作ってみました！あなたも確認してみてください',
-        cn: '我刚创建了我的人生收据！来看看你的吧',
         es: '¡Acabo de crear mi Recibo de Vida! Mira el tuyo'
     };
     return texts[currentLang] || texts.en;

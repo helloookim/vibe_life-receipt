@@ -5,141 +5,139 @@ let currentLang = 'en';
 // Country data - shared across services
 const COUNTRY_DATA = {
     KR: {
-        name: { en: 'South Korea', ko: '대한민국', ja: '韓国', cn: '韩国', es: 'Corea del Sur' },
+        name: { en: 'South Korea', ko: '대한민국', ja: '韓国', es: 'Corea del Sur' },
         currency: '₩',
         avgCoffeePrice: 4500,
         avgMealPrice: 12000,
         avgWalkingSteps: 7000,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'soju bottles', ko: '소주병', ja: '焼酎瓶', cn: '烧酒瓶', es: 'botellas de soju' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'soju bottles', ko: '소주병', ja: '焼酎瓶', es: 'botellas de soju' }
         }
     },
     US: {
-        name: { en: 'United States', ko: '미국', ja: 'アメリカ', cn: '美国', es: 'Estados Unidos' },
+        name: { en: 'United States', ko: '미국', ja: 'アメリカ', es: 'Estados Unidos' },
         currency: '$',
         avgCoffeePrice: 4.5,
         avgMealPrice: 15,
         avgWalkingSteps: 5000,
         comparisons: {
-            water: { en: 'Olympic pools', ko: '올림픽 수영장', ja: 'オリンピックプール', cn: '奥运泳池', es: 'piscinas olímpicas' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'Starbucks cups', ko: '스타벅스 컵', ja: 'スターバックスカップ', cn: '星巴克杯', es: 'tazas de Starbucks' }
+            water: { en: 'Olympic pools', ko: '올림픽 수영장', ja: 'オリンピックプール', es: 'piscinas olímpicas' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'Starbucks cups', ko: '스타벅스 컵', ja: 'スターバックスカップ', es: 'tazas de Starbucks' }
         }
     },
     JP: {
-        name: { en: 'Japan', ko: '일본', ja: '日本', cn: '日本', es: 'Japón' },
+        name: { en: 'Japan', ko: '일본', ja: '日本', es: 'Japón' },
         currency: '¥',
         avgCoffeePrice: 450,
         avgMealPrice: 1000,
         avgWalkingSteps: 7500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'coffee cans', ko: '커피캔', ja: '缶コーヒー', cn: '咖啡罐', es: 'latas de café' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'coffee cans', ko: '커피캔', ja: '缶コーヒー', es: 'latas de café' }
         }
     },
     CN: {
-        name: { en: 'China', ko: '중국', ja: '中国', cn: '中国', es: 'China' },
+        name: { en: 'China', ko: '중국', ja: '中国', es: 'China' },
         currency: '¥',
         avgCoffeePrice: 25,
         avgMealPrice: 30,
         avgWalkingSteps: 6000,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'cups', ko: '컵', ja: 'カップ', cn: '杯', es: 'tazas' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'cups', ko: '컵', ja: 'カップ', es: 'tazas' }
         }
     },
     UK: {
-        name: { en: 'United Kingdom', ko: '영국', ja: 'イギリス', cn: '英国', es: 'Reino Unido' },
+        name: { en: 'United Kingdom', ko: '영국', ja: 'イギリス', es: 'Reino Unido' },
         currency: '£',
         avgCoffeePrice: 3.5,
         avgMealPrice: 12,
         avgWalkingSteps: 5500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'tea cups', ko: '차 컵', ja: 'ティーカップ', cn: '茶杯', es: 'tazas de té' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'tea cups', ko: '차 컵', ja: 'ティーカップ', es: 'tazas de té' }
         }
     },
     DE: {
-        name: { en: 'Germany', ko: '독일', ja: 'ドイツ', cn: '德国', es: 'Alemania' },
+        name: { en: 'Germany', ko: '독일', ja: 'ドイツ', es: 'Alemania' },
         currency: '€',
         avgCoffeePrice: 3.2,
         avgMealPrice: 11,
         avgWalkingSteps: 5800,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'cups', ko: '컵', ja: 'カップ', cn: '杯', es: 'tazas' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'cups', ko: '컵', ja: 'カップ', es: 'tazas' }
         }
     },
     FR: {
-        name: { en: 'France', ko: '프랑스', ja: 'フランス', cn: '法国', es: 'Francia' },
+        name: { en: 'France', ko: '프랑스', ja: 'フランス', es: 'Francia' },
         currency: '€',
         avgCoffeePrice: 3.8,
         avgMealPrice: 13,
         avgWalkingSteps: 5200,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'espresso cups', ko: '에스프레소 잔', ja: 'エスプレッソカップ', cn: '浓缩咖啡杯', es: 'tazas de espresso' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'espresso cups', ko: '에스프레소 잔', ja: 'エスプレッソカップ', es: 'tazas de espresso' }
         }
     },
     ES: {
-        name: { en: 'Spain', ko: '스페인', ja: 'スペイン', cn: '西班牙', es: 'España' },
+        name: { en: 'Spain', ko: '스페인', ja: 'スペイン', es: 'España' },
         currency: '€',
         avgCoffeePrice: 2.5,
         avgMealPrice: 10,
         avgWalkingSteps: 5500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'café con leche', ko: '카페 라떼', ja: 'カフェラテ', cn: '拿铁', es: 'café con leche' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'café con leche', ko: '카페 라떼', ja: 'カフェラテ', es: 'café con leche' }
         }
     },
     BR: {
-        name: { en: 'Brazil', ko: '브라질', ja: 'ブラジル', cn: '巴西', es: 'Brasil' },
+        name: { en: 'Brazil', ko: '브라질', ja: 'ブラジル', es: 'Brasil' },
         currency: 'R$',
         avgCoffeePrice: 5,
         avgMealPrice: 20,
         avgWalkingSteps: 4800,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'cafezinho', ko: '카페지뉴', ja: 'カフェジーニョ', cn: '小咖啡', es: 'cafezinhos' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'cafezinho', ko: '카페지뉴', ja: 'カフェジーニョ', es: 'cafezinhos' }
         }
     },
     IN: {
-        name: { en: 'India', ko: '인도', ja: 'インド', cn: '印度', es: 'India' },
+        name: { en: 'India', ko: '인도', ja: 'インド', es: 'India' },
         currency: '₹',
         avgCoffeePrice: 150,
         avgMealPrice: 200,
         avgWalkingSteps: 6500,
         comparisons: {
-            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', cn: '浴缸', es: 'bañeras' },
-            food: { en: 'elephants', ko: '코끼리', ja: '象', cn: '大象', es: 'elefantes' },
-            coffee: { en: 'chai cups', ko: '차이 컵', ja: 'チャイカップ', cn: '奶茶杯', es: 'tazas de chai' }
+            water: { en: 'bathtubs', ko: '욕조', ja: '浴槽', es: 'bañeras' },
+            food: { en: 'elephants', ko: '코끼리', ja: '象', es: 'elefantes' },
+            coffee: { en: 'chai cups', ko: '차이 컵', ja: 'チャイカップ', es: 'tazas de chai' }
         }
     }
 };
 
 // Birthdate select configuration
-const ASIAN_LANGS = ['ko', 'ja', 'cn'];
+const ASIAN_LANGS = ['ko', 'ja'];
 const MONTH_NAMES = {
     en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     ko: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
     ja: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-    cn: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
     es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 };
 const BIRTHDATE_LABELS = {
     en: { year: 'Year', month: 'Month', day: 'Day' },
     ko: { year: '년', month: '월', day: '일' },
     ja: { year: '年', month: '月', day: '日' },
-    cn: { year: '年', month: '月', day: '日' },
     es: { year: 'Año', month: 'Mes', day: 'Día' }
 };
 
@@ -161,7 +159,7 @@ function calculateAge(birthdate) {
 
 /**
  * Switch language across the page
- * @param {string} lang - Language code (en, ko, ja, cn, es)
+ * @param {string} lang - Language code (en, ko, ja, es)
  */
 function switchLang(lang) {
     currentLang = lang;
@@ -176,20 +174,17 @@ function switchLang(lang) {
     document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
     document.querySelectorAll('.lang-ko').forEach(el => el.classList.toggle('hidden', lang !== 'ko'));
     document.querySelectorAll('.lang-ja').forEach(el => el.classList.toggle('hidden', lang !== 'ja'));
-    document.querySelectorAll('.lang-cn').forEach(el => el.classList.toggle('hidden', lang !== 'cn'));
     document.querySelectorAll('.lang-es').forEach(el => el.classList.toggle('hidden', lang !== 'es'));
 
     // Highlight active language button
     const enBtn = document.getElementById('lang-en');
     const koBtn = document.getElementById('lang-ko');
     const jaBtn = document.getElementById('lang-ja');
-    const cnBtn = document.getElementById('lang-cn');
     const esBtn = document.getElementById('lang-es');
 
     if (enBtn) enBtn.classList.toggle('lang-switch-active', lang === 'en');
     if (koBtn) koBtn.classList.toggle('lang-switch-active', lang === 'ko');
     if (jaBtn) jaBtn.classList.toggle('lang-switch-active', lang === 'ja');
-    if (cnBtn) cnBtn.classList.toggle('lang-switch-active', lang === 'cn');
     if (esBtn) esBtn.classList.toggle('lang-switch-active', lang === 'es');
 
     // Toggle Asian-only share buttons
@@ -379,7 +374,7 @@ function detectUserCountry() {
  * @returns {string} - Language code (defaults to 'en')
  */
 function getInitialLang() {
-    const supported = ['en', 'ko', 'ja', 'cn', 'es'];
+    const supported = ['en', 'ko', 'ja', 'es'];
 
     // 1. Check URL parameter: ?lang=ko
     const params = new URLSearchParams(window.location.search);
@@ -404,7 +399,7 @@ function getInitialLang() {
 
     // 4. Detect from browser locale
     const browserLang = (navigator.language || '').split('-')[0];
-    const langMap = { en: 'en', ko: 'ko', ja: 'ja', zh: 'cn', es: 'es' };
+    const langMap = { en: 'en', ko: 'ko', ja: 'ja', es: 'es' };
     if (langMap[browserLang] && supported.includes(langMap[browserLang])) {
         return langMap[browserLang];
     }
@@ -481,7 +476,6 @@ function copyLinkShared() {
             en: 'Link copied to clipboard!',
             ko: '링크가 클립보드에 복사되었습니다!',
             ja: 'リンクをクリップボードにコピーしました！',
-            cn: '链接已复制到剪贴板！',
             es: '¡Enlace copiado al portapapeles!'
         };
         showToast(msgs[currentLang] || msgs.en);
@@ -494,7 +488,6 @@ function saveAsImage(elementId, filename, bgColor) {
             en: 'Take a screenshot to save your result!\n\niPhone: Power + Volume Up\nAndroid: Power + Volume Down\nPC: Print Screen or Win+Shift+S',
             ko: '스크린샷을 찍어 결과를 저장하세요!\n\niPhone: 전원 + 볼륨업\nAndroid: 전원 + 볼륨다운\nPC: Print Screen 또는 Win+Shift+S',
             ja: 'スクリーンショットを撮って結果を保存してください！\n\niPhone: 電源 + 音量アップ\nAndroid: 電源 + 音量ダウン\nPC: Print Screen または Win+Shift+S',
-            cn: '截屏保存您的结果！\n\niPhone: 电源 + 音量增大\nAndroid: 电源 + 音量减小\nPC: Print Screen 或 Win+Shift+S',
             es: '¡Toma una captura de pantalla para guardar tu resultado!\n\niPhone: Encendido + Subir Volumen\nAndroid: Encendido + Bajar Volumen\nPC: Print Screen o Win+Shift+S'
         };
         alert(msgs[currentLang] || msgs.en);

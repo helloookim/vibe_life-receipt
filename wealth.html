@@ -15,7 +15,6 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="ko_KR">
     <meta property="og:locale:alternate" content="ja_JP">
-    <meta property="og:locale:alternate" content="zh_CN">
     <meta property="og:locale:alternate" content="es_ES">
     <meta property="og:image" content="https://lifereceipt.uk/og-image-wealth.png">
     <meta property="og:image:width" content="1200">
@@ -36,7 +35,6 @@
     <link rel="alternate" hreflang="en" href="https://lifereceipt.uk/wealth.html">
     <link rel="alternate" hreflang="ko" href="https://lifereceipt.uk/ko/wealth.html">
     <link rel="alternate" hreflang="ja" href="https://lifereceipt.uk/wealth.html?lang=ja">
-    <link rel="alternate" hreflang="zh" href="https://lifereceipt.uk/wealth.html?lang=cn">
     <link rel="alternate" hreflang="es" href="https://lifereceipt.uk/wealth.html?lang=es">
     <link rel="alternate" hreflang="x-default" href="https://lifereceipt.uk/wealth.html">
     <link rel="canonical" href="https://lifereceipt.uk/wealth.html">
@@ -57,7 +55,7 @@
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "inLanguage": ["en", "ko", "ja", "zh", "es"],
+        "inLanguage": ["en", "ko", "ja", "es"],
         "author": { "@type": "Organization", "name": "Life in Numbers", "url": "https://lifereceipt.uk" }
     }
     </script>
@@ -72,8 +70,7 @@
         }
 
         .lang-ko:not(.mono-font):not(.mono-font *),
-        .lang-ja:not(.mono-font):not(.mono-font *),
-        .lang-cn:not(.mono-font):not(.mono-font *) {
+        .lang-ja:not(.mono-font):not(.mono-font *) {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
@@ -224,7 +221,6 @@
         <button onclick="switchLang('en')" class="lang-switch px-3.5 py-1.5 rounded-full font-medium text-xs transition-all duration-300" id="lang-en">English</button>
         <button onclick="switchLang('ko')" class="lang-switch px-3.5 py-1.5 rounded-full font-medium text-xs transition-all duration-300" id="lang-ko">한국어</button>
         <button onclick="switchLang('ja')" class="lang-switch px-3.5 py-1.5 rounded-full font-medium text-xs transition-all duration-300" id="lang-ja">日本語</button>
-        <button onclick="switchLang('cn')" class="lang-switch px-3.5 py-1.5 rounded-full font-medium text-xs transition-all duration-300" id="lang-cn">中文</button>
         <button onclick="switchLang('es')" class="lang-switch px-3.5 py-1.5 rounded-full font-medium text-xs transition-all duration-300" id="lang-es">Español</button>
     </nav>
 
@@ -247,21 +243,18 @@
                     <span class="lang-en">GLOBAL WEALTH RANK</span>
                     <span class="lang-ko hidden">글로벌 부 순위</span>
                     <span class="lang-ja hidden">グローバル資産ランキング</span>
-                    <span class="lang-cn hidden">全球财富排名</span>
                     <span class="lang-es hidden">RANKING DE RIQUEZA GLOBAL</span>
                 </h1>
                 <p class="text-3xl md:text-4xl mb-4 text-blue-300 font-bold">
                     <span class="lang-en">Where do you stand among 8 billion?</span>
                     <span class="lang-ko hidden">80억 명 중 당신은 몇 등?</span>
                     <span class="lang-ja hidden">80億人の中であなたは何位？</span>
-                    <span class="lang-cn hidden">80亿人中你排第几？</span>
                     <span class="lang-es hidden">¿Dónde te ubicas entre 8 mil millones?</span>
                 </p>
                 <p class="text-lg text-gray-400 max-w-2xl mx-auto font-medium">
                     <span class="lang-en">Enter your income to discover your global wealth percentile</span>
                     <span class="lang-ko hidden">소득을 입력하고 전 세계에서의 부 순위를 확인하세요</span>
                     <span class="lang-ja hidden">収入を入力して世界での資産順位を確認しましょう</span>
-                    <span class="lang-cn hidden">输入收入，发现你的全球财富百分位</span>
                     <span class="lang-es hidden">Ingresa tu ingreso para descubrir tu percentil de riqueza global</span>
                 </p>
             </div>
@@ -270,7 +263,6 @@
                 <span class="lang-en">Check My Rank</span>
                 <span class="lang-ko hidden">내 순위 확인하기</span>
                 <span class="lang-ja hidden">順位を確認する</span>
-                <span class="lang-cn hidden">查看我的排名</span>
                 <span class="lang-es hidden">Ver Mi Ranking</span>
                 <span class="text-3xl">→</span>
             </button>
@@ -279,7 +271,6 @@
                 <span class="lang-en">Discover where you rank in the world</span>
                 <span class="lang-ko hidden">전 세계에서 당신의 위치를 확인하세요</span>
                 <span class="lang-ja hidden">世界でのあなたの位置を確認しましょう</span>
-                <span class="lang-cn hidden">发现你在世界中的位置</span>
                 <span class="lang-es hidden">Descubre tu posición en el mundo</span>
             </div>
 
@@ -290,14 +281,12 @@
                         <span class="lang-en">Life Receipt</span>
                         <span class="lang-ko hidden">인생 영수증</span>
                         <span class="lang-ja hidden">ライフレシート</span>
-                        <span class="lang-cn hidden">人生收据</span>
                         <span class="lang-es hidden">Recibo de Vida</span>
                     </div>
                     <div class="text-xs text-gray-500">
                         <span class="lang-en">Your life, one receipt</span>
                         <span class="lang-ko hidden">인생을 영수증 한 장으로</span>
                         <span class="lang-ja hidden">人生を一枚のレシートに</span>
-                        <span class="lang-cn hidden">将人生浓缩为一张收据</span>
                         <span class="lang-es hidden">Tu vida en un recibo</span>
                     </div>
                     <div class="text-gray-600 group-hover:text-yellow-400 text-xs mt-2 transition-colors">→</div>
@@ -308,14 +297,12 @@
                         <span class="lang-en">How Long Will I Live?</span>
                         <span class="lang-ko hidden">나의 남은 수명은?</span>
                         <span class="lang-ja hidden">あと何年生きられる？</span>
-                        <span class="lang-cn hidden">我还能活多久？</span>
                         <span class="lang-es hidden">¿Cuánto me queda?</span>
                     </div>
                     <div class="text-xs text-gray-500">
                         <span class="lang-en">Calculate your life expectancy</span>
                         <span class="lang-ko hidden">기대 수명을 계산해보세요</span>
                         <span class="lang-ja hidden">あなたの余命を計算</span>
-                        <span class="lang-cn hidden">计算你的预期寿命</span>
                         <span class="lang-es hidden">Calcula tu esperanza de vida</span>
                     </div>
                     <div class="text-gray-600 group-hover:text-yellow-400 text-xs mt-2 transition-colors">→</div>
@@ -332,14 +319,12 @@
                     <span class="lang-en">Enter Your Income</span>
                     <span class="lang-ko hidden">소득을 입력하세요</span>
                     <span class="lang-ja hidden">収入を入力してください</span>
-                    <span class="lang-cn hidden">请输入您的收入</span>
                     <span class="lang-es hidden">Ingresa Tu Ingreso</span>
                 </h2>
                 <p class="text-gray-400">
                     <span class="lang-en">Just 2 fields — takes 10 seconds</span>
                     <span class="lang-ko hidden">2개 항목만 입력 — 10초면 충분합니다</span>
                     <span class="lang-ja hidden">2項目だけ — 10秒で完了</span>
-                    <span class="lang-cn hidden">只需2项 — 10秒即可完成</span>
                     <span class="lang-es hidden">Solo 2 campos — toma 10 segundos</span>
                 </p>
             </div>
@@ -351,7 +336,6 @@
                     <span class="lang-en">All calculations happen in your browser — no data is collected or stored</span>
                     <span class="lang-ko hidden">모든 계산은 브라우저에서 이루어집니다 — 데이터는 수집되거나 저장되지 않습니다</span>
                     <span class="lang-ja hidden">すべての計算はブラウザ上で行われます — データは収集・保存されません</span>
-                    <span class="lang-cn hidden">所有计算均在浏览器中完成 — 不收集或存储任何数据</span>
                     <span class="lang-es hidden">Todos los cálculos se realizan en tu navegador — no se recopilan ni almacenan datos</span>
                 </p>
             </div>
@@ -365,7 +349,6 @@
                         <span class="lang-en">Country</span>
                         <span class="lang-ko hidden">국가</span>
                         <span class="lang-ja hidden">国</span>
-                        <span class="lang-cn hidden">国家</span>
                         <span class="lang-es hidden">País</span>
                         <span class="text-red-400 text-xs">*</span>
                     </label>
@@ -383,7 +366,6 @@
                         <span class="lang-en">Annual Income (before tax)</span>
                         <span class="lang-ko hidden">연소득 (세전)</span>
                         <span class="lang-ja hidden">年収（税引前）</span>
-                        <span class="lang-cn hidden">年收入（税前）</span>
                         <span class="lang-es hidden">Ingreso Anual (antes de impuestos)</span>
                         <span class="text-red-400 text-xs">*</span>
                     </label>
@@ -401,21 +383,18 @@
                         <span class="lang-en">Minimum Wage</span>
                         <span class="lang-ko hidden">최저임금</span>
                         <span class="lang-ja hidden">最低賃金</span>
-                        <span class="lang-cn hidden">最低工资</span>
                         <span class="lang-es hidden">Salario Mínimo</span>
                     </button>
                     <button onclick="setPreset('median')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border border-gray-600 transition-all hover:border-yellow-500">
                         <span class="lang-en">Median Income</span>
                         <span class="lang-ko hidden">중위소득</span>
                         <span class="lang-ja hidden">中央値所得</span>
-                        <span class="lang-cn hidden">中位数收入</span>
                         <span class="lang-es hidden">Ingreso Medio</span>
                     </button>
                     <button onclick="setPreset('top10')" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border border-gray-600 transition-all hover:border-yellow-500">
                         <span class="lang-en">Top 10%</span>
                         <span class="lang-ko hidden">상위 10%</span>
                         <span class="lang-ja hidden">上位10%</span>
-                        <span class="lang-cn hidden">前10%</span>
                         <span class="lang-es hidden">Top 10%</span>
                     </button>
                 </div>
@@ -427,7 +406,6 @@
                             <span class="lang-en">More accurate ranking (optional)</span>
                             <span class="lang-ko hidden">더 정확한 순위 보기 (선택)</span>
                             <span class="lang-ja hidden">より正確なランキング（任意）</span>
-                            <span class="lang-cn hidden">更精确的排名（可选）</span>
                             <span class="lang-es hidden">Ranking más preciso (opcional)</span>
                         </span>
                         <span id="optional-arrow" class="transition-transform duration-300 text-gray-400">▼</span>
@@ -440,7 +418,6 @@
                                 <span class="lang-en">Age</span>
                                 <span class="lang-ko hidden">나이</span>
                                 <span class="lang-ja hidden">年齢</span>
-                                <span class="lang-cn hidden">年龄</span>
                                 <span class="lang-es hidden">Edad</span>
                             </label>
                             <input type="number" id="age" min="13" max="120" class="w-full px-4 py-3 bg-gray-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-500 outline-none border-2 border-gray-600 transition-all" placeholder="30">
@@ -453,13 +430,11 @@
                                 <span class="lang-en">Household Size</span>
                                 <span class="lang-ko hidden">가구 인원수</span>
                                 <span class="lang-ja hidden">世帯人数</span>
-                                <span class="lang-cn hidden">家庭人数</span>
                                 <span class="lang-es hidden">Tamaño del Hogar</span>
                                 <span id="household-value" class="ml-2 text-yellow-400 font-bold">1</span>
                                 <span class="text-gray-400 text-xs lang-en">person(s)</span>
                                 <span class="text-gray-400 text-xs lang-ko hidden">명</span>
                                 <span class="text-gray-400 text-xs lang-ja hidden">人</span>
-                                <span class="text-gray-400 text-xs lang-cn hidden">人</span>
                                 <span class="text-gray-400 text-xs lang-es hidden">persona(s)</span>
                             </label>
                             <input type="range" id="household" min="1" max="8" value="1" oninput="document.getElementById('household-value').textContent=this.value" class="w-full">
@@ -472,7 +447,6 @@
                                 <span class="lang-en">Occupation</span>
                                 <span class="lang-ko hidden">직업군</span>
                                 <span class="lang-ja hidden">職業</span>
-                                <span class="lang-cn hidden">职业</span>
                                 <span class="lang-es hidden">Ocupación</span>
                             </label>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-2" id="occupation-buttons">
@@ -480,35 +454,30 @@
                                     <span class="lang-en">Office</span>
                                     <span class="lang-ko hidden">사무직</span>
                                     <span class="lang-ja hidden">会社員</span>
-                                    <span class="lang-cn hidden">上班族</span>
                                     <span class="lang-es hidden">Oficinista</span>
                                 </button>
                                 <button onclick="selectOccupation('professional', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Professional</span>
                                     <span class="lang-ko hidden">전문직</span>
                                     <span class="lang-ja hidden">専門職</span>
-                                    <span class="lang-cn hidden">专业人士</span>
                                     <span class="lang-es hidden">Profesional</span>
                                 </button>
                                 <button onclick="selectOccupation('self_employed', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Self-employed</span>
                                     <span class="lang-ko hidden">자영업</span>
                                     <span class="lang-ja hidden">自営業</span>
-                                    <span class="lang-cn hidden">个体经营</span>
                                     <span class="lang-es hidden">Autónomo</span>
                                 </button>
                                 <button onclick="selectOccupation('freelancer', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Freelancer</span>
                                     <span class="lang-ko hidden">프리랜서</span>
                                     <span class="lang-ja hidden">フリーランス</span>
-                                    <span class="lang-cn hidden">自由职业</span>
                                     <span class="lang-es hidden">Freelancer</span>
                                 </button>
                                 <button onclick="selectOccupation('student', event)" class="occupation-btn px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm border-2 border-gray-600 transition-all">
                                     <span class="lang-en">Student/Other</span>
                                     <span class="lang-ko hidden">학생/기타</span>
                                     <span class="lang-ja hidden">学生/その他</span>
-                                    <span class="lang-cn hidden">学生/其他</span>
                                     <span class="lang-es hidden">Estudiante/Otro</span>
                                 </button>
                             </div>
@@ -521,7 +490,6 @@
                     <span class="lang-en">💰 See My Rank</span>
                     <span class="lang-ko hidden">💰 내 순위 보기</span>
                     <span class="lang-ja hidden">💰 順位を見る</span>
-                    <span class="lang-cn hidden">💰 查看我的排名</span>
                     <span class="lang-es hidden">💰 Ver Mi Ranking</span>
                     <span class="text-2xl">→</span>
                 </button>
@@ -539,7 +507,6 @@
                 <span class="lang-en">Searching</span>
                 <span class="lang-ko hidden">검색 중</span>
                 <span class="lang-ja hidden">検索中</span>
-                <span class="lang-cn hidden">搜索中</span>
                 <span class="lang-es hidden">Buscando</span>
                 <span class="inline-block animate-pulse">.</span>
                 <span class="inline-block animate-pulse" style="animation-delay:0.2s">.</span>
@@ -549,7 +516,6 @@
                 <span class="lang-en">Finding your position among 8 billion people...</span>
                 <span class="lang-ko hidden">80억 명 중 당신의 위치를 찾고 있습니다...</span>
                 <span class="lang-ja hidden">80億人の中であなたの位置を探しています...</span>
-                <span class="lang-cn hidden">正在80亿人中寻找你的位置...</span>
                 <span class="lang-es hidden">Buscando tu posición entre 8 mil millones de personas...</span>
             </div>
             <div id="loading-counter" class="text-3xl font-bold text-blue-300 mono-font mb-6">0</div>
@@ -573,7 +539,6 @@
                 <span class="lang-en">Based on World Bank, OECD, and UBS data (2023). This is a statistical estimate and may differ from actual income distributions.</span>
                 <span class="lang-ko hidden">World Bank, OECD, UBS 데이터(2023) 기반 통계적 추정치입니다. 실제 소득 분포와 차이가 있을 수 있습니다.</span>
                 <span class="lang-ja hidden">世界銀行、OECD、UBSデータ（2023）に基づく統計的推定値です。実際の所得分布とは異なる場合があります。</span>
-                <span class="lang-cn hidden">基于世界银行、OECD、UBS数据（2023）的统计估算。可能与实际收入分布存在差异。</span>
                 <span class="lang-es hidden">Basado en datos del Banco Mundial, OCDE y UBS (2023). Esta es una estimación estadística y puede diferir de las distribuciones reales.</span>
             </p>
             <div class="flex flex-wrap justify-center gap-4">
@@ -581,35 +546,30 @@
                     <span class="lang-en">About</span>
                     <span class="lang-ko hidden">소개</span>
                     <span class="lang-ja hidden">について</span>
-                    <span class="lang-cn hidden">关于</span>
                     <span class="lang-es hidden">Acerca de</span>
                 </a>
                 <a href="privacy.html" class="hover:text-gray-300 transition">
                     <span class="lang-en">Privacy</span>
                     <span class="lang-ko hidden">개인정보처리방침</span>
                     <span class="lang-ja hidden">プライバシー</span>
-                    <span class="lang-cn hidden">隐私政策</span>
                     <span class="lang-es hidden">Privacidad</span>
                 </a>
                 <a href="terms.html" class="hover:text-gray-300 transition">
                     <span class="lang-en">Terms</span>
                     <span class="lang-ko hidden">이용약관</span>
                     <span class="lang-ja hidden">利用規約</span>
-                    <span class="lang-cn hidden">服务条款</span>
                     <span class="lang-es hidden">Términos</span>
                 </a>
                 <a href="contact.html" class="hover:text-gray-300 transition">
                     <span class="lang-en">Contact</span>
                     <span class="lang-ko hidden">문의</span>
                     <span class="lang-ja hidden">お問い合わせ</span>
-                    <span class="lang-cn hidden">联系我们</span>
                     <span class="lang-es hidden">Contacto</span>
                 </a>
                 <a href="blog/how-wealth-percentile-works.html" class="hover:text-gray-300 transition">
                     <span class="lang-en">How It Works</span>
                     <span class="lang-ko hidden">작동 원리</span>
                     <span class="lang-ja hidden">仕組み</span>
-                    <span class="lang-cn hidden">工作原理</span>
                     <span class="lang-es hidden">Cómo Funciona</span>
                 </a>
             </div>
@@ -617,7 +577,6 @@
                 <span class="lang-en">All rights reserved.</span>
                 <span class="lang-ko hidden">모든 권리 보유.</span>
                 <span class="lang-ja hidden">全著作権所有</span>
-                <span class="lang-cn hidden">保留所有权利。</span>
                 <span class="lang-es hidden">Todos los derechos reservados.</span>
             </p>
         </div>
