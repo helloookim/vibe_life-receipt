@@ -507,10 +507,83 @@ function saveAsImage(elementId, filename, bgColor) {
     });
 }
 
+// ==================== COOKIE CONSENT ====================
+
+const COOKIE_CONSENT_KEY = 'cookieConsent';
+
+function getCookieConsent() {
+    try { return localStorage.getItem(COOKIE_CONSENT_KEY); } catch (e) { return null; }
+}
+
+function setCookieConsent(value) {
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, value); } catch (e) {}
+}
+
+function showCookieConsent() {
+    if (getCookieConsent()) return; // Already accepted or rejected
+
+    const banner = document.createElement('div');
+    banner.id = 'cookie-consent-banner';
+    banner.innerHTML = `
+        <div style="position:fixed;bottom:0;left:0;right:0;z-index:10000;background:#1f2937;color:#e5e7eb;padding:16px 20px;box-shadow:0 -2px 12px rgba(0,0,0,0.3);font-size:14px;line-height:1.5;">
+            <div style="max-width:1024px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;">
+                <div style="flex:1;min-width:240px;">
+                    <span class="lang-en">We use cookies for essential functionality, analytics, and advertising. By clicking "Accept", you consent to our use of cookies. See our <a href="privacy.html#cookies" style="color:#60a5fa;text-decoration:underline;">Cookie Policy</a> for details.</span>
+                    <span class="lang-ko hidden">당사는 필수 기능, 분석 및 광고를 위해 쿠키를 사용합니다. "수락"을 클릭하면 쿠키 사용에 동의하게 됩니다. 자세한 내용은 <a href="privacy.html#cookies" style="color:#60a5fa;text-decoration:underline;">쿠키 정책</a>을 참조하세요.</span>
+                    <span class="lang-ja hidden">当サイトでは、基本機能、分析、広告のためにCookieを使用しています。「同意する」をクリックすると、Cookieの使用に同意したことになります。詳細は<a href="privacy.html#cookies" style="color:#60a5fa;text-decoration:underline;">Cookieポリシー</a>をご覧ください。</span>
+                    <span class="lang-es hidden">Utilizamos cookies para funcionalidad esencial, análisis y publicidad. Al hacer clic en "Aceptar", consiente el uso de cookies. Consulte nuestra <a href="privacy.html#cookies" style="color:#60a5fa;text-decoration:underline;">Política de Cookies</a> para más detalles.</span>
+                </div>
+                <div style="display:flex;gap:8px;flex-shrink:0;">
+                    <button onclick="handleCookieReject()" style="padding:8px 20px;border-radius:8px;background:#4b5563;color:#e5e7eb;border:none;cursor:pointer;font-size:14px;font-weight:500;">
+                        <span class="lang-en">Reject</span>
+                        <span class="lang-ko hidden">거부</span>
+                        <span class="lang-ja hidden">拒否</span>
+                        <span class="lang-es hidden">Rechazar</span>
+                    </button>
+                    <button onclick="handleCookieAccept()" style="padding:8px 20px;border-radius:8px;background:#2563eb;color:#fff;border:none;cursor:pointer;font-size:14px;font-weight:600;">
+                        <span class="lang-en">Accept</span>
+                        <span class="lang-ko hidden">수락</span>
+                        <span class="lang-ja hidden">同意する</span>
+                        <span class="lang-es hidden">Aceptar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(banner);
+
+    // Apply current language to banner
+    if (currentLang && currentLang !== 'en') {
+        banner.querySelectorAll('.lang-en').forEach(el => el.classList.add('hidden'));
+        banner.querySelectorAll(`.lang-${currentLang}`).forEach(el => el.classList.remove('hidden'));
+    }
+}
+
+function hideCookieBanner() {
+    const banner = document.getElementById('cookie-consent-banner');
+    if (banner) banner.remove();
+}
+
+function handleCookieAccept() {
+    setCookieConsent('accepted');
+    hideCookieBanner();
+}
+
+function handleCookieReject() {
+    setCookieConsent('rejected');
+    hideCookieBanner();
+}
+
+function resetCookieConsent() {
+    try { localStorage.removeItem(COOKIE_CONSENT_KEY); } catch (e) {}
+    showCookieConsent();
+}
+
 // Initialize on DOM load
 if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
         initBirthdateSelects();
         switchLang(getInitialLang());
+        showCookieConsent();
     });
 }

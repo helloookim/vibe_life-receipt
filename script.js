@@ -13,11 +13,13 @@ function startForm() {
 function goBackToLanding() {
     document.getElementById('form').classList.add('hidden');
     document.getElementById('landing').classList.remove('hidden');
+    document.querySelector('.lang-switcher').classList.remove('hidden');
 }
 
 function startOver() {
     document.getElementById('result').classList.add('hidden');
     document.getElementById('landing').classList.remove('hidden');
+    document.querySelector('.lang-switcher').classList.remove('hidden');
 }
 
 // Form interactions

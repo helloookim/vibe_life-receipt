@@ -4,7 +4,12 @@
       "Bash(git --version:*)",
       "Bash(git -C \"c:\\\\Users\\\\laser\\\\OneDrive\\\\2026\\\\vibecode\\\\lifeinnumbers\\\\life_receipt\" init)",
       "Bash(git -C \"c:\\\\Users\\\\laser\\\\OneDrive\\\\2026\\\\vibecode\\\\lifeinnumbers\\\\life_receipt\" add .)",
-      "Bash(git -C \"c:\\\\Users\\\\laser\\\\OneDrive\\\\2026\\\\vibecode\\\\lifeinnumbers\\\\life_receipt\" status)"
+      "Bash(git -C \"c:\\\\Users\\\\laser\\\\OneDrive\\\\2026\\\\vibecode\\\\lifeinnumbers\\\\life_receipt\" status)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(dir:*)",
+      "Bash(grep:*)"
     ]
   }
 }

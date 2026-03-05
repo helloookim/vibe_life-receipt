@@ -230,32 +230,32 @@ function celebratesHoliday(countryCode, holiday) {
 function getPrimaryHoliday(countryCode) {
     if (celebratesHoliday(countryCode, 'christmas')) {
         return {
-            name: { en: 'Christmas', ko: '크리스마스', ja: 'クリスマス', cn: '圣诞节', es: 'Navidad' },
+            name: { en: 'Christmas', ko: '크리스마스', ja: 'クリスマス', es: 'Navidad' },
             key: 'christmas'
         };
     }
     if (celebratesHoliday(countryCode, 'lunar_new_year')) {
         return {
-            name: { en: 'Lunar New Year', ko: '설날', ja: '旧正月', cn: '春节', es: 'Año Nuevo Lunar' },
+            name: { en: 'Lunar New Year', ko: '설날', ja: '旧正月', es: 'Año Nuevo Lunar' },
             key: 'lunar_new_year'
         };
     }
     if (celebratesHoliday(countryCode, 'diwali')) {
         return {
-            name: { en: 'Diwali', ko: '디왈리', ja: 'ディワリ', cn: '排灯节', es: 'Diwali' },
+            name: { en: 'Diwali', ko: '디왈리', ja: 'ディワリ', es: 'Diwali' },
             key: 'diwali'
         };
     }
     if (celebratesHoliday(countryCode, 'ramadan')) {
         return {
-            name: { en: 'Eid', ko: '이드', ja: 'イード', cn: '开斋节', es: 'Eid' },
+            name: { en: 'Eid', ko: '이드', ja: 'イード', es: 'Eid' },
             key: 'ramadan'
         };
     }
 
     // Default to New Year if no specific holiday
     return {
-        name: { en: 'New Year', ko: '새해', ja: '新年', cn: '新年', es: 'Año Nuevo' },
+        name: { en: 'New Year', ko: '새해', ja: '新年', es: 'Año Nuevo' },
         key: 'new_year'
     };
 }
