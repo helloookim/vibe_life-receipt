@@ -730,7 +730,7 @@ function renderTimePieGrid(data) {
     }
 
     const gridHTML = cells.map(color =>
-        `<div style="width: 10%; aspect-ratio: 1; background: ${color}; border-radius: 2px;"></div>`
+        `<div style="width: calc((100% - 18px) / 10); aspect-ratio: 1; background: ${color}; border-radius: 2px;"></div>`
     ).join('');
 
     const legendHTML = categories.filter(c => (c.percent || 0) > 0).map(c => {
