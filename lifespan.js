@@ -1101,6 +1101,14 @@ function renderResults() {
                 </button>
             </div>
 
+            <a href="blog/how-lifespan-calculator-works.html" class="w-full bg-emerald-900/30 hover:bg-emerald-900/50 text-emerald-300 font-bold py-5 rounded-xl text-lg transition-all border-2 border-emerald-700/50 flex items-center justify-center gap-2">
+                <span class="text-xl">📊</span>
+                <span class="lang-en">How It Works</span>
+                <span class="lang-ko hidden">계산 원리 알아보기</span>
+                <span class="lang-ja hidden">計算の仕組み</span>
+                <span class="lang-es hidden">Cómo Funciona</span>
+            </a>
+
             <button onclick="window.location.href='index.html'" class="w-full bg-gray-600 hover:bg-gray-500 text-white font-bold py-5 rounded-xl text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
                 <span class="text-xl">🧾</span>
                 <span class="lang-en">See My Life Receipt</span>

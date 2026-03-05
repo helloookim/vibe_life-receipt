@@ -634,7 +634,12 @@ function renderResults() {
                 </button>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="grid grid-cols-3 gap-3 pt-2">
+                <a href="blog/how-wealth-percentile-works.html" class="group block bg-blue-900 bg-opacity-30 border-2 border-blue-500 border-opacity-30 hover:border-yellow-500 hover:border-opacity-60 rounded-2xl p-4 text-center transition-all duration-300 hover:-translate-y-1">
+                    <div class="text-2xl mb-1">📊</div>
+                    <div class="font-bold text-gray-200 text-sm">${{en:'How It Works',ko:'계산 원리',ja:'計算の仕組み',es:'Cómo Funciona'}[currentLang]}</div>
+                    <div class="text-gray-600 group-hover:text-yellow-400 text-xs mt-1 transition-colors">→</div>
+                </a>
                 <a href="lifespan.html" class="group block bg-blue-900 bg-opacity-30 border-2 border-blue-500 border-opacity-30 hover:border-yellow-500 hover:border-opacity-60 rounded-2xl p-4 text-center transition-all duration-300 hover:-translate-y-1">
                     <div class="text-2xl mb-1">⏳</div>
                     <div class="font-bold text-gray-200 text-sm">${t.lifeClockLink}</div>
